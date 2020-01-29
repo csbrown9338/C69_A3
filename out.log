@@ -2,15 +2,6 @@ gcc -Wall -g -c ext2_helper.c
 ext2_helper.c: In function ‘truncatePath’:
 ext2_helper.c:20: warning: passing argument 1 of ‘strcmp’ makes pointer from integer without a cast
 /usr/include/string.h:142: note: expected ‘const char *’ but argument is of type ‘char’
-ext2_helper.c: In function ‘get_dir_entry’:
-ext2_helper.c:77: error: expected expression before ‘struct’
-ext2_helper.c:76: warning: unused variable ‘curr_block’
-ext2_helper.c: In function ‘isValidPath’:
-ext2_helper.c:99: error: ‘found’ undeclared (first use in this function)
-ext2_helper.c:99: error: (Each undeclared identifier is reported only once
-ext2_helper.c:99: error: for each function it appears in.)
-ext2_helper.c:99: error: expected ‘)’ before ‘_inode’
-ext2_helper.c:114: error: ‘found_inode’ undeclared (first use in this function)
 ext2_helper.c: In function ‘isValidDirectory’:
 ext2_helper.c:125: warning: passing argument 1 of ‘get_dir_entry’ makes pointer from integer without a cast
 ext2_helper.c:75: note: expected ‘unsigned char *’ but argument is of type ‘int’
