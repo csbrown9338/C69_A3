@@ -1,34 +1,26 @@
 gcc -Wall -g -c ext2_helper.c
 ext2_helper.c: In function ‘truncatePath’:
-ext2_helper.c:17: warning: passing argument 1 of ‘strcmp’ makes pointer from integer without a cast
+ext2_helper.c:20: warning: passing argument 1 of ‘strcmp’ makes pointer from integer without a cast
 /usr/include/string.h:142: note: expected ‘const char *’ but argument is of type ‘char’
-ext2_helper.c: In function ‘readDisk’:
-ext2_helper.c:44: warning: implicit declaration of function ‘open’
-ext2_helper.c:44: error: ‘O_RDWR’ undeclared (first use in this function)
-ext2_helper.c:44: error: (Each undeclared identifier is reported only once
-ext2_helper.c:44: error: for each function it appears in.)
-ext2_helper.c:46: warning: implicit declaration of function ‘mmap’
-ext2_helper.c:46: error: ‘PROT_READ’ undeclared (first use in this function)
-ext2_helper.c:46: error: ‘PROT_WRITE’ undeclared (first use in this function)
-ext2_helper.c:46: error: ‘MAP_SHARED’ undeclared (first use in this function)
-ext2_helper.c:48: error: ‘MAP_FAILED’ undeclared (first use in this function)
 ext2_helper.c: In function ‘get_dir_entry’:
-ext2_helper.c:74: error: expected expression before ‘struct’
-ext2_helper.c:73: warning: unused variable ‘curr_block’
+ext2_helper.c:77: error: expected expression before ‘struct’
+ext2_helper.c:76: warning: unused variable ‘curr_block’
 ext2_helper.c: In function ‘isValidPath’:
-ext2_helper.c:96: error: ‘found’ undeclared (first use in this function)
-ext2_helper.c:96: error: expected ‘)’ before ‘_inode’
-ext2_helper.c:111: error: ‘found_inode’ undeclared (first use in this function)
+ext2_helper.c:99: error: ‘found’ undeclared (first use in this function)
+ext2_helper.c:99: error: (Each undeclared identifier is reported only once
+ext2_helper.c:99: error: for each function it appears in.)
+ext2_helper.c:99: error: expected ‘)’ before ‘_inode’
+ext2_helper.c:114: error: ‘found_inode’ undeclared (first use in this function)
 ext2_helper.c: In function ‘isValidDirectory’:
-ext2_helper.c:122: warning: passing argument 1 of ‘get_dir_entry’ makes pointer from integer without a cast
-ext2_helper.c:72: note: expected ‘unsigned char *’ but argument is of type ‘int’
-ext2_helper.c:122: error: too few arguments to function ‘get_dir_entry’
+ext2_helper.c:125: warning: passing argument 1 of ‘get_dir_entry’ makes pointer from integer without a cast
+ext2_helper.c:75: note: expected ‘unsigned char *’ but argument is of type ‘int’
+ext2_helper.c:125: error: too few arguments to function ‘get_dir_entry’
 ext2_helper.c: In function ‘isValidFile’:
-ext2_helper.c:135: warning: passing argument 1 of ‘get_dir_entry’ makes pointer from integer without a cast
-ext2_helper.c:72: note: expected ‘unsigned char *’ but argument is of type ‘int’
-ext2_helper.c:135: error: too few arguments to function ‘get_dir_entry’
+ext2_helper.c:138: warning: passing argument 1 of ‘get_dir_entry’ makes pointer from integer without a cast
+ext2_helper.c:75: note: expected ‘unsigned char *’ but argument is of type ‘int’
+ext2_helper.c:138: error: too few arguments to function ‘get_dir_entry’
 ext2_helper.c: In function ‘isValidLink’:
-ext2_helper.c:157: warning: passing argument 1 of ‘get_dir_entry’ makes pointer from integer without a cast
-ext2_helper.c:72: note: expected ‘unsigned char *’ but argument is of type ‘int’
-ext2_helper.c:157: error: too few arguments to function ‘get_dir_entry’
+ext2_helper.c:160: warning: passing argument 1 of ‘get_dir_entry’ makes pointer from integer without a cast
+ext2_helper.c:75: note: expected ‘unsigned char *’ but argument is of type ‘int’
+ext2_helper.c:160: error: too few arguments to function ‘get_dir_entry’
 make: *** [ext2_helper.o] Error 1
