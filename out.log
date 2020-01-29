@@ -2,11 +2,11 @@ gcc -Wall -g -c ext2_helper.c
 ext2_helper.c: In function ‘truncatePath’:
 ext2_helper.c:20: warning: passing argument 1 of ‘strcmp’ makes pointer from integer without a cast
 /usr/include/string.h:142: note: expected ‘const char *’ but argument is of type ‘char’
-ext2_helper.c: In function ‘get_inode’:
-ext2_helper.c:69: error: ‘ext2_group_desc’ undeclared (first use in this function)
-ext2_helper.c:69: error: (Each undeclared identifier is reported only once
-ext2_helper.c:69: error: for each function it appears in.)
-ext2_helper.c:69: error: ‘gd’ undeclared (first use in this function)
-ext2_helper.c: In function ‘get_entry’:
-ext2_helper.c:87: error: ‘struct ext2_inode’ has no member named ‘block’
-make: *** [ext2_helper.o] Error 1
+gcc -Wall -g -o ext2_ls ext2_ls.o ext2.h ext2_helper.o
+gcc -Wall -g -c ext2_cp.c
+gcc -Wall -g -o ext2_cp ext2_cp.o ext2.h ext2_helper.o
+gcc -Wall -g -c ext2_mkdir.c
+gcc -Wall -g -o ext2_mkdir ext2_mkdir.o ext2.h ext2_helper.o
+gcc -Wall -g -c ext2_ln.c
+gcc -Wall -g -o ext2_ln ext2_ln.o ext2.h ext2_helper.o
+gcc -Wall -g -o ext2_rm ext2_rm.o ext2.h ext2_helper.o
