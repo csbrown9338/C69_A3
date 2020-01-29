@@ -1,17 +1,17 @@
 gcc -Wall -g -c ext2_helper.c
-ext2_helper.c: In function ‘truncatePath’:
-ext2_helper.c:20: warning: passing argument 1 of ‘strcmp’ makes pointer from integer without a cast
-/usr/include/string.h:142: note: expected ‘const char *’ but argument is of type ‘char’
-ext2_helper.c: In function ‘isValidDirectory’:
-ext2_helper.c:125: warning: passing argument 1 of ‘get_dir_entry’ makes pointer from integer without a cast
-ext2_helper.c:75: note: expected ‘unsigned char *’ but argument is of type ‘int’
-ext2_helper.c:125: error: too few arguments to function ‘get_dir_entry’
-ext2_helper.c: In function ‘isValidFile’:
-ext2_helper.c:138: warning: passing argument 1 of ‘get_dir_entry’ makes pointer from integer without a cast
-ext2_helper.c:75: note: expected ‘unsigned char *’ but argument is of type ‘int’
-ext2_helper.c:138: error: too few arguments to function ‘get_dir_entry’
-ext2_helper.c: In function ‘isValidLink’:
-ext2_helper.c:160: warning: passing argument 1 of ‘get_dir_entry’ makes pointer from integer without a cast
-ext2_helper.c:75: note: expected ‘unsigned char *’ but argument is of type ‘int’
-ext2_helper.c:160: error: too few arguments to function ‘get_dir_entry’
+ext2_helper.c: In function ‘get_dir’:
+ext2_helper.c:16: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:32: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:45: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:61: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:68: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:77: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:85: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:95: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:133: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:146: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:159: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:168: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.h:22: error: old-style parameter declarations in prototyped function definition
+ext2_helper.c:174: error: expected ‘{’ at end of input
 make: *** [ext2_helper.o] Error 1
