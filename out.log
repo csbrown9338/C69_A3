@@ -1,4 +1,2 @@
 gcc -Wall -g -c ext2_ls.c
-ext2_ls.c: In function ‘main’:
-ext2_ls.c:44: warning: initialization from incompatible pointer type
 gcc -Wall -g -o ext2_ls ext2_ls.o ext2.h ext2_helper.o
