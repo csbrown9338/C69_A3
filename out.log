@@ -1,6 +1,15 @@
-gcc -Wall -g -c ext2_helper.c
-gcc -Wall -g -o ext2_ls ext2_ls.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_cp ext2_cp.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_mkdir ext2_mkdir.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_ln ext2_ln.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_rm ext2_rm.o ext2.h ext2_helper.o
+gcc -Wall -g -c ext2_ls.c
+ext2_ls.c: In function ‘main’:
+ext2_ls.c:31: warning: suggest parentheses around assignment used as truth value
+ext2_ls.c:33: warning: suggest parentheses around assignment used as truth value
+ext2_ls.c:36: error: expected statement before ‘)’ token
+ext2_ls.c:37: error: expected ‘}’ before ‘else’
+ext2_ls.c:43: warning: initialization from incompatible pointer type
+ext2_ls.c:47: error: ‘has_flag’ undeclared (first use in this function)
+ext2_ls.c:47: error: (Each undeclared identifier is reported only once
+ext2_ls.c:47: error: for each function it appears in.)
+ext2_ls.c: At top level:
+ext2_ls.c:54: error: expected identifier or ‘(’ before ‘else’
+ext2_ls.c:55: error: expected identifier or ‘(’ before ‘return’
+ext2_ls.c:56: error: expected identifier or ‘(’ before ‘}’ token
+make: *** [ext2_ls.o] Error 1
