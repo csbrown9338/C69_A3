@@ -1,7 +1,8 @@
 gcc -Wall -g -c ext2_cp.c
-ext2_cp.c: In function ‘main’:
-ext2_cp.c:38: warning: implicit declaration of function ‘addFile’
-ext2_cp.c:38: error: ‘path’ undeclared (first use in this function)
-ext2_cp.c:38: error: (Each undeclared identifier is reported only once
-ext2_cp.c:38: error: for each function it appears in.)
-make: *** [ext2_cp.o] Error 1
+gcc -Wall -g -o ext2_cp ext2_cp.o ext2.h ext2_helper.o
+gcc -Wall -g -c ext2_mkdir.c
+gcc -Wall -g -o ext2_mkdir ext2_mkdir.o ext2.h ext2_helper.o
+gcc -Wall -g -c ext2_ln.c
+gcc -Wall -g -o ext2_ln ext2_ln.o ext2.h ext2_helper.o
+gcc -Wall -g -c ext2_rm.c
+gcc -Wall -g -o ext2_rm ext2_rm.o ext2.h ext2_helper.o
