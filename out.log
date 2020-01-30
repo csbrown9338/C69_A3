@@ -1,6 +1,7 @@
 gcc -Wall -g -c ext2_helper.c
-gcc -Wall -g -o ext2_ls ext2_ls.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_cp ext2_cp.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_mkdir ext2_mkdir.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_ln ext2_ln.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_rm ext2_rm.o ext2.h ext2_helper.o
+ext2_helper.c: In function ‘get_it’:
+ext2_helper.c:77: warning: initialization from incompatible pointer type
+ext2_helper.c:78: error: dereferencing pointer to incomplete type
+ext2_helper.c: In function ‘get_inode’:
+ext2_helper.c:102: warning: unused variable ‘size’
+make: *** [ext2_helper.o] Error 1
