@@ -1,19 +1,5 @@
 gcc -Wall -g -c ext2_helper.c
-ext2_helper.c: In function ‘get_inode’:
-ext2_helper.c:96: warning: unused variable ‘gd’
 ext2_helper.c: In function ‘allocateInode’:
+ext2_helper.c:210: error: subscripted value is neither array nor pointer
 ext2_helper.c:211: error: subscripted value is neither array nor pointer
-ext2_helper.c:212: error: subscripted value is neither array nor pointer
-ext2_helper.c: In function ‘findNewEntry’:
-ext2_helper.c:232: error: ‘struct ext2_inode’ has no member named ‘blocks’
-ext2_helper.c:236: error: invalid type argument of ‘->’ (have ‘int’)
-ext2_helper.c:236: warning: return from incompatible pointer type
-ext2_helper.c: In function ‘addNativeFile’:
-ext2_helper.c:269: warning: initialization from incompatible pointer type
-ext2_helper.c: In function ‘addDir’:
-ext2_helper.c:288: warning: initialization from incompatible pointer type
-ext2_helper.c: In function ‘addSymLink’:
-ext2_helper.c:307: warning: initialization from incompatible pointer type
-ext2_helper.c: In function ‘addLinkFile’:
-ext2_helper.c:319: warning: initialization from incompatible pointer type
 make: *** [ext2_helper.o] Error 1
