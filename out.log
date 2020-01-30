@@ -1,8 +1,5 @@
 gcc -Wall -g -c ext2_helper.c
 ext2_helper.c: In function ‘truncatePath’:
-ext2_helper.c:27: warning: passing argument 2 of ‘strncpy’ makes pointer from integer without a cast
-/usr/include/string.h:130: note: expected ‘const char * __restrict__’ but argument is of type ‘int’
-ext2_helper.c:27: error: too few arguments to function ‘strncpy’
 ext2_helper.c:28: error: expected ‘;’ before ‘return’
 ext2_helper.c: In function ‘extractFileName’:
 ext2_helper.c:61: error: expected expression before ‘[’ token
