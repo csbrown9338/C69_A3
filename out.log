@@ -1,5 +1,11 @@
 gcc -Wall -g -c ext2_helper.c
 ext2_helper.c: In function ‘allocateInode’:
-ext2_helper.c:210: error: subscripted value is neither array nor pointer
-ext2_helper.c:211: error: subscripted value is neither array nor pointer
-make: *** [ext2_helper.o] Error 1
+ext2_helper.c:206: warning: initialization makes pointer from integer without a cast
+ext2_helper.c: In function ‘addEntry’:
+ext2_helper.c:249: warning: control reaches end of non-void function
+gcc -Wall -g -o ext2_ls ext2_ls.o ext2.h ext2_helper.o
+gcc -Wall -g -o ext2_cp ext2_cp.o ext2.h ext2_helper.o
+gcc -Wall -g -o ext2_mkdir ext2_mkdir.o ext2.h ext2_helper.o
+gcc -Wall -g -c ext2_ln.c
+gcc -Wall -g -o ext2_ln ext2_ln.o ext2.h ext2_helper.o
+gcc -Wall -g -o ext2_rm ext2_rm.o ext2.h ext2_helper.o
