@@ -1,9 +1,7 @@
 gcc -Wall -g -c ext2_ls.c
-gcc -Wall -g -c ext2_helper.c
-ext2_helper.c: In function ‘isValidPath’:
-ext2_helper.c:168: error: expected ‘)’ before ‘;’ token
-ext2_helper.c:169: error: expected ‘;’ before ‘int’
-ext2_helper.c:171: error: ‘curr_pos’ undeclared (first use in this function)
-ext2_helper.c:171: error: (Each undeclared identifier is reported only once
-ext2_helper.c:171: error: for each function it appears in.)
-make: *** [ext2_helper.o] Error 1
+ext2_ls.c: In function ‘main’:
+ext2_ls.c:51: error: expected ‘;’ before ‘int’
+ext2_ls.c:55: error: ‘curr_pos’ undeclared (first use in this function)
+ext2_ls.c:55: error: (Each undeclared identifier is reported only once
+ext2_ls.c:55: error: for each function it appears in.)
+make: *** [ext2_ls.o] Error 1
