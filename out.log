@@ -1,8 +1,5 @@
-gcc -Wall -g -c ext2_helper.c
-ext2_helper.c: In function ‘tokenizePath’:
-ext2_helper.c:41: warning: ‘tpath’ may be used uninitialized in this function
 gcc -Wall -g -o ext2_ls ext2_ls.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_cp ext2_cp.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_mkdir ext2_mkdir.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_ln ext2_ln.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_rm ext2_rm.o ext2.h ext2_helper.o
+ext2_helper.o: In function `extractFileName':
+/home/student/Assignment3/C69_A3/ext2_helper.c:57: undefined reference to `tokenizePath'
+collect2: ld returned 1 exit status
+make: *** [ext2_ls] Error 1
