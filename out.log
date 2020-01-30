@@ -1,8 +1,6 @@
 gcc -Wall -g -c ext2_helper.c
-ext2_helper.c: In function ‘get_inode’:
-ext2_helper.c:97: error: ‘i’ undeclared (first use in this function)
-ext2_helper.c:97: error: (Each undeclared identifier is reported only once
-ext2_helper.c:97: error: for each function it appears in.)
 ext2_helper.c: In function ‘get_entry’:
-ext2_helper.c:114: error: ‘struct ext2_inode’ has no member named ‘i_name’
+ext2_helper.c:114: error: ‘i’ undeclared (first use in this function)
+ext2_helper.c:114: error: (Each undeclared identifier is reported only once
+ext2_helper.c:114: error: for each function it appears in.)
 make: *** [ext2_helper.o] Error 1
