@@ -1,5 +1,11 @@
-gcc -Wall -g -o ext2_ls ext2_ls.o ext2.h ext2_helper.o
-ext2_helper.o: In function `extractFileName':
-/home/student/Assignment3/C69_A3/ext2_helper.c:57: undefined reference to `tokenizePath'
-collect2: ld returned 1 exit status
-make: *** [ext2_ls] Error 1
+gcc -Wall -g -c ext2_helper.c
+ext2_helper.c: In function ‘truncatePath’:
+ext2_helper.c:27: warning: passing argument 2 of ‘strncpy’ makes pointer from integer without a cast
+/usr/include/string.h:130: note: expected ‘const char * __restrict__’ but argument is of type ‘int’
+ext2_helper.c:27: error: too few arguments to function ‘strncpy’
+ext2_helper.c:28: error: expected ‘;’ before ‘return’
+ext2_helper.c: In function ‘extractFileName’:
+ext2_helper.c:61: error: expected expression before ‘[’ token
+ext2_helper.c: In function ‘isValidPath’:
+ext2_helper.c:187: warning: left-hand operand of comma expression has no effect
+make: *** [ext2_helper.o] Error 1
