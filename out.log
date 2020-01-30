@@ -1,8 +1,5 @@
 gcc -Wall -g -c ext2_helper.c
 ext2_helper.c: In function ‘truncatePath’:
-ext2_helper.c:28: error: expected ‘;’ before ‘return’
-ext2_helper.c: In function ‘extractFileName’:
-ext2_helper.c:61: error: expected expression before ‘[’ token
-ext2_helper.c: In function ‘isValidPath’:
-ext2_helper.c:187: warning: left-hand operand of comma expression has no effect
+ext2_helper.c:27: error: incompatible types when assigning to type ‘char[(unsigned int)(i)]’ from type ‘void *’
+ext2_helper.c:29: warning: function returns address of local variable
 make: *** [ext2_helper.o] Error 1
