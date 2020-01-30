@@ -1,8 +1,28 @@
-gcc -Wall -g -c ext2_cp.c
-gcc -Wall -g -o ext2_cp ext2_cp.o ext2.h ext2_helper.o
-gcc -Wall -g -c ext2_mkdir.c
-gcc -Wall -g -o ext2_mkdir ext2_mkdir.o ext2.h ext2_helper.o
-gcc -Wall -g -c ext2_ln.c
-gcc -Wall -g -o ext2_ln ext2_ln.o ext2.h ext2_helper.o
-gcc -Wall -g -c ext2_rm.c
-gcc -Wall -g -o ext2_rm ext2_rm.o ext2.h ext2_helper.o
+gcc -Wall -g -c ext2_helper.c
+ext2_helper.c: In function ‘get_i_bm’:
+ext2_helper.c:17: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:33: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:46: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:63: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:70: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:74: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:81: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:88: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:95: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:104: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:112: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:122: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:160: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:173: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:186: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:200: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:226: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:244: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:257: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:281: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:298: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:317: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.c:329: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+ext2_helper.h:14: error: old-style parameter declarations in prototyped function definition
+ext2_helper.c:332: error: expected ‘{’ at end of input
+make: *** [ext2_helper.o] Error 1
