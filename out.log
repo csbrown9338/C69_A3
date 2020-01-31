@@ -1,6 +1,6 @@
 gcc -Wall -g -c ext2_helper.c
-ext2_helper.c: In function ‘allocateInode’:
-ext2_helper.c:323: error: ‘struct ext2_super_block’ has no member named ‘s_free_inodes’
+ext2_helper.c: In function ‘allocateBlocks’:
+ext2_helper.c:295: error: ‘struct ext2_super_block’ has no member named ‘bg_free_blocks_count’
 ext2_helper.c: In function ‘addDir’:
-ext2_helper.c:422: error: ‘struct ext2_inode’ has no member named ‘block’
+ext2_helper.c:423: error: ‘struct ext2_inode’ has no member named ‘block’
 make: *** [ext2_helper.o] Error 1
