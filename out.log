@@ -1,4 +1,11 @@
 gcc -Wall -g -c ext2_mkdir.c
 ext2_mkdir.c: In function ‘main’:
-ext2_mkdir.c:23: warning: ‘filename’ may be used uninitialized in this function
+ext2_mkdir.c:37: warning: null argument where non-null required (argument 2)
+ext2_mkdir.c:37: warning: null argument where non-null required (argument 2)
+ext2_mkdir.c:43: warning: null argument where non-null required (argument 2)
+ext2_mkdir.c:43: warning: null argument where non-null required (argument 2)
+ext2_mkdir.c:50: warning: null argument where non-null required (argument 2)
+ext2_mkdir.c:50: warning: null argument where non-null required (argument 2)
 gcc -Wall -g -o ext2_mkdir ext2_mkdir.o ext2.h ext2_helper.o
+gcc -Wall -g -c ext2_ln.c
+gcc -Wall -g -o ext2_ln ext2_ln.o ext2.h ext2_helper.o
