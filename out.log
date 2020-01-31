@@ -1,7 +1,6 @@
 gcc -Wall -g -c ext2_helper.c
 ext2_helper.c: In function ‘allocateInode’:
-ext2_helper.c:253: warning: initialization makes integer from pointer without a cast
-ext2_helper.c:260: error: subscripted value is neither array nor pointer
-ext2_helper.c:261: error: subscripted value is neither array nor pointer
-ext2_helper.c:265: error: subscripted value is neither array nor pointer
+ext2_helper.c:260: error: invalid type argument of ‘unary *’ (have ‘int’)
+ext2_helper.c:261: error: invalid type argument of ‘unary *’ (have ‘int’)
+ext2_helper.c:265: error: invalid type argument of ‘unary *’ (have ‘int’)
 make: *** [ext2_helper.o] Error 1
