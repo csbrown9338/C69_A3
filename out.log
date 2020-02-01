@@ -1,14 +1,10 @@
-gcc -Wall -g -c ext2_ls.c
 gcc -Wall -g -c ext2_helper.c
-ext2_helper.c: In function ‘allocateBlocks’:
-ext2_helper.c:288: warning: statement with no effect
-ext2_helper.c:298: error: ‘found’ undeclared (first use in this function)
-ext2_helper.c:298: error: (Each undeclared identifier is reported only once
-ext2_helper.c:298: error: for each function it appears in.)
 ext2_helper.c: In function ‘addFileContents’:
 ext2_helper.c:393: error: lvalue required as left operand of assignment
 ext2_helper.c: In function ‘insertLink’:
 ext2_helper.c:413: error: ‘curr_bock’ undeclared (first use in this function)
+ext2_helper.c:413: error: (Each undeclared identifier is reported only once
+ext2_helper.c:413: error: for each function it appears in.)
 ext2_helper.c:411: warning: unused variable ‘block’
 ext2_helper.c: In function ‘addDir’:
 ext2_helper.c:471: warning: passing argument 2 of ‘allocateBlocks’ makes pointer from integer without a cast
