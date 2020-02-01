@@ -1,8 +1,5 @@
 gcc -Wall -g -c ext2_helper.c
-ext2_helper.c: In function ‘isValidPath’:
-ext2_helper.c:187: warning: statement with no effect
-gcc -Wall -g -o ext2_ls ext2_ls.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_cp ext2_cp.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_mkdir ext2_mkdir.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_ln ext2_ln.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_rm ext2_rm.o ext2.h ext2_helper.o
+ext2_helper.c: In function ‘isValidFile’:
+ext2_helper.c:235: error: expected expression before ‘||’ token
+ext2_helper.c:235: error: expected statement before ‘)’ token
+make: *** [ext2_helper.o] Error 1
