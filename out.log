@@ -1,9 +1,12 @@
 gcc -Wall -g -c ext2_helper.c
+ext2_helper.c: In function ‘addNativeFile’:
+ext2_helper.c:428: warning: unused variable ‘dest_blocks’
 ext2_helper.c: In function ‘addDir’:
-ext2_helper.c:457: warning: passing argument 2 of ‘allocateBlocks’ makes pointer from integer without a cast
-ext2_helper.c:265: note: expected ‘struct ext2_inode *’ but argument is of type ‘int’
-ext2_helper.c:457: error: too few arguments to function ‘allocateBlocks’
-ext2_helper.c:472: error: invalid type argument of ‘->’ (have ‘int’)
+ext2_helper.c:468: error: invalid type argument of ‘->’ (have ‘int’)
+ext2_helper.c:455: warning: unused variable ‘block’
 ext2_helper.c: In function ‘addSymLink’:
-ext2_helper.c:492: error: too many arguments to function ‘get_b_bm’
+ext2_helper.c:486: warning: passing argument 3 of ‘get_block’ makes integer from pointer without a cast
+ext2_helper.c:145: note: expected ‘int’ but argument is of type ‘unsigned char *’
+ext2_helper.c:486: error: too many arguments to function ‘get_block’
+ext2_helper.c:484: warning: unused variable ‘dest_blocks’
 make: *** [ext2_helper.o] Error 1
