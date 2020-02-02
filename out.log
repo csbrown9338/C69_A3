@@ -1,6 +1,5 @@
-gcc -Wall -g -c ext2_helper.c
-gcc -Wall -g -o ext2_ls ext2_ls.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_cp ext2_cp.o ext2.h ext2_helper.o
+gcc -Wall -g -c ext2_mkdir.c
+ext2_mkdir.c: In function ‘main’:
+ext2_mkdir.c:31: warning: format ‘%d’ expects type ‘int’, but argument 3 has type ‘char *’
+ext2_mkdir.c:26: warning: unused variable ‘exists_inode’
 gcc -Wall -g -o ext2_mkdir ext2_mkdir.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_ln ext2_ln.o ext2.h ext2_helper.o
-gcc -Wall -g -o ext2_rm ext2_rm.o ext2.h ext2_helper.o
