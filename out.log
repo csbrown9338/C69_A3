@@ -1,9 +1,8 @@
 gcc -Wall -g -c ext2_helper.c
 ext2_helper.c: In function ‘findNewEntry’:
-ext2_helper.c:338: error: expected ‘;’ before ‘struct’
-ext2_helper.c:341: error: ‘dir’ undeclared (first use in this function)
-ext2_helper.c:341: error: (Each undeclared identifier is reported only once
-ext2_helper.c:341: error: for each function it appears in.)
-ext2_helper.c:343: error: expected ‘;’ before ‘while’
-ext2_helper.c:340: warning: unused variable ‘curr_block’
-make: *** [ext2_helper.o] Error 1
+ext2_helper.c:344: warning: unused variable ‘block’
+gcc -Wall -g -o ext2_ls ext2_ls.o ext2.h ext2_helper.o
+gcc -Wall -g -o ext2_cp ext2_cp.o ext2.h ext2_helper.o
+gcc -Wall -g -o ext2_mkdir ext2_mkdir.o ext2.h ext2_helper.o
+gcc -Wall -g -o ext2_ln ext2_ln.o ext2.h ext2_helper.o
+gcc -Wall -g -o ext2_rm ext2_rm.o ext2.h ext2_helper.o
