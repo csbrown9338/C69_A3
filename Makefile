@@ -2,19 +2,19 @@ all: ext2_ls ext2_cp ext2_mkdir ext2_ln ext2_rm
 #	ext2_ls ext2_cp ext2_mkdir ext2_ln ext2_rm
 
 ext2_ls : ext2_ls.o ext2.h readimage.o
-	gcc -Wall -g -o ext2_ls $<
+	gcc -Wall -g -o ext2_ls $^
 
 ext2_cp : ext2_cp.o ext2.h readimage.o
-	gcc -Wall -g -o ext2_cp $<
+	gcc -Wall -g -o ext2_cp $^
 
 ext2_mkdir : ext2_mkdir.o ext2.h readimage.o
-	gcc -Wall -g -o ext2_mkdir $<
+	gcc -Wall -g -o ext2_mkdir $^
 
 ext2_ln : ext2_ln.o ext2.h readimage.o
-	gcc -Wall -g -o ext2_ln $<
+	gcc -Wall -g -o ext2_ln $^
 
 ext2_rm : ext2_rm.o ext2.h readimage.o
-	gcc -Wall -g -o ext2_rm $<
+	gcc -Wall -g -o ext2_rm $^
 
 # %: %.o ext2.h readimage.o
 # 	gcc -Wall -g -o % ${%} $^
