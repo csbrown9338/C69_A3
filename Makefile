@@ -17,7 +17,7 @@
 # 	gcc -Wall -g -o ext2_rm $^
 
 %: %.o ext2.h readimage.o
-	gcc -Wall -g -o % $<
+	gcc -Wall -g -o % ${%} $^
 
 %.o : %.c ext2.h
 	gcc -Wall -g -c $<
