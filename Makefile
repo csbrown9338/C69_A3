@@ -1,7 +1,7 @@
 all: ext2_ls ext2_cp ext2_mkdir ext2_ln ext2_rm readimage ext2_helper
 
-ext2_helper : ext2_helper.o ext2.h 
-	gcc -Wall -g -o ext2_helper $^
+# ext2_helper : ext2_helper.o ext2.h 
+# 	gcc -Wall -g -o ext2_helper $^
 
 ext2_ls : ext2_ls.o ext2.h readimage.o ext2_helper.o
 	gcc -Wall -g -o ext2_ls $^
