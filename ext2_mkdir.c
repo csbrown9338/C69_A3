@@ -23,15 +23,15 @@ int main(int argc, char **argv) {
         exit(1);
     }
     // Check that everything before the last '/' is a valid dir
-    if (isValidDirectory(disk, newDir) == -1) { // TODO: TAKE OUT THE LAST '/'
+    if (isValidDirectory(disk, newdir) == -1) { // TODO: TAKE OUT THE LAST '/'
         fprintf(stderr, "Invalid parent path");
         return ENOENT;
     }
     // Check if the name is taken
-    else if (isValidPath(disk, newDir) != -1) {
+    else if (isValidPath(disk, newdir) != -1) {
         fprintf(stderr, "Name is taken");
-        if (isValidDirectory(disk, newDir) != -1) return EISDIR;
-        else if (isValidFile(disk, newDir) != -1) return EEXIST;
+        if (isValidDirectory(disk, newdir) != -1) return EISDIR;
+        else if (isValidFile(disk, newdir) != -1) return EEXIST;
         else exit(1);
     }
     else { 
