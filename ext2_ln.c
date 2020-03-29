@@ -40,8 +40,8 @@ int main(int argc, char **argv) {
     // Check if name is taken
     else if (isValidLink(disk, dest) != -1) {
         fprintf(stderr, "Name is taken");
-        if (isValidDirectory(disk, newDir) != -1) return EISDIR;
-        else if (isValidFile(disk, newDir) != -1) return EEXIST;
+        if (isValidDirectory(disk, dest) != -1) return EISDIR;
+        else if (isValidFile(disk, dest) != -1) return EEXIST;
         else exit(1);
     }
     // Check flag to see if it's a symbolic or hard link
