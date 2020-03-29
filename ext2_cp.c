@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
     // Get the arguments
     if (argc != 4) {
         fprintf(stderr, "Usage: uhh it ain't right lmao");
-        exit(1)
+        exit(1);
     }
     char *disk_name = argv[1];
     char *to_copy = argv[2];

@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
     // Get args
     if (argc != 3) {
         fprintf(stderr, "Usage: uhh it ain't right lmao");
-        exit(1)
+        exit(1);
     }
     char *disk_name = argv[1];
     char *newdir = argv[2];
