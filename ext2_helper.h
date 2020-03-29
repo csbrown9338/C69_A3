@@ -7,14 +7,14 @@
 #include <string.h>
 #include "ext2.h"
 
-int isValidPath(char *path);
+int isValidPath(unsigned char *disk, char *path);
 
-int isValidDirectory(char *path);
+int isValidDirectory(unsigned char *disk, char *path);
 
-int isValidFile(char *path);
+int isValidFile(unsigned char *disk, char *path);
 
-int isValidNativeFile(char *path);
+int isValidNativeFile(unsigned char *disk, char *path);
 
-int isValidLink(char *path);
+int isValidLink(unsigned char *disk, char *path);
 
 unsigned char *readDisk(char *path);

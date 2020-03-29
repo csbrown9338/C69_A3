@@ -12,7 +12,7 @@
  * returns -1 if invalid
  * returns inode number if valid
  */
-int isValidPath(char *path) {
+int isValidPath(unsigned char *disk, char *path) {
     return 0;
 }
 
@@ -21,7 +21,7 @@ int isValidPath(char *path) {
  * returns -1 if invalid
  * returns inode number if valid
  */
-int isValidDirectory(char *path) {
+int isValidDirectory(unsigned char *disk, char *path) {
     return 0;
 }
 
@@ -30,7 +30,7 @@ int isValidDirectory(char *path) {
  * returns -1 if invalid
  * returns inode number if valid
  */
-int isValidFile(char *path) {
+int isValidFile(unsigned char *disk, char *path) {
     return 0;
 }
 
@@ -39,7 +39,7 @@ int isValidFile(char *path) {
  * returns -1 if invalid
  * returns inode number if valid
  */
-int isValidNativeFile(char *path) {
+int isValidNativeFile(unsigned char *disk, char *path) {
     return 0;
 }
 

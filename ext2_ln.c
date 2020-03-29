@@ -14,28 +14,34 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Usage: uhh it ain't right lmao");
         exit(1)
     }
-    char *disk = argv[1];
+    char *disk_name = argv[1];
     char *source = argv[2];
     char *dest = argv[3];
     char *flag;
     if (argc == 5) {
         flag = argv[4];
     }
+    unsigned char *disk = readDisk(disk_name);
+    // Check if disk exists
+    if (disk == NULL) {
+        fprintf(stderr, "Invalid disk");
+        exit(1);
+    }
     // Check to make sure the source is a valid path
-    if (isValidFile(source) == -1) {
+    if (isValidFile(disk, source) == -1) {
         fprintf(stderr, "Invalid source file");
         return ENOENT;
     }
     // Check to make sure that the dest is also valid
-    else if (isValidDirectory(dest) == -1) { // TODO: take out the last '/'
+    else if (isValidDirectory(disk, dest) == -1) { // TODO: take out the last '/'
         fprintf(stderr, "Invalid destination");
         return ENOENT;
     }
     // Check if name is taken
-    else if (isValidLink(dest) != -1) {
+    else if (isValidLink(disk, dest) != -1) {
         fprintf(stderr, "Name is taken");
-        if (isValidDirectory(newDir) != -1) return EISDIR;
-        else if (isValidFile(newDir) != -1) return EEXIST;
+        if (isValidDirectory(disk, newDir) != -1) return EISDIR;
+        else if (isValidFile(disk, newDir) != -1) return EEXIST;
         else exit(1);
     }
     // Check flag to see if it's a symbolic or hard link
@@ -45,7 +51,6 @@ int main(int argc, char **argv) {
     else if (flag[0] == '\0') {
         // she hard
     }
-
     else {
         fprintf(stderr, "Invalid flag");
         exit(1);

@@ -14,16 +14,22 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Usage: uhh it ain't right lmao");
         exit(1);
     }
-    char *disk = argv[1];
+    char *disk_name = argv[1];
     char *path = argv[2];
     char *flag;
     if (argc == 4) {
         flag = argv[3];
     }
+    unsigned char *disk = readDisk(disk_name);
+    // Check if disk exists
+    if (disk == NULL) {
+        fprintf(stderr, "Invalid disk");
+        exit(1);
+    }
     // If it's a file, then just... print da filename lmao
-    if (isValidFile(path) != -1) printf("%s", path);
+    if (isValidFile(disk, path) != -1) printf("%s", path);
     // If it's a directory... oh boi
-    else if (isValidPath(path) != -1) {
+    else if (isValidPath(disk, path) != -1) {
         // If there be the -a, do the . and ..
         if (strcmp(flag, "-a")) printf(".\n..");
         else if (flag[0] != '\0') {

@@ -14,18 +14,24 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Usage: uhh it ain't right lmao");
         exit(1)
     }
-    char *disk = argv[1];
+    char *disk_name = argv[1];
     char *newdir = argv[2];
+    unsigned char *disk = readDisk(disk_name);
+    // Check if disk exists
+    if (disk == NULL) {
+        fprintf(stderr, "Invalid disk");
+        exit(1);
+    }
     // Check that everything before the last '/' is a valid dir
-    if (isValidDirectory(newDir) == -1) { // TODO: TAKE OUT THE LAST '/'
+    if (isValidDirectory(disk, newDir) == -1) { // TODO: TAKE OUT THE LAST '/'
         fprintf(stderr, "Invalid parent path");
         return ENOENT;
     }
     // Check if the name is taken
-    else if (isValidPath(newDir) != -1) {
+    else if (isValidPath(disk, newDir) != -1) {
         fprintf(stderr, "Name is taken");
-        if (isValidDirectory(newDir) != -1) return EISDIR;
-        else if (isValidFile(newDir) != -1) return EEXIST;
+        if (isValidDirectory(disk, newDir) != -1) return EISDIR;
+        else if (isValidFile(disk, newDir) != -1) return EEXIST;
         else exit(1);
     }
     else { 
