@@ -52,7 +52,31 @@ int isValidLink(char *path) {
     return 0;
 }
 
-
+/*
+ * Reads the disk given a path to the disk img
+ */
 unsigned char *readDisk(char *path) {
-    return NULL;
+    // Open da file
+    int fd = open(path, O_RDWR);
+    // the disk!!!! use mmap apparently
+    unsigned char *d = mmap(NULL, EXT2_BLOCK_SIZE * 128, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    // But we gotta make sure that it actually worked
+    if (d == MAP_FAILED) {
+        fprintf(stderr, "Mapping didn't work");
+        exit(1);
+    }
+    return d;
 }
+
+/*
+ * Gets the group description :)
+ */
+struct ext2_group_desc *get_gd(unsigned char *disk) {
+    return (struct ext2_group_desc *) (void *)disk + (2 * EXT2_BLOCK_SIZE);
+}
+
+// struct ext2_inode *get_it(unsigned char *disk) {
+//     struct ext2_group_desc *gd = get_gd(disk);
+//     return (struct ext2_inode *) 
+// }
+
