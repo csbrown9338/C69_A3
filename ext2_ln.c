@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
         return ENOENT;
     }
     // Check to make sure that the dest is also valid
-    else if (isValidDirectory(disk, dest) == -1) { // TODO: take out the last '/'
+    else if (isValidDirectory(disk, truncatePath(dest)) == -1) {
         fprintf(stderr, "Invalid destination");
         return ENOENT;
     }

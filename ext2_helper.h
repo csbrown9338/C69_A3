@@ -7,6 +7,8 @@
 #include <string.h>
 #include "ext2.h"
 
+char *truncatePath(char *path);
+
 int isValidPath(unsigned char *disk, char *path);
 
 int isValidDirectory(unsigned char *disk, char *path);
@@ -20,3 +22,5 @@ int isValidLink(unsigned char *disk, char *path);
 unsigned char *readDisk(char *path);
 
 struct ext2_group_desc *get_gd(unsigned char *disk);
+
+int get_bg(unsigned char *disk, int inode);

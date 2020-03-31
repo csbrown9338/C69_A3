@@ -8,6 +8,22 @@
 #include "ext2.h"
 
 /*
+ * takes out the last name in the path 
+ */
+char *truncatePath(char *path) {
+    int i = strlen(path) - 1;
+    int index = -1;
+    while (index == -1) {
+        if (strcmp(path[i], "/")) {
+            path[i] = '\0';
+            index = i;
+        }
+        i--;
+    }
+    return path;
+}
+
+/*
  * Check if specified path is valid
  * returns -1 if invalid
  * returns inode number if valid
@@ -22,6 +38,8 @@ int isValidPath(unsigned char *disk, char *path) {
  * returns inode number if valid
  */
 int isValidDirectory(unsigned char *disk, char *path) {
+    int inode = isValidPath(disk, path);
+    // Check if type is directory (EXT2_FT_DIR)
     return 0;
 }
 
@@ -31,6 +49,8 @@ int isValidDirectory(unsigned char *disk, char *path) {
  * returns inode number if valid
  */
 int isValidFile(unsigned char *disk, char *path) {
+    int inode = isValidPath(disk, path);
+    // Check if type is file (EXT2_FT_REG_FILE)
     return 0;
 }
 
@@ -48,7 +68,9 @@ int isValidNativeFile(unsigned char *disk, char *path) {
  * returns -1 if invalid
  * returns inode number if valid
  */
-int isValidLink(char *path) {
+int isValidLink(unsigned char *disk, char *path) {
+    int inode = isValidPath(disk, path);
+    // Check if type is symlink (EXT2_FT_SYMLINK)
     return 0;
 }
 
@@ -80,3 +102,6 @@ struct ext2_group_desc *get_gd(unsigned char *disk) {
 //     return (struct ext2_inode *) 
 // }
 
+int get_bg(unsigned char *disk, int inode) {
+    return (inode - 1) / (((struct ext2_super_block *)disk)->s_inodes_per_group);
+}

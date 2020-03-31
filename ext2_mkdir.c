@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
         exit(1);
     }
     // Check that everything before the last '/' is a valid dir
-    if (isValidDirectory(disk, newdir) == -1) { // TODO: TAKE OUT THE LAST '/'
+    if (isValidDirectory(disk, truncatePath(newdir)) == -1) {
         fprintf(stderr, "Invalid parent path");
         return ENOENT;
     }
