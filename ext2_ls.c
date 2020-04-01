@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
         }
         // TODO: get the uhhhhh contents of the directory :)
         // get the ext2_dir_entry of the current dir
-        struct ext2_dir_entry *e = get_entry(disk, inode);
+        struct ext2_dir_entry_2 *e = get_entry(disk, inode);
         int curr_pos = 0;
         while (curr_pos < 1024) {
             if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..")) {
