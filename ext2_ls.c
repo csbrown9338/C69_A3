@@ -21,22 +21,34 @@ int main(int argc, char **argv) {
         flag = argv[3];
     }
     unsigned char *disk = readDisk(disk_name);
+    int inode;
     // Check if disk exists
     if (disk == NULL) {
         fprintf(stderr, "Invalid disk");
         exit(1);
     }
     // If it's a file, then just... print da filename lmao
-    if (isValidFile(disk, path) != -1) printf("%s", path);
+    if (inode = isValidFile(disk, path) != -1) printf("%s", path);
     // If it's a directory... oh boi
-    else if (isValidPath(disk, path) != -1) {
+    else if (inode = isValidDirectory(disk, path) != -1) {
         // If there be the -a, do the . and ..
-        if (strcmp(flag, "-a")) printf(".\n..");
+        int has_flag = 0; // 0 if no flag, 1 if -a flag
+        if (strcmp(flag, "-a") == 0)) has_flag = 1;
         else if (flag[0] != '\0') {
             fprintf(stderr, "Invalid flag");
             exit(1);
         }
         // TODO: get the uhhhhh contents of the directory :)
+        // get the ext2_dir_entry of the current dir
+        struct ext2_dir_entry *e = get_entry(disk, inode);
+        int curr_pos = 0;
+        while (curr_pos < 1024) {
+            if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..")) {
+                if (has_flag == 1) printf("%s", e->name);
+            }
+            else printf("%s", e->name);
+            curr_pos += e->rec_len;
+        }
     }
     // If not file or directory, then ENOENT
     else return ENOENT;
