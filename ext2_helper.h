@@ -13,7 +13,7 @@ struct ext2_inode *get_inode(unsigned char *disk, int inode);
 
 struct ext2_dir_entry_2 *get_dir_entry(unsigned char *disk, struct ext2_inode *inode, int block, int pos);
 
-struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode)
+struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode);
 
 int isValidPath(unsigned char *disk, char *path);
 
