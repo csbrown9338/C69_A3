@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
         return ENAMETOOLONG; 
     } 
     else {
-        addFile(disk, path, dir_inode);
+        addNativeFile(disk, to_copy, dir_inode);
     }
 
     return 0;
