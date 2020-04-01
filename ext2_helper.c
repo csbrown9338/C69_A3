@@ -66,7 +66,7 @@ struct ext2_group_desc *get_gd(unsigned char *disk) {
  * Get the inode struct given the index
  */
 struct ext2_inode *get_inode(unsigned char *disk, int inode) {
-    ext2_group_desc *gd = get_gd(disk);
+    struct ext2_group_desc *gd = get_gd(disk);
     return (struct ext2_inode *)((void *)gd->bg_inode_table + (sizeof(struct ext2_inode) * inode));
 }
 
@@ -84,7 +84,7 @@ struct ext2_dir_entry_2 *get_dir_entry(unsigned char *disk, struct ext2_inode *i
  */
 struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
     struct ext2_inode *i = get_inode(disk, inode);
-    return (struct ext2_dir_entry_2 *)(i->block[0]);
+    return (struct ext2_dir_entry_2 *)(i->i_block[0]);
 }
 
 /*
