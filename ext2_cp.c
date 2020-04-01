@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
            return ENOENT;
     }
     // Check if name is tooo long
-    else if (0 >= EXT2_NAME_LEN) { // TODO: find out how to see if a name is too long
+    else if (strlen(extractFileName(to_copy)) >= EXT2_NAME_LEN) { 
         fprintf(stderr, "File name too long");
         return ENAMETOOLONG; 
     } 

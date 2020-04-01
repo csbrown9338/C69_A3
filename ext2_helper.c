@@ -59,17 +59,19 @@ struct ext2_group_desc *get_gd(unsigned char *disk) {
     return (struct ext2_group_desc *) (void *)disk + (2 * EXT2_BLOCK_SIZE);
 }
 
-// struct ext2_inode *get_it(unsigned char *disk) {
-//     struct ext2_group_desc *gd = get_gd(disk);
-//     return (struct ext2_inode *) 
-// }
-
-int get_bg(unsigned char *disk, int inode) {
-    return (inode - 1) / (((struct ext2_super_block *)(disk + EXT2_BLOCK_SIZE))->s_inodes_per_group);
+/*
+ * Get the inode struct given the index
+ */
+struct ext2_inode *get_inode(unsigned char *disk, int inode) {
+    return (struct ext2_inode *)((void *)disk + (sizeof(struct ext2_inode) * inode));
 }
 
-struct ext2_dir_entry_2 *get_dir_entry(int inode) {
-    return NULL;
+/*
+ * Gets the dir entry given the inode and position
+ */
+struct ext2_dir_entry_2 *get_dir_entry(unsigned char *disk, struct ext2_inode *inode, int block, int pos) {
+    int curr_block = inode->i_block[block];
+    return struct ext2_dir_entry_2 *e = (struct ext2_dir_entry_2 *) (disk + (curr_block * EXT2_BLOCK_SIZE) + pos);
 }
 
 /*
@@ -80,11 +82,33 @@ struct ext2_dir_entry_2 *get_dir_entry(int inode) {
 int isValidPath(unsigned char *disk, char *path) {
     // Get the individual path names :)
     char *tpath = strtok(path, "/");
+    int curr_inode = EXT2_ROOT_INO; // start at root
     while (tpath != NULL) {
-        // Do the stuff to find the path :D 
+        // Do the stuff to find the path :D
+        // This is to parse through the block i think
+        int curr_block = 0;
+        int found_inode = curr_inode;
+        struct ext2_inode *inode = get_inode(disk, curr_inode);
+        // Loop through each block?
+        while (found_inode != curr_inode && curr_block < inode->i_blocks) {
+            int curr_pos = 0;
+            // Loop through each position
+            while (found _inode != curr_inode && curr_pos < inode->i_size) {
+                // Go through all the entries in the directory to find a name match
+                struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
+                // check name if it MATCHES :D
+                if (strcmp(tpath, e->name)) {
+                    found_inode = e->inode;
+                }
+                curr_pos += e->rec_len; 
+            }
+            // If curr_pos is i_size, then we gotta go to the next block
+            if (curr_pos == inode->i_size) curr_block++;
+        }
+        if (found_inode == curr_inode) return -1;
         tpath = strtok(NULL, "/");
     }
-    return 0;
+    return found_inode;
 }
 
 /*
