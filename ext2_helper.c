@@ -17,7 +17,7 @@ char *truncatePath(char *path) {
     int i = strlen(path) - 1;
     int index = -1;
     while (index == -1) {
-        if (strcmp(path[i], "/")) {
+        if (path[i] == '/') {
             path[i] = '\0';
             index = i;
         }
