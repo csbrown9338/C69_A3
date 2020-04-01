@@ -76,15 +76,15 @@ struct ext2_inode *get_inode(unsigned char *disk, int inode) {
  */
 struct ext2_dir_entry_2 *get_dir_entry(unsigned char *disk, struct ext2_inode *inode, int block, int pos) {
     int curr_block = inode->i_block[block];
-    return (struct ext2_dir_entry_2 *) (disk + (curr_block * EXT2_BLOCK_SIZE) + pos);
+    return (struct ext2_dir_entry_2 *)(disk + (curr_block * EXT2_BLOCK_SIZE) + pos);
 }
 
 /*
  * get dir entry given only the inode index
  */
-struct ext2_dir_entry_2 *get_dir(unsigned char *disk, int inode) {
+struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
     struct ext2_inode *i = get_inode(disk, inode);
-    return (struct ext2_dir_entry_2 *) (i->block[0]);
+    return (struct ext2_dir_entry_2 *)(i->block[0]);
 }
 
 /*
@@ -133,7 +133,7 @@ int isValidPath(unsigned char *disk, char *path) {
 int isValidDirectory(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is directory (EXT2_FT_DIR)
-    struct ext2_dir_entry_2 *e = get_dir(disk, inode);
+    struct ext2_dir_entry_2 *e = get_entry(disk, inode);
     if ((e->file_type == EXT2_FT_DIR)) return inode;
     return -1;
 }
@@ -146,7 +146,7 @@ int isValidDirectory(unsigned char *disk, char *path) {
 int isValidFile(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is file (EXT2_FT_REG_FILE)
-    struct ext2_dir_entry_2 *e = get_dir_entry(inode);
+    struct ext2_dir_entry_2 *e = get_entry(disk, inode);
     if ((e->file_type == EXT2_FT_REG_FILE)) return inode;
     return -1;
 }
@@ -168,7 +168,7 @@ int isValidNativeFile(unsigned char *disk, char *path) {
 int isValidLink(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is symlink (EXT2_FT_SYMLINK)
-    struct ext2_dir_entry_2 *e = get_dir_entry(inode);
+    struct ext2_dir_entry_2 *e = get_entry(disk, inode);
     if ((e->file_type == EXT2_FT_SYMLINK)) return inode;
     return -1;
 }
