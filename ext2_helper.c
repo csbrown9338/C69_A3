@@ -172,3 +172,38 @@ int isValidLink(unsigned char *disk, char *path) {
     if ((e->file_type == EXT2_FT_SYMLINK)) return inode;
     return -1;
 }
+
+/*
+ * Adds a file into the directory given by the inode
+ * path is the native path to the file
+ * returns 0 on success, and -1 on failure
+ */
+int addFile(unsigned char *disk, char *path, struct ext2_inode *inode) {
+    char *fname = extractFileName(path);
+    return 0;
+}
+
+/*
+ * Adds a directory into the directory given by the inode
+ * returns 0 on success, and -1 on failure
+ */
+int addDir(unsigned char *disk, char *dirname, struct ext2_inode *inode) {
+    return 0;
+}
+
+/*
+ * Adds a link into the directory given by the inode
+ * hard = 0 if soft link, hard = 1 on hard link
+ * returns 0 on success, and -1 on failure
+ */
+int addLink(unsigned char *disk, char *lname, struct ext2_inode *file, struct ext2_inode *dir, int hard) {
+    return 0;
+}
+
+/*
+ * Deletes a file or link given the inode to_del
+ * returns 0 on success, and -1 on failure
+ */
+int delFile(unsigned char *disk, struct ext2_inode *to_del, struct ext2_inode *parent) {
+    return 0;
+}

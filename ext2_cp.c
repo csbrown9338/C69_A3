@@ -18,18 +18,14 @@ int main(int argc, char **argv) {
     char *to_copy = argv[2];
     char *destdir = argv[3];
     unsigned char *disk = readDisk(disk_name);
+    int dir_inode = isValidDirectory(disk, destdir)
     // Check if disk exists
     if (disk == NULL) {
         fprintf(stderr, "Invalid disk");
         exit(1);
     }
-    // Check if the to_copy is a file (we're not doing dirs lol)
-    if (isValidNativeFile(disk, to_copy) == -1) {
-        fprintf(stderr, "Invalid source file");
-        return ENOENT;
-    }
     // Check if the destdir is a valid directory in the disk
-    else if (isValidDirectory(disk, destdir) == -1) {
+    else if (dir_inode == -1) {
            fprintf(stderr, "Invalid destination"); 
            return ENOENT;
     }
@@ -39,7 +35,7 @@ int main(int argc, char **argv) {
         return ENAMETOOLONG; 
     } 
     else {
-        // TODO: c o p y (same file name)
+        addFile(disk, path, dir_inode);
     }
 
     return 0;

@@ -24,3 +24,11 @@ int isValidFile(unsigned char *disk, char *path);
 int isValidNativeFile(unsigned char *disk, char *path);
 
 int isValidLink(unsigned char *disk, char *path);
+
+int addFile(unsigned char *disk, char *path, struct ext2_inode *inode);
+
+int addDir(unsigned char *disk, char *dirname, struct ext2_inode *inode);
+
+int addLink(unsigned char *disk, char *lname, struct ext2_inode *file, struct ext2_inode *dir, int hard);
+
+int delFile(unsigned char *disk, struct ext2_inode *to_del, struct ext2_inode *parent);
