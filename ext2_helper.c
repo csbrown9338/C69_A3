@@ -5,7 +5,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string.h>
+#include <sys/mman.h>
+#include <fcntl.h>
 #include "ext2.h"
+#include "ext2_helper.h"
 
 /*
  * takes out the last name in the path (get parent dir)
