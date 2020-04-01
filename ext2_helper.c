@@ -74,7 +74,7 @@ struct ext2_inode *get_inode(unsigned char *disk, int inode) {
  */
 struct ext2_dir_entry_2 *get_dir_entry(unsigned char *disk, struct ext2_inode *inode, int block, int pos) {
     int curr_block = inode->i_block[block];
-    return struct ext2_dir_entry_2 *e = (struct ext2_dir_entry_2 *) (disk + (curr_block * EXT2_BLOCK_SIZE) + pos);
+    return (struct ext2_dir_entry_2 *) (disk + (curr_block * EXT2_BLOCK_SIZE) + pos);
 }
 
 /*
@@ -86,17 +86,17 @@ int isValidPath(unsigned char *disk, char *path) {
     // Get the individual path names :)
     char *tpath = strtok(path, "/");
     int curr_inode = EXT2_ROOT_INO; // start at root
+    int found_inode = curr_inode;
     while (tpath != NULL) {
         // Do the stuff to find the path :D
         // This is to parse through the block i think
         int curr_block = 0;
-        int found_inode = curr_inode;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
         // Loop through each block?
         while (found_inode != curr_inode && curr_block < inode->i_blocks) {
             int curr_pos = 0;
             // Loop through each position
-            while (found _inode != curr_inode && curr_pos < inode->i_size) {
+            while (found_inode != curr_inode && curr_pos < inode->i_size) {
                 // Go through all the entries in the directory to find a name match
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
                 // check name if it MATCHES :D
