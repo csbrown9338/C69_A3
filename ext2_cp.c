@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
     char *to_copy = argv[2];
     char *destdir = argv[3];
     unsigned char *disk = readDisk(disk_name);
-    int dir_inode = isValidDirectory(disk, destdir)
+    int dir_inode = isValidDirectory(disk, destdir);
     // Check if disk exists
     if (disk == NULL) {
         fprintf(stderr, "Invalid disk");
