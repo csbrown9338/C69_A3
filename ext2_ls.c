@@ -27,10 +27,11 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Invalid disk");
         exit(1);
     }
+    inode = isValidDirectory(disk, path);
     // If it's a file, then just... print da filename lmao
-    if (inode = isValidFile(disk, path) != -1) printf("%s", path);
+    if (isValidFile(disk, path) != -1) printf("%s", path);
     // If it's a directory... oh boi
-    else if (inode = isValidDirectory(disk, path) != -1) {
+    else if (inode != -1) {
         // If there be the -a, do the . and ..
         int has_flag = 0; // 0 if no flag, 1 if -a flag
         if (strcmp(flag, "-a") == 0)) has_flag = 1;
