@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
     else if (inode != -1) {
         // If there be the -a, do the . and ..
         int has_flag = 0; // 0 if no flag, 1 if -a flag
-        if (strcmp(flag, "-a") == 0)) has_flag = 1;
+        if (strcmp(flag, "-a") == 0) has_flag = 1;
         else if (flag[0] != '\0') {
             fprintf(stderr, "Invalid flag");
             exit(1);
