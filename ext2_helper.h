@@ -1,15 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <string.h>
-#include <sys/mman.h>
-#include <fcntl.h>
 #include "ext2.h"
 
 char *truncatePath(char *path);
+
+char *extractFileName(char *path);
 
 unsigned char *readDisk(char *path);
 
