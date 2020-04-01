@@ -59,22 +59,32 @@ unsigned char *readDisk(char *path) {
  * Gets the group description :)
  */
 struct ext2_group_desc *get_gd(unsigned char *disk) {
-    return (struct ext2_group_desc *) (void *)disk + (2 * EXT2_BLOCK_SIZE);
+    return (struct ext2_group_desc *) ((void *)disk + (2 * EXT2_BLOCK_SIZE));
 }
 
 /*
  * Get the inode struct given the index
  */
 struct ext2_inode *get_inode(unsigned char *disk, int inode) {
-    return (struct ext2_inode *)((void *)disk + (sizeof(struct ext2_inode) * inode));
+    ext2_group_desc *gd = get_gd(disk);
+    return (struct ext2_inode *)((void *)gd->bg_inode_table + (sizeof(struct ext2_inode) * inode));
 }
 
 /*
- * Gets the dir entry given the inode and position
+ * Gets the dir entry given the inode, block, and position
+ * (meant to be used mostly in the isValidPath helper)
  */
 struct ext2_dir_entry_2 *get_dir_entry(unsigned char *disk, struct ext2_inode *inode, int block, int pos) {
     int curr_block = inode->i_block[block];
     return (struct ext2_dir_entry_2 *) (disk + (curr_block * EXT2_BLOCK_SIZE) + pos);
+}
+
+/*
+ * get dir entry given only the inode index
+ */
+struct ext2_dir_entry_2 *get_dir(unsigned char *disk, int inode) {
+    struct ext2_inode *i = get_inode(disk, inode);
+    return (struct ext2_dir_entry_2 *) (i->block[0]);
 }
 
 /*
@@ -101,6 +111,7 @@ int isValidPath(unsigned char *disk, char *path) {
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
                 // check name if it MATCHES :D
                 if (strcmp(tpath, e->name)) {
+                    if (e->file_type != EXT2_FT_DIR) return -1;
                     found_inode = e->inode;
                 }
                 curr_pos += e->rec_len; 
@@ -122,7 +133,7 @@ int isValidPath(unsigned char *disk, char *path) {
 int isValidDirectory(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is directory (EXT2_FT_DIR)
-    struct ext2_dir_entry_2 *e = get_dir_entry(inode);
+    struct ext2_dir_entry_2 *e = get_dir(disk, inode);
     if ((e->file_type == EXT2_FT_DIR)) return inode;
     return -1;
 }
