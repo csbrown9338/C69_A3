@@ -22,34 +22,39 @@ int main(int argc, char **argv) {
         flag = argv[4];
     }
     unsigned char *disk = readDisk(disk_name);
+    int srcinode = isValidFile(disk, source);
+    int dirinode = isValidDirectory(disk, truncatePath(dest));
     // Check if disk exists
     if (disk == NULL) {
         fprintf(stderr, "Invalid disk");
         exit(1);
     }
     // Check to make sure the source is a valid path
-    if (isValidFile(disk, source) == -1) {
+    if (srcinode == -1) {
         fprintf(stderr, "Invalid source file");
         return ENOENT;
     }
     // Check to make sure that the dest is also valid
-    else if (isValidDirectory(disk, truncatePath(dest)) == -1) {
+    else if (dirinode == -1) {
         fprintf(stderr, "Invalid destination");
         return ENOENT;
     }
     // Check if name is taken
-    else if (isValidLink(disk, dest) != -1) {
+    else if (isValidPath(disk, dest) != -1) {
         fprintf(stderr, "Name is taken");
         if (isValidDirectory(disk, dest) != -1) return EISDIR;
         else if (isValidFile(disk, dest) != -1) return EEXIST;
         else exit(1);
     }
     // Check flag to see if it's a symbolic or hard link
+
     if (strcmp(flag, "-s")) {
         // she symbolic
+        addLink(disk, extractFileName(dest), srcinode, dirinode);
     }
     else if (flag[0] == '\0') {
         // she hard
+        addLinkFile(disk, extractFileName(dest), srcinode, dirinode);
     }
     else {
         fprintf(stderr, "Invalid flag");

@@ -178,7 +178,7 @@ int isValidLink(unsigned char *disk, char *path) {
  * path is the native path to the file
  * returns 0 on success, and -1 on failure
  */
-int addFile(unsigned char *disk, char *path, struct ext2_inode *inode) {
+int addNativeFile(unsigned char *disk, char *path, int inode) {
     char *fname = extractFileName(path);
     return 0;
 }
@@ -187,16 +187,23 @@ int addFile(unsigned char *disk, char *path, struct ext2_inode *inode) {
  * Adds a directory into the directory given by the inode
  * returns 0 on success, and -1 on failure
  */
-int addDir(unsigned char *disk, char *dirname, struct ext2_inode *inode) {
+int addDir(unsigned char *disk, char *dirname, int inode) {
     return 0;
 }
 
 /*
- * Adds a link into the directory given by the inode
- * hard = 0 if soft link, hard = 1 on hard link
+ * Adds a sym link into the directory given by the inode
  * returns 0 on success, and -1 on failure
  */
-int addLink(unsigned char *disk, char *lname, struct ext2_inode *file, struct ext2_inode *dir, int hard) {
+int addLink(unsigned char *disk, char *lname, int file_inode, int dir_inode) {
+    return 0;
+}
+
+/*
+ * Adds a hard link into the directory given by the inode
+ * returns 0 on success, and -1 on failure
+ */
+int addLinkFile(unsigned char *disk, char *lname, int link_inode, int dir_inode) {
     return 0;
 }
 
@@ -204,6 +211,6 @@ int addLink(unsigned char *disk, char *lname, struct ext2_inode *file, struct ex
  * Deletes a file or link given the inode to_del
  * returns 0 on success, and -1 on failure
  */
-int delFile(unsigned char *disk, struct ext2_inode *to_del, struct ext2_inode *parent) {
+int delFile(unsigned char *disk, int to_del_inode, int parent_inode) {
     return 0;
 }

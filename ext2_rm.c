@@ -17,13 +17,15 @@ int main(int argc, char **argv) {
     char *disk_name = argv[1];
     char *to_del = argv[2];
     unsigned char *disk = readDisk(disk_name);
+    int to_del_inode = isValidPath(disk, to_del);
+    int parent_inode = isValidDirectory(disk, truncatePath(to_del));
     // Check if disk exists
     if (disk == NULL) {
         fprintf(stderr, "Invalid disk");
         exit(1);
     }
     // Check if to_del is a valid path
-    if (isValidPath(disk, to_del) == -1) {
+    if (to_del_inode == -1) {
         fprintf(stderr, "Not a valid path");
         return ENOENT;
     }
@@ -32,7 +34,7 @@ int main(int argc, char **argv) {
         return EISDIR;
     }
     else {
-        // Uhhhhh delete it
+        delFile(disk, to_del_inode, parent_inode);
     }
     
 

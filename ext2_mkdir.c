@@ -17,13 +17,14 @@ int main(int argc, char **argv) {
     char *disk_name = argv[1];
     char *newdir = argv[2];
     unsigned char *disk = readDisk(disk_name);
+    int inode = isValidDirectory(disk, truncatePath(newdir));
     // Check if disk exists
     if (disk == NULL) {
         fprintf(stderr, "Invalid disk");
         exit(1);
     }
     // Check that everything before the last '/' is a valid dir
-    if (isValidDirectory(disk, truncatePath(newdir)) == -1) {
+    if (inode == -1) {
         fprintf(stderr, "Invalid parent path");
         return ENOENT;
     }
@@ -35,7 +36,7 @@ int main(int argc, char **argv) {
         else exit(1);
     }
     else { 
-        // make the new directory in inode stuff
+        addDir(disk, extractFileName(newdir), inode);
     } 
     return 0;
 }
