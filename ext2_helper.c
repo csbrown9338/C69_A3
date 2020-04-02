@@ -119,22 +119,26 @@ struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
  * returns inode number if valid
  */
 int isValidPath(unsigned char *disk, char *path) {
-    printf("OH HONEY, YOU GOT A STORM COMIN");
-    fflush(stdout);
     // Get the individual path names :)
     char *tpath = strtok(path, "/");
     int curr_inode = EXT2_ROOT_INO; // start at root
     int found_inode = curr_inode;
     while (tpath != NULL) {
+        printf("entering loop to go through da path\n");
+        fflush(stdout);
         // Do the stuff to find the path :D
         // This is to parse through the block i think
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
         // Loop through each block?
         while (found_inode != curr_inode && curr_block < inode->i_blocks) {
+            printf("\tentering loop to go through each block i think\n");
+            fflush(stdout);
             int curr_pos = 0;
             // Loop through each position
             while (found_inode != curr_inode && curr_pos < inode->i_size) {
+                printf("\t\tentering loop to go through each position\n");
+                fflush(stdout);
                 // Go through all the entries in the directory to find a name match
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
                 // check name if it MATCHES :D

@@ -9,8 +9,6 @@
 #include "ext2_helper.h"
 
 int main(int argc, char **argv) {
-    printf("testing testing i'm just suggesting");
-    fflush(stdout);
     // Get the arguments
     if (argc != 3 && argc != 4) {
         fprintf(stderr, "Usage: uhh it ain't right lmao");
