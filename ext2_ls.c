@@ -9,7 +9,8 @@
 #include "ext2_helper.h"
 
 int main(int argc, char **argv) {
-    fprintf(stdderr, "testing testing i'm just suggesting");
+    printf("testing testing i'm just suggesting");
+    fflush(stdout);
     // Get the arguments
     if (argc != 3 && argc != 4) {
         fprintf(stderr, "Usage: uhh it ain't right lmao");
@@ -45,7 +46,8 @@ int main(int argc, char **argv) {
         struct ext2_dir_entry_2 *e = get_entry(disk, inode);
         int curr_pos = 0;
         while (curr_pos < 1024) {
-            fprintf(stderr, "looping through directory entries");
+            printf("looping through directory entries");
+            fflush(stdout);
             if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..")) {
                 if (has_flag == 1) printf("%s", e->name);
             }
