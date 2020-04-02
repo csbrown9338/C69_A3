@@ -74,7 +74,7 @@ struct ext2_group_desc *get_gd(unsigned char *disk) {
 struct ext2_inode *get_it(unsigned char *disk) {
     printf("we in get_it()\n");
     fflush(stdout);
-    struct ext2_grou_desc *gd = get_gd(disk);
+    struct ext2_group_desc *gd = get_gd(disk);
     return (struct ext2_inode *) disk + EXT2_BLOCK_SIZE * gd->bg_inode_table;
 }
 
