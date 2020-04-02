@@ -241,7 +241,7 @@ int allocateInode(unsigned char *disk, int size) {
     return NULL;
  }
 
- void addEntry(struct ext2_dir_entry_2 *entry, int inode, int file_type, char *name) {
+ int addEntry(struct ext2_dir_entry_2 *entry, int inode, int file_type, char *name) {
     entry->inode = inode;
     entry->name_len = strlen(name);
     entry->rec_len = ceil((sizeof(struct ext2_dir_entry_2) + sizeof(name)) / 4) * 4;
