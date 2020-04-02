@@ -57,10 +57,21 @@ unsigned char *readDisk(char *path) {
 }
 
 /*
+ * returns the super block :D:D:D:D:D
+ */
+struct ext2_super_block *get_sb(unsigned char* disk) {
+    return (struct ext2_super_block *)(disk + 1024);
+}
+
+/*
  * Gets the group description :)
  */
 struct ext2_group_desc *get_gd(unsigned char *disk) {
-    return (struct ext2_group_desc *) ((void *)disk + (2 * EXT2_BLOCK_SIZE));
+    return (struct ext2_group_desc *)(disk + 2 * EXT2_BLOCK_SIZE);
+}
+
+unsigned int get_it(unsigned char *disk) {
+    return (get_gd(disk))->bg_inode_table;
 }
 
 /*
@@ -82,7 +93,7 @@ unsigned int get_i_bm(unsigned char *disk) {
  */
 struct ext2_inode *get_inode(unsigned char *disk, int inode) {
     struct ext2_group_desc *gd = get_gd(disk);
-    return (struct ext2_inode *)((void *)gd->bg_inode_table + (sizeof(struct ext2_inode) * inode));
+    return (struct ext2_inode *)(get_it(disk) + (sizeof(struct ext2_inode) * inode));
 }
 
 /*
@@ -182,8 +193,20 @@ int isValidLink(unsigned char *disk, char *path) {
 /*
  * Returns the node that was allocated
  * size is required amount of blocks
+ * if there aren't enough blocks, uh gg returns -1
  */
 int allocateInode(unsigned char *disk, int size) {
+    // Get the amount of free blocks we have
+    int free = (get_gd(disk))->bg_free_blocks_count;
+    if (size < free) {
+        fprintf(stderr, "Not enough space to allocate inode");
+        return ENOMEM;
+    }
+    // loop through the inode bitmap to see what's free!!!!
+    unsigned int ibm = get_i_bm(disk);
+    while () {
+
+    }
     return 0;
 }
 
@@ -191,7 +214,7 @@ int allocateInode(unsigned char *disk, int size) {
  * Determines the amount of required blocks
  */
 int reqBlocks(unsigned char *disk, int fd) {
-    return 0;
+    return lseek(fd, 0, SEEK_END) / EXT2_BLOCK_SIZE;
  }
 
 /*
@@ -202,10 +225,7 @@ int reqBlocks(unsigned char *disk, int fd) {
     // Get the dir_inode
     struct ext2_inode *dir = get_inode(disk, dir_inode);
     // Go through blockz
-    int curr_block = 0;
-    while (1) {
-        int curr_pos = 0; // This is to go through dem positions :)
-    }
+
 
  }
 
@@ -222,8 +242,6 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
     int blocks = reqBlocks (disk, fd);
     // Find an inode that you can allocate to
     int allocatedinode = allocateInode(disk, blocks);
-    // Change the inode bitmap and block bitmap
-
     // Put the content into the allocatedInode
     struct ext2_dir_entry_2 *entry; // ????
     // Go into the parent inode and add that in the dir
