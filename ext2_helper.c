@@ -72,8 +72,6 @@ struct ext2_group_desc *get_gd(unsigned char *disk) {
 }
 
 struct ext2_inode *get_it(unsigned char *disk) {
-    printf("we in get_it()\n");
-    fflush(stdout);
     struct ext2_group_desc *gd = get_gd(disk);
     return (struct ext2_inode *) (disk + EXT2_BLOCK_SIZE * gd->bg_inode_table);
 }
@@ -97,9 +95,6 @@ unsigned int get_i_bm(unsigned char *disk) {
  */
 struct ext2_inode *get_inode(unsigned char *disk, int inode) {
     struct ext2_inode *i = get_it(disk);
-    printf("%d\n", i->i_links_count);
-    printf("indexing is the problem\n");
-    fflush(stdout);
     return (struct ext2_inode *)(get_it(disk) + (sizeof(struct ext2_inode) * inode));
 }
 
@@ -116,8 +111,6 @@ struct ext2_dir_entry_2 *get_dir_entry(unsigned char *disk, struct ext2_inode *i
  * get dir entry given only the inode index
  */
 struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
-    printf("yo we bout to get this entry dawg get that inode and shit\n");
-    fflush(stdout);
     struct ext2_inode *i = get_inode(disk, inode);
     return (struct ext2_dir_entry_2 *)(i->i_block[0]);
 }
@@ -176,10 +169,10 @@ int isValidPath(unsigned char *disk, char *path) {
 int isValidDirectory(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is directory (EXT2_FT_DIR)
-    printf("getting da entryyyy mmmboiiii\n");
-    fflush(stdout);
     struct ext2_dir_entry_2 *e = get_entry(disk, inode);
     printf("checking if she a dir forreal now doe\n");
+    fflush(stdout);
+    printf("&d\n", e->inode);
     fflush(stdout);
     if ((e->file_type == EXT2_FT_DIR)) return inode;
     return -1;
