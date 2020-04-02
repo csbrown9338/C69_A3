@@ -27,8 +27,12 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Invalid disk");
         exit(1);
     }
+    printf("checking if she a dir\n");
+    fflush(stdout);
     inode = isValidDirectory(disk, path);
     // If it's a file, then just... print da filename lmao
+    printf("checking if she a file\n");
+    fflush(stdout);
     if (isValidFile(disk, path) != -1) printf("%s", path);
     // If it's a directory... oh boi
     else if (inode != -1) {
