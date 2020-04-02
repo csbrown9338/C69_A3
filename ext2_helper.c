@@ -172,7 +172,7 @@ int isValidDirectory(unsigned char *disk, char *path) {
     struct ext2_dir_entry_2 *e = get_entry(disk, inode);
     printf("checking if she a dir forreal now doe\n");
     fflush(stdout);
-    printf("&d\n", e->inode);
+    printf("%d\n", e->inode);
     fflush(stdout);
     if ((e->file_type == EXT2_FT_DIR)) return inode;
     return -1;
