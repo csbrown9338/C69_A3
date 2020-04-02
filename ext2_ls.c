@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
             while (curr_pos < EXT2_BLOCK_SIZE) {
                 printf("looping through directory entries");
                 fflush(stdout);
-                struct ext2_dir_entry_2 *e = get_entry(disk, i, curr_block, curr_pos);
+                struct ext2_dir_entry_2 *e = get_dir_entry(disk, i, curr_block, curr_pos);
                 if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..")) {
                     if (has_flag == 1) printf("%s", e->name);
                 }
