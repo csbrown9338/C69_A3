@@ -44,6 +44,7 @@ int main(int argc, char **argv) {
         struct ext2_dir_entry_2 *e = get_entry(disk, inode);
         int curr_pos = 0;
         while (curr_pos < 1024) {
+            printf("looping through directory entries");
             if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..")) {
                 if (has_flag == 1) printf("%s", e->name);
             }
