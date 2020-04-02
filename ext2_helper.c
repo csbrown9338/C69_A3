@@ -68,17 +68,12 @@ struct ext2_super_block *get_sb(unsigned char* disk) {
  * Gets the group description :)
  */
 struct ext2_group_desc *get_gd(unsigned char *disk) {
-    printf("checking if get_gd() works\n");
-    fflush(stdout);
-    struct ext2_group_desc *gd = disk + 2 * EXT2_BLOCK_SIZE;
-    unsigned short fb = gd->bg_free_blocks_count;
-    printf("%d", fb);
-    printf("get_it() is the problem??? somehow???\n");
-    fflush(stdout);
     return (struct ext2_group_desc *)(disk + 2 * EXT2_BLOCK_SIZE);
 }
 
-unsigned int get_it(unsigned char *disk) {
+struct ext2_inode *get_it(unsigned char *disk) {
+    printf("we in get_it()\n");
+    fflush(stdout);
     return (get_gd(disk))->bg_inode_table;
 }
 
@@ -100,7 +95,9 @@ unsigned int get_i_bm(unsigned char *disk) {
  * Get the inode struct given the index
  */
 struct ext2_inode *get_inode(unsigned char *disk, int inode) {
-    struct ext2_inode *i = (struct ext2_inode *) get_it(disk);
+    printf("in get_inode()\n");
+    fflush(stdout);
+    struct ext2_inode *i = get_it(disk);
     unsigned int size = i->i_size;
     printf("indexing is the problem\n");
     fflush(stdout);
