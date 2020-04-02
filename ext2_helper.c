@@ -112,7 +112,7 @@ struct ext2_dir_entry_2 *get_dir_entry(unsigned char *disk, struct ext2_inode *i
  */
 struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
     struct ext2_inode *i = get_inode(disk, inode);
-    return (struct ext2_dir_entry_2 *)(i->i_block[0]);
+    return (struct ext2_dir_entry_2 *)(disk + i->i_block[0]);
 }
 
 /*
