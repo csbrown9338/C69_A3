@@ -93,7 +93,6 @@ unsigned int get_i_bm(unsigned char *disk) {
  * Get the inode struct given the index
  */
 struct ext2_inode *get_inode(unsigned char *disk, int inode) {
-    struct ext2_group_desc *gd = get_gd(disk);
     return (struct ext2_inode *)(get_it(disk) + (sizeof(struct ext2_inode) * inode));
 }
 
@@ -223,17 +222,17 @@ int allocateInode(unsigned char *disk, int size) {
  * Returns unused ext2_dir_new_entry_2 structure, otherwise NULL
  * not neccesarily for new entries, but also for hard links
  */
- struct ext2_dir_new_entry_2 *findNewEntry(unsigned char *disk, int dir_inode) {
+ struct ext2_dir_entry_2 *findNewEntry(unsigned char *disk, int dir_inode) {
     // Get the dir_inode
     struct ext2_inode *dir = get_inode(disk, dir_inode);
     // loooooopp through the blocks :)
     int curr_block = 0;
     while (curr_block < dir->i_blocks) {
-        unsigned int block = dir->blocks[curr_block];
+        unsigned int block = dir->i_block[curr_block];
         int curr_pos = block;
         while (curr_pos < EXT2_BLOCK_SIZE) {
             struct ext2_dir_entry_2 *e = (struct ext2_dir_entry_2 *) curr_pos;
-            if (curr_pos->inode == 0) return e;
+            if (e->inode == 0) return e;
             curr_pos += e->rec_len;
         }
         curr_block++;
