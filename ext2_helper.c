@@ -97,7 +97,7 @@ struct ext2_inode *get_inode(unsigned char *disk, int inode) {
     struct ext2_inode *i = get_it(disk);
     printf("size: %d\n", i->i_size);
     fflush(stdout);
-    return (struct ext2_inode *)(i + inode);
+    return (struct ext2_inode *)(i + sizeof(struct ext2_inode) * (inode-1));
 }
 
 /*
