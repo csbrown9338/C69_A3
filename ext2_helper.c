@@ -93,6 +93,12 @@ unsigned int get_i_bm(unsigned char *disk) {
  * Get the inode struct given the index
  */
 struct ext2_inode *get_inode(unsigned char *disk, int inode) {
+    printf("testing if get_it works\n");
+    fflush(stdout);
+    struct ext2_inode *i = (struct ext2_inode *) get_it(disk);
+    unsigned int size = i->i_size;
+    printf("indexing is the problem\n");
+    fflush(stdout);
     return (struct ext2_inode *)(get_it(disk) + (sizeof(struct ext2_inode) * inode));
 }
 
@@ -112,11 +118,6 @@ struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
     printf("yo we bout to get this entry dawg get that inode and shit\n");
     fflush(stdout);
     struct ext2_inode *i = get_inode(disk, inode);
-    printf("trying to see if it's a problem with inode or something else\n");
-    fflush(stdout);
-    unsigned int size = i->i_size;
-    printf("returning block\n");
-    fflush(stdout);
     return (struct ext2_dir_entry_2 *)(i->i_block[0]);
 }
 
