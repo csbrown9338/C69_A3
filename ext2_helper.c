@@ -111,8 +111,6 @@ struct ext2_dir_entry_2 *get_dir_entry(unsigned char *disk, struct ext2_inode *i
  * get dir entry given only the inode index
  */
 struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
-    struct ext2_inode *i = get_inode(disk, inode);
-    printf("%s\n", i->i_name);
     return (struct ext2_dir_entry_2 *)(disk + EXT2_BLOCK_SIZE * (i->i_block)[0]);
 }
 
@@ -174,6 +172,7 @@ int isValidDirectory(unsigned char *disk, char *path) {
     printf("checking if she a dir forreal now doe\n");
     fflush(stdout);
     printf("%d\n", e->inode);
+    printf("%s\n", e->name);
     fflush(stdout);
     if ((e->file_type == EXT2_FT_DIR)) return inode;
     return -1;
