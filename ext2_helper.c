@@ -220,13 +220,24 @@ int allocateInode(unsigned char *disk, int size) {
 
 /*
  * Searches for next new space in inode
- * Returns 0 on success, -1 on failure
+ * Returns unused ext2_dir_new_entry_2 structure, otherwise NULL
  * not neccesarily for new entries, but also for hard links
  */
  struct ext2_dir_new_entry_2 *findNewEntry(unsigned char *disk, int dir_inode) {
     // Get the dir_inode
     struct ext2_inode *dir = get_inode(disk, dir_inode);
     // loooooopp through the blocks :)
+    int curr_block = 0;
+    while (curr_block < dir->i_blocks) {
+        unsigned int block = dir->blocks[curr_block];
+        int curr_pos = block;
+        while (curr_pos < EXT2_BLOCK_SIZE) {
+            struct ext2_dir_entry_2 *e = (struct ext2_dir_entry_2 *) curr_pos;
+            if (curr_pos->inode == 0) return e;
+            curr_pos += e->rec_len;
+        }
+        curr_block++;
+    }
     return NULL;
  }
 
@@ -316,6 +327,6 @@ int addLinkFile(unsigned char *disk, char *lname, int link_inode, int dir_inode)
  * returns 0 on success, and -1 on failure
  */
 int delFile(unsigned char *disk, int to_del_inode, int parent_inode) {
-
+    // get the inode and make it 0, and remove the uh yeah
     return 0;
 }
