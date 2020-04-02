@@ -219,13 +219,6 @@ int allocateInode(unsigned char *disk, int size) {
 }
 
 /*
- * Determines the amount of required blocks
- */
-int reqBlocks(unsigned char *disk, int fd) {
-    return lseek(fd, 0, SEEK_END) / EXT2_BLOCK_SIZE;
- }
-
-/*
  * Searches for next new space in inode
  * Returns 0 on success, -1 on failure
  * not neccesarily for new entries, but also for hard links
@@ -233,8 +226,8 @@ int reqBlocks(unsigned char *disk, int fd) {
  struct ext2_dir_new_entry_2 *findNewEntry(unsigned char *disk, int dir_inode) {
     // Get the dir_inode
     struct ext2_inode *dir = get_inode(disk, dir_inode);
-    // put that boi in :D
-    
+    // loooooopp through the blocks :)
+    return NULL;
  }
 
  void addEntry(struct ext2_dir_entry_2 *entry, int inode, int file_type, char *name) {
@@ -255,7 +248,7 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
     // Get the file handle
     int fd = open(path, O_RDONLY);
     // get the amount of blocks you need to allocate
-    int blocks = reqBlocks (disk, fd);
+    int blocks = lseek(fd, 0, SEEK_END) / EXT2_BLOCK_SIZE;
     // Find an inode that you can allocate to
     int allocatedinode = allocateInode(disk, blocks);
     // Put it in
@@ -275,6 +268,15 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
  * returns 0 on success, and -1 on failure
  */
 int addDir(unsigned char *disk, char *dirname, int inode) {
+    // get a freeeeeeeeeee inode :D:D:D
+    int allocatedinode = allocateInode(disk, 1);
+    // put er innnnn
+    struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *)(get_inode(disk, allocatedinode))->i_block[0];
+    addEntry(a_entry, allocatedinode, EXT2_FT_DIR, dirname);
+    // now add it to the parent dirrrr
+    struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
+    // and add
+    addEntry(entry, allocatedinode, EXT2_FT_DIR, dirname);
     return 0;
 }
 
@@ -282,7 +284,18 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
  * Adds a sym link into the directory given by the inode
  * returns 0 on success, and -1 on failure
  */
-int addLink(unsigned char *disk, char *lname, int file_inode, int dir_inode) {
+int addSymLink(unsigned char *disk, char *lname, char *source_name, int file_inode, int dir_inode) {
+    // Get the amount of blocks ya neeeed
+    int blocks = ceil(sizeof(source_name) / EXT2_BLOCK_SIZE);
+    // do the do
+    int allocatedinode = allocateInode(disk, blocks);
+    // put em INNNN BOII
+    struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *)(get_inode(disk, allocatedinode))->i_block[0];
+    addEntry(a_entry, allocatedinode, EXT2_FT_SYMLINK, lname);
+    // put it into the parent dirrrrrrrrr
+    struct ext2_dir_entry_2 *entry = findNewEntry(disk, dir_inode);
+    // and addddddd
+    addEntry(entry, allocatedinode, EXT2_FT_SYMLINK, lname);
     return 0;
 }
 
@@ -291,7 +304,10 @@ int addLink(unsigned char *disk, char *lname, int file_inode, int dir_inode) {
  * returns 0 on success, and -1 on failure
  */
 int addLinkFile(unsigned char *disk, char *lname, int link_inode, int dir_inode) {
-
+    // don't need to allocate a new inode, just add it into the inode of the directory
+    struct ext2_dir_entry_2 *entry = findNewEntry(disk, dir_inode);
+    // add
+    addEntry(entry, link_inode, EXT2_FT_REG_FILE, lname);
     return 0;
 }
 
@@ -300,5 +316,6 @@ int addLinkFile(unsigned char *disk, char *lname, int link_inode, int dir_inode)
  * returns 0 on success, and -1 on failure
  */
 int delFile(unsigned char *disk, int to_del_inode, int parent_inode) {
+
     return 0;
 }

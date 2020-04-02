@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
 
     if (strcmp(flag, "-s")) {
         // she symbolic
-        addLink(disk, extractFileName(dest), srcinode, dirinode);
+        addSymLink(disk, extractFileName(dest), source, srcinode, dirinode);
     }
     else if (flag[0] == '\0') {
         // she hard

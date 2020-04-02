@@ -31,7 +31,7 @@ int addNativeFile(unsigned char *disk, char *path, int inode);
 
 int addDir(unsigned char *disk, char *dirname, int inode);
 
-int addLink(unsigned char *disk, char *lname, int file_inode, int dir_inode);
+int addSymLink(unsigned char *disk, char *lname, char *source_name, int file_inode, int dir_inode);
 
 int addLinkFile(unsigned char *disk, char *lname, int link_inode, int dir_inode);
 
