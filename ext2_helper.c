@@ -95,6 +95,8 @@ unsigned int get_i_bm(unsigned char *disk) {
  */
 struct ext2_inode *get_inode(unsigned char *disk, int inode) {
     struct ext2_inode *i = get_it(disk);
+    printf("%d\n", i->i_size);
+    fflush(stdout);
     return (struct ext2_inode *)(i + (sizeof(struct ext2_inode) * inode));
 }
 
