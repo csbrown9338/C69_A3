@@ -75,7 +75,7 @@ struct ext2_inode *get_it(unsigned char *disk) {
     printf("we in get_it()\n");
     fflush(stdout);
     struct ext2_group_desc *gd = get_gd(disk);
-    return (struct ext2_inode *) disk + EXT2_BLOCK_SIZE * gd->bg_inode_table;
+    return (struct ext2_inode *) (disk + EXT2_BLOCK_SIZE * gd->bg_inode_table);
 }
 
 /*
@@ -96,8 +96,6 @@ unsigned int get_i_bm(unsigned char *disk) {
  * Get the inode struct given the index
  */
 struct ext2_inode *get_inode(unsigned char *disk, int inode) {
-    printf("in get_inode()\n");
-    fflush(stdout);
     struct ext2_inode *i = get_it(disk);
     printf("%d\n", i->i_links_count);
     printf("indexing is the problem\n");
