@@ -98,6 +98,8 @@ struct ext2_inode *get_inode(unsigned char *disk, int inode) {
     printf("in get_inode()\n");
     fflush(stdout);
     struct ext2_inode *i = get_it(disk);
+    printf("it has returned\n");
+    fflush(stdout);
     unsigned int size = i->i_size;
     printf("indexing is the problem\n");
     fflush(stdout);
