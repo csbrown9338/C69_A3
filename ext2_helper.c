@@ -109,7 +109,11 @@ struct ext2_dir_entry_2 *get_dir_entry(unsigned char *disk, struct ext2_inode *i
  * get dir entry given only the inode index
  */
 struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
+    printf("yo we bout to get this entry dawg get that inode and shit\n");
+    fflush(stdout);
     struct ext2_inode *i = get_inode(disk, inode);
+    printf("we returning the block my guy\n");
+    fflush(stdout);
     return (struct ext2_dir_entry_2 *)(i->i_block[0]);
 }
 
