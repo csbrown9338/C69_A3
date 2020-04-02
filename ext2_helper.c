@@ -203,7 +203,7 @@ int allocateInode(unsigned char *disk, int size) {
         return ENOMEM;
     }
     // loop through the inode bitmap to see what's free!!!!
-    unsigned char *ibm = get_i_bm(disk);
+    unsigned char *ibm = (void *)get_i_bm(disk);
     int curr_inode = EXT2_ROOT_INO;
     // Look for a free inodeeee
     while (curr_inode < (get_sb(disk))->s_inodes_count) {
@@ -240,12 +240,17 @@ int allocateInode(unsigned char *disk, int size) {
     return NULL;
  }
 
+/*
+ * Adds info to the dir entry :)
+ * returns 0 on success!
+ */
  int addEntry(struct ext2_dir_entry_2 *entry, int inode, int file_type, char *name) {
     entry->inode = inode;
     entry->name_len = strlen(name);
     entry->rec_len = ceil((sizeof(struct ext2_dir_entry_2) + sizeof(name)) / 4) * 4;
     entry->file_type = file_type;
     strcpy(entry->name, name);
+    return 0;
  }
 
 /*
