@@ -47,6 +47,7 @@ unsigned char *readDisk(char *path) {
     int fd = open(path, O_RDWR);
     // the disk!!!! use mmap apparently
     unsigned char *d = mmap(NULL, EXT2_BLOCK_SIZE * 128, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    close(fd);
     // But we gotta make sure that it actually worked
     if (d == MAP_FAILED) {
         fprintf(stderr, "Mapping didn't work");
@@ -60,6 +61,20 @@ unsigned char *readDisk(char *path) {
  */
 struct ext2_group_desc *get_gd(unsigned char *disk) {
     return (struct ext2_group_desc *) ((void *)disk + (2 * EXT2_BLOCK_SIZE));
+}
+
+/*
+ * Get the block bitmap of the disk
+ */
+unsigned int get_b_bm(unsigned char *disk) {
+    return (get_gd(disk))->bg_block_bitmap;
+}
+
+/*
+ * Get the inode bitmap of the disk
+ */
+unsigned int get_i_bm(unsigned char *disk) {
+    return (get_gd(disk))->bg_inode_bitmap;
 }
 
 /*
@@ -152,15 +167,6 @@ int isValidFile(unsigned char *disk, char *path) {
 }
 
 /*
- * Check if specified file is valid in native
- * returns -1 if invalid
- * returns inode number if valid
- */
-int isValidNativeFile(unsigned char *disk, char *path) {
-    return 0;
-}
-
-/*
  * Check if specified link is valid
  * returns -1 if invalid
  * returns inode number if valid
@@ -174,12 +180,56 @@ int isValidLink(unsigned char *disk, char *path) {
 }
 
 /*
+ * Returns the node that was allocated
+ * size is required amount of blocks
+ */
+int allocateInode(unsigned char *disk, int size) {
+    return 0;
+}
+
+/*
+ * Determines the amount of required blocks
+ */
+int reqBlocks(unsigned char *disk, int fd) {
+    return 0;
+ }
+
+/*
+ * Puts the to_add_inode into the dir_inode
+ * Returns 0 on success, -1 on failure
+ */
+ int addEntry(unsigned char *disk, int to_add_inode, int dir_inode) {
+    // Get the dir_inode
+    struct ext2_inode *dir = get_inode(disk, dir_inode);
+    // Go through blockz
+    int curr_block = 0;
+    while (1) {
+        int curr_pos = 0; // This is to go through dem positions :)
+    }
+
+ }
+
+/*
  * Adds a file into the directory given by the inode
  * path is the native path to the file
  * returns 0 on success, and -1 on failure
  */
 int addNativeFile(unsigned char *disk, char *path, int inode) {
     char *fname = extractFileName(path);
+    // Get the file handle
+    int fd = open(path, O_RDONLY);
+    // get the amount of blocks you need to allocate
+    int blocks = reqBlocks (disk, fd);
+    // Find an inode that you can allocate to
+    int allocatedinode = allocateInode(disk, blocks);
+    // Change the inode bitmap and block bitmap
+
+    // Put the content into the allocatedInode
+    struct ext2_dir_entry_2 *entry; // ????
+    // Go into the parent inode and add that in the dir
+
+    // close file handle btw
+    close(fd);
     return 0;
 }
 
