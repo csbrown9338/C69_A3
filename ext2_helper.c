@@ -120,8 +120,14 @@ struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
  */
 int isValidPath(unsigned char *disk, char *path) {
     // Get the individual path names :)
+    printf("assigning tokens\n");
+    fflush(stdout);
     char *tpath = strtok(path, "/");
+    printf("assigning curr_inode\n");
+    fflush(stdout);
     int curr_inode = EXT2_ROOT_INO; // start at root
+    printf("assigning found_inode\n");
+    fflush(stdout);
     int found_inode = curr_inode;
     while (tpath != NULL) {
         printf("entering loop to go through da path\n");
