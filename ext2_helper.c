@@ -72,6 +72,7 @@ struct ext2_group_desc *get_gd(unsigned char *disk) {
     fflush(stdout);
     struct ext2_group_desc *gd = disk + 2 * EXT2_BLOCK_SIZE;
     unsigned short fb = gd->bg_free_blocks_count;
+    printf("%d", fb);
     printf("get_it() is the problem??? somehow???\n");
     fflush(stdout);
     return (struct ext2_group_desc *)(disk + 2 * EXT2_BLOCK_SIZE);
