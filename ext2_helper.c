@@ -112,7 +112,10 @@ struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
     printf("yo we bout to get this entry dawg get that inode and shit\n");
     fflush(stdout);
     struct ext2_inode *i = get_inode(disk, inode);
-    printf("we returning the block my guy\n");
+    printf("trying to see if it's a problem with inode or something else\n");
+    fflush(stdout);
+    unsigned int size = i->i_size;
+    printf("returning block\n");
     fflush(stdout);
     return (struct ext2_dir_entry_2 *)(i->i_block[0]);
 }
