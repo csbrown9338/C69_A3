@@ -43,16 +43,21 @@ int main(int argc, char **argv) {
         }
         // TODO: get the uhhhhh contents of the directory :)
         // get the ext2_dir_entry of the current dir
-        struct ext2_dir_entry_2 *e = get_entry(disk, inode);
+        struct ext2_inode *i = get_inode(disk, inode);
+        int curr_block = 0;
         int curr_pos = 0;
-        while (curr_pos < 1024) {
-            printf("looping through directory entries");
-            fflush(stdout);
-            if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..")) {
-                if (has_flag == 1) printf("%s", e->name);
+        while (curr_block < i->i_blocks){
+            while (curr_pos < EXT2_BLOCK_SIZE) {
+                printf("looping through directory entries");
+                fflush(stdout);
+                struct ext2_dir_entry_2 *e = get_entry(disk, i, curr_block, curr_pos);
+                if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..")) {
+                    if (has_flag == 1) printf("%s", e->name);
+                }
+                else printf("%s", e->name);
+                curr_pos += e->rec_len;
             }
-            else printf("%s", e->name);
-            curr_pos += e->rec_len;
+            curr_block++;
         }
     }
     // If not file or directory, then ENOENT
