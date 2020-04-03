@@ -126,7 +126,6 @@ int isValidPath(unsigned char *disk, char *path) {
     if (strcmp(path, "/") == 0) return EXT2_ROOT_INO;
     // Get the individual path names :)
     char *tpath = strtok(path, "/");
-    printf("path after strtok: %s\n", path);
     int curr_inode = EXT2_ROOT_INO; // start at root
     int found_inode = curr_inode;
     // Starting the loop to go through each token in the path

@@ -17,7 +17,6 @@ int main(int argc, char **argv) {
     char *disk_name = argv[1];
     char *path = argv[2];
     char *flag;
-    printf("og path: %s\n", path);
     if (argc == 4) {
         flag = argv[3];
     }
@@ -28,13 +27,14 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Invalid disk");
         exit(1);
     }
+    printf("about to check if valid dir\n");
     inode = isValidDirectory(disk, path);
+    printf("about to check if valid file\n");
     int fileInode = isValidFile(disk, path);
-    printf("%d", fileInode);
+    // printf("%d", fileInode);
     // If it's a file, then just... print da filename lmao
-    printf("received inode: %d\n", inode);
     fflush(stdout);
-    if (isValidFile(disk, path) != -1) printf("%s", path);
+    if (fileInode != -1) printf("%s", path);
     // If it's a directory... oh boi
     else if (inode != -1) {
         // If there be the -a, do the . and ..
