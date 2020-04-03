@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
                 if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..") == 0) {
                     if (has_flag == 1) printf("%s\n", e->name);
                 }
-                else if (e->name != '\0') printf("%s\n", e->name);
+                else if (e->name != '\0') printf("%s, len: %d\n", e->name, strlen(e->name));
                 curr_pos += e->rec_len;
                 linkidx++;
             }
