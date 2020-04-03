@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
         while (curr_block < i->i_blocks){
             while (curr_pos < EXT2_BLOCK_SIZE) {
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, i, curr_block, curr_pos);
-                if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..")) {
+                if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..") == 0) {
                     if (has_flag == 1) printf("%s\n", e->name);
                 }
                 else printf("%s\n", e->name);
