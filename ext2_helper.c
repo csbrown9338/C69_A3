@@ -174,7 +174,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
                 // check name if it MATCHES :D
                 printf("\t\tcurrent thing: %s, length: %d\n", e->name, e->name_len);
-                if (strcmp(tpath, e->name) == 0) {
+                if (strncmp(tpath, e->name, strlen(tpath)) == 0) {
                     printf("\t\t\twe in boiz");
                     curr_inode = e->inode;
                 }
