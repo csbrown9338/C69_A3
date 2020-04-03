@@ -17,6 +17,7 @@ int main(int argc, char **argv) {
     char *disk_name = argv[1];
     char *path = argv[2];
     char *flag;
+    printf("og path: %s\n", path);
     if (argc == 4) {
         flag = argv[3];
     }

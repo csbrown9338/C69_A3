@@ -128,7 +128,6 @@ int isValidPath(unsigned char *disk, char *path) {
     int curr_inode = EXT2_ROOT_INO; // start at root
     int found_inode = curr_inode;
     // Starting the loop to go through each token in the path
-    printf("og path: %s\n", path);
     while (tpath != NULL) {
         // Do the stuff to find the path :D
         printf("looking for: %s\n", tpath);
