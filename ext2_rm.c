@@ -18,9 +18,6 @@ int main(int argc, char **argv) {
     char *to_del = argv[2];
     unsigned char *disk = readDisk(disk_name);
     int to_del_inode = isValidPath(disk, to_del);
-    char *parent_dir = truncatePath(to_del);
-    int parent_inode = isValidDirectory(disk, parent_dir);
-    free(parent_dir);
     // Check if disk exists
     if (disk == NULL) {
         fprintf(stderr, "Invalid disk");
@@ -36,6 +33,7 @@ int main(int argc, char **argv) {
         return EISDIR;
     }
     else {
+        int parent_inode = isValidDirectory(disk, truncatePath(to_del));
         delFile(disk, to_del_inode, parent_inode);
     }
     

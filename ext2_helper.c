@@ -20,13 +20,11 @@ char *truncatePath(char *path) {
     while (index == -1) {
         if (path[i] == '/') {
             index = i;
+            path[i] = '\0';
         }
         i--;
     }
-    char newPath[i];
-    newPath = (char *) malloc(sizeof(char) * i);
-    strncpy(newPath, path, i);
-    return newPath;
+    return Path;
 }
 
 // /*

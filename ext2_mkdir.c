@@ -17,9 +17,10 @@ int main(int argc, char **argv) {
     char *disk_name = argv[1];
     char *newdir = argv[2];
     unsigned char *disk = readDisk(disk_name);
-    char *parent_dir = truncatePath(newDir);
-    int inode = isValidDirectory(disk, parent_dir);
-    free(parent_dir);
+    int exists_inode = isValidPath(disk, newdir);
+    char *filename = extractFileName(newdir);
+    char *parent = truncatePath(newdir);
+    int inode = isValidDirectory(disk, parent);
     // Check if disk exists
     if (disk == NULL) {
         (fprintfstderr, "Invalid disk");
@@ -31,14 +32,14 @@ int main(int argc, char **argv) {
         return ENOENT;
     }
     // Check if the name is taken
-    else if (isValidPath(disk, newdir) != -1) {
+    else if (exists_inode != -1) {
         fprintf(stderr, "Name is taken");
         if (isValidDirectory(disk, newdir) != -1) return EISDIR;
         else if (isValidFile(disk, newdir) != -1) return EEXIST;
         else exit(1);
     }
     else { 
-        addDir(disk, extractFileName(newdir), inode);
+        addDir(disk, filename, inode);
     } 
     return 0;
 }

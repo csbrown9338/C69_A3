@@ -23,9 +23,10 @@ int main(int argc, char **argv) {
     }
     unsigned char *disk = readDisk(disk_name);
     int srcinode = isValidFile(disk, source);
-    char *parent_dir = truncatePath(dest);
-    int dirinode = isValidDirectory(disk, parent_dir);
-    free(parent_dir);
+    int exists_inode = isValidPath(disk, dest);
+    char *filename = extractFileName(dest);
+    char *parent = truncatePath(dest);
+    int dirinode = isValidDirectory(disk, parent);
     // Check if disk exists
     if (disk == NULL) {
         fprintf(stderr, "Invalid disk");
@@ -42,7 +43,7 @@ int main(int argc, char **argv) {
         return ENOENT;
     }
     // Check if name is taken
-    else if (isValidPath(disk, dest) != -1) {
+    else if (exists_inode != -1) {
         fprintf(stderr, "Name is taken");
         if (isValidDirectory(disk, dest) != -1) return EISDIR;
         else if (isValidFile(disk, dest) != -1) return EEXIST;
@@ -52,11 +53,11 @@ int main(int argc, char **argv) {
 
     if (strcmp(flag, "-s")) {
         // she symbolic
-        addSymLink(disk, extractFileName(dest), source, srcinode, dirinode);
+        addSymLink(disk, filename, source, srcinode, dirinode);
     }
     else if (flag[0] == '\0') {
         // she hard
-        addLinkFile(disk, extractFileName(dest), srcinode, dirinode);
+        addLinkFile(disk, filename, srcinode, dirinode);
     }
     else {
         fprintf(stderr, "Invalid flag");
