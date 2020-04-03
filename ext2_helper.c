@@ -140,7 +140,7 @@ int isValidPath(unsigned char *disk, char *path) {
             fflush(stdout);
             int curr_pos = 0;
             // Loop through each position
-            while (found_inode != curr_inode && curr_pos < inode->i_size) {
+            while (found_inode == curr_inode && curr_pos < inode->i_size) {
                 printf("\t\tentering loop to go through each position\n");
                 fflush(stdout);
                 // Go through all the entries in the directory to find a name match
@@ -153,7 +153,7 @@ int isValidPath(unsigned char *disk, char *path) {
                 curr_pos += e->rec_len; 
             }
             // If curr_pos is i_size, then we gotta go to the next block
-            if (curr_pos == inode->i_size) curr_block++;
+            curr_block++;
         }
         if (found_inode == curr_inode) return -1;
         tpath = strtok(NULL, "/");
