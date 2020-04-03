@@ -121,7 +121,7 @@ struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
  * returns inode number if valid
  */
 int isValidPath(unsigned char *disk, char *og_path) {
-    printf("passed in path: %s\n", path);
+    printf("passed in path: %s\n", og_path);
     // Make copy of path, cuz strtok apparently adds dumb nullbytes in between smhhhh
     char *path;
     strcpy(path, og_path);
