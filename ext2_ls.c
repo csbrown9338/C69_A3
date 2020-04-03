@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
             // if it's root, then subtract 1
             if (inode == EXT2_ROOT_INO) links--;
             while (curr_pos < EXT2_BLOCK_SIZE && linkidx < links) {
-                printf("total links: %d, current link: %d -- ", links, linkidx);
+                printf("\ntotal links: %d, current link: %d -- ", links, linkidx);
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, i, curr_block, curr_pos);
                 if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..") == 0) {
                     if (has_flag == 1) printf("%s\n", e->name);
