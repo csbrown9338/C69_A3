@@ -130,6 +130,7 @@ int isValidPath(unsigned char *disk, char *path) {
     // Starting the loop to go through each token in the path
     while (tpath != NULL) {
         // Do the stuff to find the path :D
+        printf("looking for: %s\n", tpath);
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
         // Loop through each block

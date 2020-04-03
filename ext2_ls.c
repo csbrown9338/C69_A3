@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
             // get the amount of LINKS oh my goodness this is so important
             int links = i->i_links_count;
             while (curr_pos < EXT2_BLOCK_SIZE && linkidx < links) {
-                printf("confusion\n");
+                //printf("confusion\n");
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, i, curr_block, curr_pos);
                 if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..") == 0) {
                     if (has_flag == 1) printf("%s\n", e->name);
