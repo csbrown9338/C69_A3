@@ -124,6 +124,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
     printf("passed in path: %s\n", og_path);
     // Make copy of path, cuz strtok apparently adds dumb nullbytes in between smhhhh
     char *path = "";
+    printf("bout to strcpy that shit");
     strcpy(path, og_path);
     // Check if it's ROOOOOT (/)
     if (strcmp(path, "/") == 0) return EXT2_ROOT_INO;
