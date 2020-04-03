@@ -24,7 +24,7 @@ char *truncatePath(char *path) {
         }
         i--;
     }
-    return Path;
+    return path;
 }
 
 // /*
