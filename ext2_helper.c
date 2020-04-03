@@ -178,7 +178,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
                     printf("\t\t\twe in boiz\n");
                     curr_inode = e->inode;
                 }
-                else if (e->name[0] == '\0') blank = 1;
+                else if (e->name_len == 0) blank = 1;
                 curr_pos += e->rec_len; 
             }
             // If curr_pos is i_size, then we gotta go to the next block
