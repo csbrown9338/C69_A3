@@ -42,7 +42,11 @@ int main(int argc, char **argv) {
         int curr_block = 0;
         while (curr_block < i->i_blocks){
             int curr_pos = 0;
-            while (curr_pos < EXT2_BLOCK_SIZE) {
+            // get the amount of LINKS oh my goodness this is so important
+            int links = i->links_count;
+            // if it's root, then subtract 1
+            if (inode == EXT2_ROOT_INO) links--;
+            while (curr_pos < links) {
                 printf("new entry: ");
                 fflush(stdout);
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, i, curr_block, curr_pos);
