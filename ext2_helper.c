@@ -154,8 +154,6 @@ int isValidPath(unsigned char *disk, char *og_path) {
     if (strcmp(path, "/") == 0) return EXT2_ROOT_INO;
     // Get the individual path names :)
     char *tpath = strtok(path, "/");
-    printf("tokenize successful\n");
-    fflush(stdout);
     int curr_inode = EXT2_ROOT_INO; // start at root
     int found_inode = curr_inode;
     // Starting the loop to go through each token in the path
@@ -184,6 +182,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
         // +1 for null byte
         tpath = strtok(NULL, "/");
     }
+    printf("found: %d", found_inode);
     return found_inode;
 }
 
