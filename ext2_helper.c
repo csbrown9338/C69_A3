@@ -216,7 +216,7 @@ int isValidFile(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is file (EXT2_FT_REG_FILE)
     struct ext2_dir_entry_2 *e = get_entry(disk, inode);
-    printf("filetype: %d", e->file_type);
+    printf("filetype: %d\n", e->file_type);
     if ((e->file_type == EXT2_FT_REG_FILE)) return inode;
     return -1;
 }
