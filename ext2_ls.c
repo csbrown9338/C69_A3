@@ -27,19 +27,13 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Invalid disk");
         exit(1);
     }
-    printf("about to check if valid dir\n");
     inode = isValidDirectory(disk, path);
-    printf("found dir: %d\n", inode);
-    printf("about to check if valid file\n");
     int fileInode = isValidFile(disk, path);
-    printf("found file: %d\n", fileInode);
     // printf("%d", fileInode);
     // If it's a file, then just... print da filename lmao
-    fflush(stdout);
     if (fileInode != -1) printf("%s", path);
     // If it's a directory... oh boi
     else if (inode != -1) {
-        printf("we're going through a dir");
         // If there be the -a, do the . and ..
         int has_flag = 0; // 0 if no flag, 1 if -a flag
         if (strcmp(flag, "-a") == 0) has_flag = 1;
@@ -47,7 +41,6 @@ int main(int argc, char **argv) {
         struct ext2_inode *i = get_inode(disk, inode);
         int curr_block = 0;
         while (curr_block < i->i_blocks){
-            printf("looping through da blocks???\n");
             int curr_pos = 0;
             int linkidx = 0;
             // get the amount of LINKS oh my goodness this is so important
@@ -56,7 +49,6 @@ int main(int argc, char **argv) {
             while (curr_pos < i->i_size && linkidx < links) {
                 //printf("confusion\n");
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, i, curr_block, curr_pos);
-                // printf("\tentry: %s, curr link: %d, total links: %d\n", e->name, linkidx, links);
                 if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..") == 0) {
                     if (has_flag == 1) printf("%s\n", e->name);
                 }
