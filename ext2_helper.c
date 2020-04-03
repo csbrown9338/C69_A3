@@ -116,6 +116,7 @@ unsigned char *get_b_bm(unsigned char *disk) {
 unsigned char *get_i_bm(unsigned char *disk) {
     struct ext2_group_desc *gd = get_gd(disk);
     return (unsigned char *)(disk + EXT2_BLOCK_SIZE * gd->bg_inode_bitmap);
+}
 
 /*
  * Get the inode struct given the index
