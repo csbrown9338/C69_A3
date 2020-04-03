@@ -158,25 +158,27 @@ int isValidPath(unsigned char *disk, char *og_path) {
     int found_inode;
     // Starting the loop to go through each token in the path
     while (tpath != NULL) {
+        int blank = 0;
         // Do the stuff to find the path :D
         printf("looking for: %s\n", tpath);
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
         found_inode = curr_inode;
         // Loop through each block
-        while (found_inode == curr_inode && curr_block < inode->i_blocks) {
+        while (found_inode == curr_inode && curr_block < inode->i_blocks && blank == 0) {
             printf("\twe going through blocks\n");
             int curr_pos = 0;
             // Loop through each position
-            while (found_inode == curr_inode && curr_pos < inode->i_size) {
+            while (found_inode == curr_inode && curr_pos < inode->i_size && blank == 0) {
                 // Go through all the entries in the directory to find a name match
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
                 // check name if it MATCHES :D
                 printf("\t\tcurrent thing: %s\n", e->name);
-                if (tpath == e->name) {
+                if (strcmp(tpath, e->name) == 0) {
                     printf("\t\t\twe in boiz\n");
                     curr_inode = e->inode;
                 }
+                else if (strcmp(e->name, "")) blank = 1;
                 curr_pos += e->rec_len; 
             }
             // If curr_pos is i_size, then we gotta go to the next block
