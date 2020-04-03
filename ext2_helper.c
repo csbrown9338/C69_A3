@@ -179,7 +179,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
                 curr_pos += e->rec_len; 
             }
             // If curr_pos is i_size, then we gotta go to the next block
-            curr_block++;
+            if (found_inode == curr_inode) curr_block++;
         }
         if (found_inode == curr_inode) return -1;
         // +1 for null byte
