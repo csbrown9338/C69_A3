@@ -335,10 +335,16 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     printf("we did is the allocatin ig\n");
     fflush(stdout);
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, dirname);
+    printf("we adding the entry into the new inode thingy thinger whatever\n");
+    fflush(stdout);
     // now add it to the parent dirrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
+    printf("went through and found an open spot in parent directory ig\n");
+    fflush(stdout);
     // and add
     addEntry(entry, allocatedinode, EXT2_FT_DIR, dirname);
+    printf("we putting er in boiz (into the parent)\n");
+    fflush(stdout);
     return 0;
 }
 
