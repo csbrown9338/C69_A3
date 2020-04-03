@@ -47,11 +47,13 @@ int main(int argc, char **argv) {
         struct ext2_inode *i = get_inode(disk, inode);
         int curr_block = 0;
         while (curr_block < i->i_blocks){
+            printf("looping through da blocks???\n")
             int curr_pos = 0;
             int linkidx = 0;
             // get the amount of LINKS oh my goodness this is so important
             int links = i->i_links_count;
             while (curr_pos < i->i_size && linkidx < links) {
+                printf("\tlooping through the pos\n");
                 //printf("confusion\n");
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, i, curr_block, curr_pos);
                 if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..") == 0) {
