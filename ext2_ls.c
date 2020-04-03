@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
             // get the amount of LINKS oh my goodness this is so important
             int links = i->i_links_count;
             // if it's root, then subtract 1
-            if (inode == EXT2_ROOT_INO) links--;
+            if (inode != EXT2_ROOT_INO) links--;
             while (curr_pos < EXT2_BLOCK_SIZE && linkidx < links) {
                 printf("\ntotal links: %d, current link: %d -- ", links, linkidx);
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, i, curr_block, curr_pos);
