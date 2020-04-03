@@ -27,28 +27,28 @@ char *truncatePath(char *path) {
     return path;
 }
 
-/*
- * returns tokens of path
- */
- char **tokenizePath(char *path) {
-    // loop through the path
-    int i = 0;
-    int tokenindex = 0;
-    char **tpath;
-    while (i < strlen(path)) {
-        if (path[i] == '/') {
-            if (i != 0) {
-                **(tpath + sizeof(char) * i) = '\0';
-                tokenindex++;
-            }
-        }
-        else **(tpath + sizeof(char) * i) = path[i];
-        printf("aklsdjhalkdjfh\n");
-        fflush(stdout);
-        i++;
-    }
-    return tpath;
- }
+// /*
+//  * returns tokens of path
+//  */
+//  char **tokenizePath(char *path) {
+//     // loop through the path
+//     int i = 0;
+//     int tokenindex = 0;
+//     char **tpath;
+//     while (i < strlen(path)) {
+//         if (path[i] == '/') {
+//             if (i != 0) {
+//                 **(tpath + sizeof(char) * i) = '\0';
+//                 tokenindex++;
+//             }
+//         }
+//         else **(tpath + sizeof(char) * i) = path[i];
+//         printf("aklsdjhalkdjfh\n");
+//         fflush(stdout);
+//         i++;
+//     }
+//     return tpath;
+//  }
 
 /*
  * Gets the desired file name
@@ -144,21 +144,23 @@ struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
  * returns -1 if invalid
  * returns inode number if valid
  */
-int isValidPath(unsigned char *disk, char *path) {
+int isValidPath(unsigned char *disk, char *og_path) {
+    char path[strlen(og_path)];
+    strcpy(path, og_path);
     printf("passed in path: %s\n", path);
     // Make copy of path, cuz strtok apparently adds dumb nullbytes in between smhhhh
     // Check if it's ROOOOOT (/)
     if (strcmp(path, "/") == 0) return EXT2_ROOT_INO;
     // Get the individual path names :)
-    char **tpath = tokenizePath(path);
+    char *tpath = strtok(path, "/");
     printf("tokenize successful\n");
     fflush(stdout);
     int curr_inode = EXT2_ROOT_INO; // start at root
     int found_inode = curr_inode;
     // Starting the loop to go through each token in the path
-    while (*tpath != '\0') {
+    while (tpath != '\0') {
         // Do the stuff to find the path :D
-        printf("looking for: %s\n", *tpath);
+        printf("looking for: %s\n", tpath);
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
         // Loop through each block
@@ -169,7 +171,7 @@ int isValidPath(unsigned char *disk, char *path) {
                 // Go through all the entries in the directory to find a name match
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
                 // check name if it MATCHES :D
-                if (strcmp(*tpath, e->name) == 0) {
+                if (strcmp(tpath, e->name) == 0) {
                     found_inode = e->inode;
                 }
                 curr_pos += e->rec_len; 
@@ -179,7 +181,7 @@ int isValidPath(unsigned char *disk, char *path) {
         }
         if (found_inode == curr_inode) return -1;
         // +1 for null byte
-        tpath += (strlen(*tpath) + 1) * sizeof(char);
+        tpath = (NULL, "/");
     }
     return found_inode;
 }
