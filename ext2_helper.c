@@ -241,11 +241,19 @@ int allocateInode(unsigned char *disk, int size) {
         return ENOMEM;
     }
     // loop through the inode bitmap to see what's free!!!!
+    printf("getting the ibm :D\n");
+    fflush(stdout);
     unsigned char *ibm = (void *)get_i_bm(disk);
     int curr_inode = EXT2_ROOT_INO;
     // Look for a free inodeeee
+    printf("entering loop to check for free inode\n");
+    fflush(stdout);
     while (curr_inode < (get_sb(disk))->s_inodes_count) {
+        printf("\tin loop\n");
+        fflush(stdout);
         if (ibm[curr_inode] == 0) {
+            printf("\t\thah, gottem\n");
+            fflush(stdout);
             ibm[curr_inode] |= 1; // set it to in use
             return curr_inode;
         }
