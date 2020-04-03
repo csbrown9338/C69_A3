@@ -175,7 +175,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
                 // check name if it MATCHES :D
                 printf("\t\tcurrent thing: %s, length: %d\n", e->name, e->name_len);
                 if (strncmp(tpath, e->name, strlen(tpath)) == 0) {
-                    printf("\t\t\twe in boiz");
+                    printf("\t\t\twe in boiz\n");
                     curr_inode = e->inode;
                 }
                 else if (e->name_len == 0) {
