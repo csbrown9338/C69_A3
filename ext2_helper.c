@@ -24,7 +24,7 @@ char *truncatePath(char *path) {
         i--;
     }
     char newPath[i];
-    strncpy(newPath, path, i)
+    strncpy(newPath, path, i);
     return newPath;
 }
 
@@ -58,7 +58,7 @@ char *truncatePath(char *path) {
     int i = strlen(path) - 1;
     int index = -1;
     while (index == -1) {
-        if ([i] == '/') {
+        if (path[i] == '/') {
             index = i;
         }
         i--;
@@ -184,7 +184,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
         }
         if (found_inode == curr_inode) return -1;
         // +1 for null byte
-        tpath = (NULL, "/");
+        tpath = strtok(NULL, "/");
     }
     return found_inode;
 }
