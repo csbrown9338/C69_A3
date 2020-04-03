@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
             int linkidx = 0;
             // get the amount of LINKS oh my goodness this is so important
             int links = i->i_links_count;
-            // if it's root, then subtract 1
+            // if it's not root, then subtract 1 (cuz there's a reference from the parent)
             if (inode != EXT2_ROOT_INO) links--;
             while (curr_pos < EXT2_BLOCK_SIZE && linkidx < links) {
                 printf("\ntotal links: %d, current link: %d -- ", links, linkidx);
