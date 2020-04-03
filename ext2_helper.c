@@ -182,7 +182,6 @@ int isValidPath(unsigned char *disk, char *og_path) {
         // +1 for null byte
         tpath = strtok(NULL, "/");
     }
-    printf("found: %d", found_inode);
     return found_inode;
 }
 

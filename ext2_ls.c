@@ -29,8 +29,10 @@ int main(int argc, char **argv) {
     }
     printf("about to check if valid dir\n");
     inode = isValidDirectory(disk, path);
+    printf("found dir: %d\n", inode);
     printf("about to check if valid file\n");
     int fileInode = isValidFile(disk, path);
+    printf("found dir: %d\n", fileInode);
     // printf("%d", fileInode);
     // If it's a file, then just... print da filename lmao
     fflush(stdout);
