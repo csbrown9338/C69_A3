@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
         struct ext2_inode *i = get_inode(disk, inode);
         int curr_block = 0;
         while (curr_block < i->i_blocks){
-            printf("looping through da blocks???\n")
+            printf("looping through da blocks???\n");
             int curr_pos = 0;
             int linkidx = 0;
             // get the amount of LINKS oh my goodness this is so important
