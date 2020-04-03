@@ -239,7 +239,7 @@ int isValidLink(unsigned char *disk, char *path) {
 int allocateInode(unsigned char *disk, int size) {
     // Get the amount of free blocks we have
     if (size > (get_gd(disk))->bg_free_blocks_count) {
-        fprintf(stderr, "Not enough space to allocate inode");
+        fprintf(stderr, "Not enough space to allocate inode\n");
         return ENOMEM;
     }
     // loop through the inode bitmap to see what's free!!!!
@@ -255,7 +255,7 @@ int allocateInode(unsigned char *disk, int size) {
         }
         curr_inode++;
     }
-    fprintf(stderr, "Couldn't find an inode :(");
+    fprintf(stderr, "Couldn't find an inode :(\n");
     return -1; // couldn't find one gg idk what to tell you
 }
 
