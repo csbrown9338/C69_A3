@@ -34,6 +34,8 @@ int main(int argc, char **argv) {
     if (isValidFile(disk, path) != -1) printf("%s", path);
     // If it's a directory... oh boi
     else if (inode != -1) {
+        printf("going into the loop for directory????\n");
+        fflush(stdout);
         // If there be the -a, do the . and ..
         int has_flag = 0; // 0 if no flag, 1 if -a flag
         if (strcmp(flag, "-a") == 0) has_flag = 1;
