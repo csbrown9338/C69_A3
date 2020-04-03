@@ -28,6 +28,8 @@ int main(int argc, char **argv) {
         exit(1);
     }
     inode = isValidDirectory(disk, path);
+    int fileInode = isValidFile(disk, path);
+    printf("%d", fileInode);
     // If it's a file, then just... print da filename lmao
     printf("received inode: %d\n", inode);
     fflush(stdout);
