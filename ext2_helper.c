@@ -120,12 +120,16 @@ struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
  * returns -1 if invalid
  * returns inode number if valid
  */
-int isValidPath(unsigned char *disk, char *path) {
+int isValidPath(unsigned char *disk, char *og_path) {
     printf("passed in path: %s\n", path);
+    // Make copy of path, cuz strtok apparently adds dumb nullbytes in between smhhhh
+    char *path;
+    strcpy(path, og_path);
     // Check if it's ROOOOOT (/)
     if (strcmp(path, "/") == 0) return EXT2_ROOT_INO;
     // Get the individual path names :)
     char *tpath = strtok(path, "/");
+    printf("original: %s, tokenized: %s", og_path, path);
     int curr_inode = EXT2_ROOT_INO; // start at root
     int found_inode = curr_inode;
     // Starting the loop to go through each token in the path
