@@ -37,8 +37,8 @@ int main(int argc, char **argv) {
         // If there be the -a, do the . and ..
         int has_flag = 0; // 0 if no flag, 1 if -a flag
         if (strcmp(flag, "-a") == 0) has_flag = 1;
-        else if (flag[0] != '\0') {
-            fprintf(stderr, "Invalid flag");
+        else if (strlen(flag) != 0) {
+            fprintf(stderr, "Invalid flag\n");
             exit(1);
         }
         // get the ext2_dir_entry of the current dir
@@ -53,9 +53,9 @@ int main(int argc, char **argv) {
                 fflush(stdout);
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, i, curr_block, curr_pos);
                 if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..")) {
-                    if (has_flag == 1) printf("%s", e->name);
+                    if (has_flag == 1) printf("%s\n", e->name);
                 }
-                else printf("%s", e->name);
+                else printf("%s\n", e->name);
                 curr_pos += e->rec_len;
             }
             curr_block++;
