@@ -250,7 +250,7 @@ int allocateInode(unsigned char *disk, int size) {
     while (curr_block < sb->s_inodes_count/(sizeof(unsigned char) * 8)) {
         int bit = 0;
         while (bit < 8) {
-            printf("bit: %d", ibm[curr_block] & 1 << bit);
+            printf("bit: %d", ~(ibm[curr_block] & 1 << bit));
             if (~(ibm[curr_block] & 1 << bit)) {
                 int found_inode = (curr_block * 8) + bit;
                 printf("found free inode: %d\n", curr_block);
