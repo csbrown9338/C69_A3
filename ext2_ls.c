@@ -52,10 +52,11 @@ int main(int argc, char **argv) {
             int linkidx = 0;
             // get the amount of LINKS oh my goodness this is so important
             int links = i->i_links_count;
+            if (inode == EXT2_ROOT_INO) links++;
             while (curr_pos < i->i_size && linkidx < links) {
-                printf("\tcurr link: %d, total links: %d\n", linkidx, links);
                 //printf("confusion\n");
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, i, curr_block, curr_pos);
+                // printf("\tentry: %s, curr link: %d, total links: %d\n", e->name, linkidx, links);
                 if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..") == 0) {
                     if (has_flag == 1) printf("%s\n", e->name);
                 }
