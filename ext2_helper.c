@@ -147,7 +147,6 @@ int isValidPath(unsigned char *disk, char *path) {
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
                 // check name if it MATCHES :D
                 if (strcmp(tpath, e->name) == 0) {
-                    if (e->file_type != EXT2_FT_DIR) return -1;
                     found_inode = e->inode;
                 }
                 curr_pos += e->rec_len; 

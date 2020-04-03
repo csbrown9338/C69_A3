@@ -34,8 +34,6 @@ int main(int argc, char **argv) {
     if (isValidFile(disk, path) != -1) printf("%s", path);
     // If it's a directory... oh boi
     else if (inode != -1) {
-        printf("going into the loop for directory????\n");
-        fflush(stdout);
         // If there be the -a, do the . and ..
         int has_flag = 0; // 0 if no flag, 1 if -a flag
         if (strcmp(flag, "-a") == 0) has_flag = 1;
@@ -45,6 +43,8 @@ int main(int argc, char **argv) {
         while (curr_block < i->i_blocks){
             int curr_pos = 0;
             while (curr_pos < EXT2_BLOCK_SIZE) {
+                printf("new entry: ");
+                fflush(stdout);
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, i, curr_block, curr_pos);
                 if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..") == 0) {
                     if (has_flag == 1) printf("%s\n", e->name);
