@@ -330,7 +330,7 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // put er innnnn
     printf("trying to actually allocate this shit dawg\n");
     fflush(stdout);
-    struct ext2_inode *in = get_inode(disk, allocatedInode);
+    struct ext2_inode *in = get_inode(disk, allocatedinode);
     struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
     printf("we did is the allocatin ig\n");
     fflush(stdout);
