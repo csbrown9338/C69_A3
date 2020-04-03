@@ -42,8 +42,8 @@ char *truncatePath(char *path) {
                 tokenindex++;
             }
         }
-        else **(tpath + sizeof(char)) = path[i];
-        printf("we going dawg\n");
+        else **(tpath + sizeof(char) * i) = path[i];
+        printf("aklsdjhalkdjfh\n");
         fflush(stdout);
         i++;
     }
