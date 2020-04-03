@@ -248,7 +248,7 @@ int allocateInode(unsigned char *disk, int size) {
     // Look for a free inodeeee
     while (curr_inode < (get_sb(disk))->s_inodes_count) {
         if (ibm[curr_inode] == 0) {
-            printf("found free inode: curr_inode\n");
+            printf("found free inode: %d\n", curr_inode);
             fflush(stdout);
             ibm[curr_inode] |= 1; // set it to in use
             return curr_inode;
@@ -333,23 +333,13 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     int allocatedinode = allocateInode(disk, 1);
     if (allocatedinode == -1) return -1;
     // put er innnnn
-    printf("trying to actually allocate this shit dawg\n");
-    fflush(stdout);
     struct ext2_inode *in = get_inode(disk, allocatedinode);
     struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
-    printf("we did is the allocatin ig\n");
-    fflush(stdout);
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, dirname);
-    printf("we adding the entry into the new inode thingy thinger whatever\n");
-    fflush(stdout);
     // now add it to the parent dirrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
-    printf("went through and found an open spot in parent directory ig\n");
-    fflush(stdout);
     // and add
     addEntry(entry, allocatedinode, EXT2_FT_DIR, dirname);
-    printf("we putting er in boiz (into the parent)\n");
-    fflush(stdout);
     return 0;
 }
 
