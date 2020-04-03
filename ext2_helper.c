@@ -32,9 +32,13 @@ char *truncatePath(char *path) {
  */
  char **tokenizePath(char *path) {
     // loop through the path
+    printf("WE OUT HERE MMMMBBBOIZZZZZZZ\n");
+    fflush(stdout);
     int i = 0;
     int tokenindex = 0;
     char **tpath;
+    printf("we bout to start this loop bitch\n");
+    fflush(stdout);
     while (i < strlen(path)) {
         if (path[i] == '/') {
             if (i != 0) {
@@ -148,8 +152,6 @@ int isValidPath(unsigned char *disk, char *path) {
     // Check if it's ROOOOOT (/)
     if (strcmp(path, "/") == 0) return EXT2_ROOT_INO;
     // Get the individual path names :)
-    printf("bitch gonn tokenize that shit\n");
-    fflush(stdout);
     char **tpath = tokenizePath(path);
     printf("tokenize successful\n");
     fflush(stdout);
