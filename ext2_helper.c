@@ -251,8 +251,6 @@ int allocateInode(unsigned char *disk, int size) {
             printf("hah, gottem\n");
             fflush(stdout);
             ibm[curr_inode] |= 1; // set it to in use
-            printf("we got the bitmap to change boiz\n");
-            fflush(stdout);
             return curr_inode;
         }
         curr_inode++;
@@ -330,7 +328,12 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // get a freeeeeeeeeee inode :D:D:D
     int allocatedinode = allocateInode(disk, 1);
     // put er innnnn
-    struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *)(get_inode(disk, allocatedinode))->i_block[0];
+    printf("trying to actually allocate this shit dawg\n");
+    fflush(stdout);
+    struct ext2_inode *in = get_inode(disk, allocatedInode);
+    struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
+    printf("we did is the allocatin ig\n");
+    fflush(stdout);
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, dirname);
     // now add it to the parent dirrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
