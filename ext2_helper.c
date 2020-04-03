@@ -32,9 +32,10 @@ char *truncatePath(char *path) {
  */
  char **tokenizePath(char *path) {
     // loop through the path
+    int i = 0;
     int tokenindex = 0;
     char **tpath;
-    for (int i = 0; i < strlen(path); i++) {
+    while (i < strlen(path)) {
         if (path[i] == '/') {
             if (i != 0) {
                 tpath[tokenindex][i] = '\0';
@@ -42,6 +43,7 @@ char *truncatePath(char *path) {
             }
         }
         else tpath[tokenindex][i] = path[i];
+        i++;
     }
     return tpath;
  }
