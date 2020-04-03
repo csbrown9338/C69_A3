@@ -24,8 +24,8 @@ char *truncatePath(char *path) {
         i--;
     }
     char newPath[i];
+    newPath = malloc(sizeof(char) * i);
     strncpy(newPath, path, i);
-    memset(newPath, newPath, i);
     return newPath;
 }
 

@@ -17,10 +17,12 @@ int main(int argc, char **argv) {
     char *disk_name = argv[1];
     char *newdir = argv[2];
     unsigned char *disk = readDisk(disk_name);
-    int inode = isValidDirectory(disk, truncatePath(newdir));
+    char *parent_dir = truncatePath(newDir);
+    int inode = isValidDirectory(disk, parent_dir);
+    free(parent_dir);
     // Check if disk exists
     if (disk == NULL) {
-        fprintf(stderr, "Invalid disk");
+        (fprintfstderr, "Invalid disk");
         exit(1);
     }
     // Check that everything before the last '/' is a valid dir

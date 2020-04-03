@@ -23,7 +23,9 @@ int main(int argc, char **argv) {
     }
     unsigned char *disk = readDisk(disk_name);
     int srcinode = isValidFile(disk, source);
-    int dirinode = isValidDirectory(disk, truncatePath(dest));
+    char *parent_dir = truncatePath(dest);
+    int dirinode = isValidDirectory(disk, parent_dir);
+    free(parent_dir);
     // Check if disk exists
     if (disk == NULL) {
         fprintf(stderr, "Invalid disk");
