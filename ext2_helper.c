@@ -95,8 +95,6 @@ unsigned int get_i_bm(unsigned char *disk) {
  */
 struct ext2_inode *get_inode(unsigned char *disk, int inode) {
     struct ext2_inode *i = get_it(disk);
-    printf("inode size: %d\n", i->i_size);
-    fflush(stdout);
     return (struct ext2_inode *)(i + (inode-1));
 }
 
@@ -172,11 +170,6 @@ int isValidDirectory(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is directory (EXT2_FT_DIR)
     struct ext2_dir_entry_2 *e = get_entry(disk, inode);
-    printf("checking if she a dir forreal now doe\n");
-    fflush(stdout);
-    printf("inode of entry: %d\n", e->inode);
-    printf("name of entry: %s\n", e->name);
-    fflush(stdout);
     if ((e->file_type == EXT2_FT_DIR)) return inode;
     return -1;
 }

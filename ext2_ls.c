@@ -41,11 +41,12 @@ int main(int argc, char **argv) {
             fprintf(stderr, "Invalid flag");
             exit(1);
         }
-        // TODO: get the uhhhhh contents of the directory :)
         // get the ext2_dir_entry of the current dir
         struct ext2_inode *i = get_inode(disk, inode);
         int curr_block = 0;
         int curr_pos = 0;
+        printf("about to go through the entries :)\n");
+        fflush(stdout);
         while (curr_block < i->i_blocks){
             while (curr_pos < EXT2_BLOCK_SIZE) {
                 printf("looping through directory entries");
