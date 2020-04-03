@@ -160,27 +160,22 @@ int isValidPath(unsigned char *disk, char *og_path) {
     while (tpath != NULL) {
         int blank = 0;
         // Do the stuff to find the path :D
-        printf("looking for: %s\n", tpath);
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
         found_inode = curr_inode;
         // Loop through each block
         while (found_inode == curr_inode && curr_block < inode->i_blocks && blank == 0) {
-            printf("\twe going through blocks\n");
             int curr_pos = 0;
             // Loop through each position
             while (found_inode == curr_inode && curr_pos < inode->i_size && blank == 0) {
                 // Go through all the entries in the directory to find a name match
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
                 // check name if it MATCHES :D
-                printf("\t\tcurrent thing: %s, length: %d\n", e->name, e->name_len);
                 if (strncmp(tpath, e->name, strlen(tpath)) == 0) {
-                    printf("\t\t\twe in boiz\n");
                     curr_inode = e->inode;
                 }
                 else if (e->name_len == 0) {
                     blank = 1;
-                    printf("IT BLANK");
                 }
                 curr_pos += e->rec_len; 
             }
@@ -216,7 +211,6 @@ int isValidFile(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is file (EXT2_FT_REG_FILE)
     struct ext2_dir_entry_2 *e = get_entry(disk, inode);
-    printf("filetype: %d\n", e->file_type);
     if ((e->file_type == EXT2_FT_REG_FILE)) return inode;
     return -1;
 }
@@ -242,7 +236,7 @@ int isValidLink(unsigned char *disk, char *path) {
  */
 int allocateInode(unsigned char *disk, int size) {
     // Get the amount of free blocks we have
-    if (size < (get_gd(disk))->bg_free_blocks_count) {
+    if (size > (get_gd(disk))->bg_free_blocks_count) {
         fprintf(stderr, "Not enough space to allocate inode");
         return ENOMEM;
     }
