@@ -148,9 +148,8 @@ struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
  */
 int isValidPath(unsigned char *disk, char *og_path) {
     char path[strlen(og_path)];
-    strcpy(path, og_path);
-    printf("passed in path: %s\n", path);
     // Make copy of path, cuz strtok apparently adds dumb nullbytes in between smhhhh
+    strcpy(path, og_path);
     // Check if it's ROOOOOT (/)
     if (strcmp(path, "/") == 0) return EXT2_ROOT_INO;
     // Get the individual path names :)
