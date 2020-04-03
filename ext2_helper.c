@@ -273,7 +273,7 @@ int allocateInode(unsigned char *disk, int size) {
         unsigned int block = dir->i_block[curr_block];
         int curr_pos = block;
         while (curr_pos < EXT2_BLOCK_SIZE) {
-            struct ext2_dir_entry_2 *e = (struct ext2_dir_entry_2 *) curr_pos;
+            struct ext2_dir_entry_2 *e = get_dir_entry(disk, dir, curr_block, curr_pos);
             if (e->inode == 0) return e;
             curr_pos += e->rec_len;
         }
