@@ -165,7 +165,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
         found_inode = curr_inode;
         // Loop through each block
         while (found_inode == curr_inode && curr_block < inode->i_blocks) {
-            printf("\twe going through blocks\n";)
+            printf("\twe going through blocks\n");
             int curr_pos = 0;
             // Loop through each position
             while (found_inode == curr_inode && curr_pos < inode->i_size) {
