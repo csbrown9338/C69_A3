@@ -148,7 +148,11 @@ int isValidPath(unsigned char *disk, char *path) {
     // Check if it's ROOOOOT (/)
     if (strcmp(path, "/") == 0) return EXT2_ROOT_INO;
     // Get the individual path names :)
-    char **tpath = tokenizePath(path); // TODO CHANGE THIS BULLSHIT
+    printf("bitch gonn tokenize that shit\n");
+    fflush(stdout);
+    char **tpath = tokenizePath(path);
+    printf("tokenize successful\n");
+    fflush(stdout);
     int curr_inode = EXT2_ROOT_INO; // start at root
     int found_inode = curr_inode;
     // Starting the loop to go through each token in the path
