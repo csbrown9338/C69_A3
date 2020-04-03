@@ -244,7 +244,7 @@ int allocateInode(unsigned char *disk, int size) {
     }
     // loop through the inode bitmap to see what's free!!!!
     unsigned char *ibm = get_i_bm(disk);
-    int curr_inode = EXT2_ROOT_INO;
+    int curr_block = 0;
     // Look for a free inodeeee
     struct ext2_super_block *sb = get_sb(disk);
     while (curr_block < sb->s_inodes_count/(sizeof(unsigned char) * 8)) {
