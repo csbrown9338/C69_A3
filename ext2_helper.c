@@ -24,7 +24,7 @@ char *truncatePath(char *path) {
         i--;
     }
     char newPath[i];
-    strncpy(newPath, i)
+    strncpy(newPath, path, i)
     return newPath;
 }
 
