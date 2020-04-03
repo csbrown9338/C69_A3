@@ -248,9 +248,11 @@ int allocateInode(unsigned char *disk, int size) {
     // Look for a free inodeeee
     while (curr_inode < (get_sb(disk))->s_inodes_count) {
         if (ibm[curr_inode] == 0) {
-            printf("\t\thah, gottem\n");
+            printf("hah, gottem\n");
             fflush(stdout);
             ibm[curr_inode] |= 1; // set it to in use
+            printf("we got the bitmap to change boiz\n");
+            fflush(stdout);
             return curr_inode;
         }
         curr_inode++;
