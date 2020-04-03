@@ -246,14 +246,20 @@ int allocateInode(unsigned char *disk, int size) {
     unsigned char *ibm = get_i_bm(disk);
     int curr_inode = EXT2_ROOT_INO;
     // Look for a free inodeeee
-    while (curr_inode < (get_sb(disk))->s_inodes_count) {
-        if (ibm[curr_inode] == 0) {
-            printf("found free inode: %d\n", curr_inode);
-            fflush(stdout);
-            ibm[curr_inode] |= 1; // set it to in use
-            return curr_inode;
+    struct ext2_super_block *sb = get_sb(disk);
+    while (curr_block < sb->s_inodes_count/(sizeof(unsigned char) * 8)) {
+        int bit = 0;
+        while (bit < 8) {
+            if (!((ibm[curr_block] >> bit) &= 1)) {
+                int found_inode = (curr_block * 8) + bit;
+                printf("found free inode: %d\n", curr_block);
+                fflush(stdout);
+                (ibm[curr_block] >> bit) |= 1; // set it to in use
+                return found_inode;
+            }
+            bit++;
         }
-        curr_inode++;
+        curr_block++;
     }
     fprintf(stderr, "Couldn't find an inode :(\n");
     return -1; // couldn't find one gg idk what to tell you
