@@ -105,16 +105,17 @@ struct ext2_inode *get_it(unsigned char *disk) {
 /*
  * Get the block bitmap of the disk
  */
-unsigned int get_b_bm(unsigned char *disk) {
-    return (get_gd(disk))->bg_block_bitmap;
+unsigned char *get_b_bm(unsigned char *disk) {
+    struct ext2_group_desc *gd = get_gd(disk);
+    return (unsigned char *)(disk + EXT2_BLOCK_SIZE * gd->bg_block_bitmap);
 }
 
 /*
  * Get the inode bitmap of the disk
  */
-unsigned int get_i_bm(unsigned char *disk) {
-    return (get_gd(disk))->bg_inode_bitmap;
-}
+unsigned char *get_i_bm(unsigned char *disk) {
+    struct ext2_group_desc *gd = get_gd(disk);
+    return (unsigned char *)(disk + EXT2_BLOCK_SIZE * gd->bg_inode_bitmap);
 
 /*
  * Get the inode struct given the index
