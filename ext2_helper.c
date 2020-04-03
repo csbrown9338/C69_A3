@@ -254,7 +254,7 @@ int allocateInode(unsigned char *disk, int size) {
                 int found_inode = (curr_block * 8) + bit;
                 printf("found free inode: %d\n", curr_block);
                 fflush(stdout);
-                ibm[curr_block] |= 1 << bit; // set it to in use
+                ibm[curr_block] |= 1 >> bit; // set it to in use
                 return found_inode;
             }
             bit++;
