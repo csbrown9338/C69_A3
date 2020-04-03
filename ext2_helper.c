@@ -40,13 +40,21 @@ char *truncatePath(char *path) {
     printf("we bout to start this loop bitch\n");
     fflush(stdout);
     while (i < strlen(path)) {
+        printf("WE IN THE LOOP\n");
+        fflush(stdout);
         if (path[i] == '/') {
+            printf("we found a '/'\n");
+            fflush(stdout);
             if (i != 0) {
+                printf("it's not the beginning either heheheh\n");
+                fflush(stdout);
                 tpath[tokenindex][i] = '\0';
                 tokenindex++;
             }
         }
         else tpath[tokenindex][i] = path[i];
+        printf("we going dawg\n");
+        fflush(stdout);
         i++;
     }
     return tpath;
