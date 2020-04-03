@@ -28,23 +28,36 @@ char *truncatePath(char *path) {
 }
 
 /*
- * Gets the desired file name
- */
- char *extractFileName(char *path) {
-    char *tpath = strtok(path, "/");
-    char *name;
-    while (tpath != NULL) {
-        name = tpath;
-        tpath = strtok(NULL, "/");
-    }
-    return name;
- }
-
-/*
  * returns tokens of path
  */
  char **tokenizePath(char *path) {
-    return NULL;
+    // loop through the path
+    int tokenindex = 0;
+    char **tpath;
+    for (int i = 0; i < strlen(path); i++) {
+        if (path[i] == '/') {
+            if (i != 0) {
+                tpath[tokenindex][i] = '\0';
+                tokenindex++;
+            }
+        }
+        else tpath[tokenindex][i] = path[i];
+    }
+    return tpath;
+ }
+
+/*
+ * Gets the desired file name
+ */
+ char *extractFileName(char *path) {
+    char **tpath = tokenizePath(path);
+    char *name;
+    while (*tpath != NULL) {
+        name = *tpath;
+        // +1 for null byte
+        tpath += (strlen(name) + 1)* sizeof(char);
+    }
+    return name;
  }
 
 /*
@@ -159,7 +172,8 @@ int isValidPath(unsigned char *disk, char *path) {
             curr_block++;
         }
         if (found_inode == curr_inode) return -1;
-        tpath += strlen(*tpath);
+        // +1 for null byte
+        tpath += (strlen(*tpath) + 1) * sizeof(char);
     }
     return found_inode;
 }
