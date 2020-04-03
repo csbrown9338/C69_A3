@@ -327,6 +327,7 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
 int addDir(unsigned char *disk, char *dirname, int inode) {
     // get a freeeeeeeeeee inode :D:D:D
     int allocatedinode = allocateInode(disk, 1);
+    if (allocatedinode == -1) return -1;
     // put er innnnn
     printf("trying to actually allocate this shit dawg\n");
     fflush(stdout);
