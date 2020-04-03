@@ -127,15 +127,15 @@ int isValidPath(unsigned char *disk, char *path) {
     char *tpath = strtok(path, "/");
     int curr_inode = EXT2_ROOT_INO; // start at root
     int found_inode = curr_inode;
+    // Starting the loop to go through each token in the path
     while (tpath != NULL) {
         printf("entering loop to go through da path\n");
         fflush(stdout);
         // Do the stuff to find the path :D
-        // This is to parse through the block i think
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
-        // Loop through each block?
-        while (found_inode != curr_inode && curr_block < inode->i_blocks) {
+        // Loop through each block
+        while (found_inode == curr_inode && curr_block < inode->i_blocks) {
             printf("\tentering loop to go through each block i think\n");
             fflush(stdout);
             int curr_pos = 0;
@@ -146,7 +146,7 @@ int isValidPath(unsigned char *disk, char *path) {
                 // Go through all the entries in the directory to find a name match
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
                 // check name if it MATCHES :D
-                if (strcmp(tpath, e->name)) {
+                if (strcmp(tpath, e->name) == 0) {
                     if (e->file_type != EXT2_FT_DIR) return -1;
                     found_inode = e->inode;
                 }
