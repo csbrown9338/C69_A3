@@ -121,6 +121,7 @@ struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
  * returns inode number if valid
  */
 int isValidPath(unsigned char *disk, char *path) {
+    printf("passed in path: %s\n", path);
     // Check if it's ROOOOOT (/)
     if (strcmp(path, "/") == 0) return EXT2_ROOT_INO;
     // Get the individual path names :)
