@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     int inode = isValidDirectory(disk, parent);
     // Check if disk exists
     if (disk == NULL) {
-        (fprintfstderr, "Invalid disk");
+        fprintf(stderr, "Invalid disk");
         exit(1);
     }
     // Check that everything before the last '/' is a valid dir
