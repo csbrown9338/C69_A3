@@ -41,6 +41,13 @@ char *truncatePath(char *path) {
  }
 
 /*
+ * returns tokens of path
+ */
+ char **tokenizePath(char *path) {
+    return NULL;
+ }
+
+/*
  * Reads the disk given a path to the disk img
  */
 unsigned char *readDisk(char *path) {
@@ -120,23 +127,19 @@ struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
  * returns -1 if invalid
  * returns inode number if valid
  */
-int isValidPath(unsigned char *disk, char *og_path) {
-    printf("passed in path: %s\n", og_path);
+int isValidPath(unsigned char *disk, char *path) {
+    printf("passed in path: %s\n", path);
     // Make copy of path, cuz strtok apparently adds dumb nullbytes in between smhhhh
-    char path[];
-    printf("bout to strcpy that shit");
-    strcpy(path, og_path);
     // Check if it's ROOOOOT (/)
     if (strcmp(path, "/") == 0) return EXT2_ROOT_INO;
     // Get the individual path names :)
-    char *tpath = strtok(path, "/");
-    printf("original: %s, tokenized: %s", og_path, path);
+    char **tpath = tokenizePath(path); // TODO CHANGE THIS BULLSHIT
     int curr_inode = EXT2_ROOT_INO; // start at root
     int found_inode = curr_inode;
     // Starting the loop to go through each token in the path
-    while (tpath != NULL) {
+    while (*tpath != '\0') {
         // Do the stuff to find the path :D
-        printf("looking for: %s\n", tpath);
+        printf("looking for: %s\n", *tpath);
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
         // Loop through each block
@@ -147,7 +150,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
                 // Go through all the entries in the directory to find a name match
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
                 // check name if it MATCHES :D
-                if (strcmp(tpath, e->name) == 0) {
+                if (strcmp(*tpath, e->name) == 0) {
                     found_inode = e->inode;
                 }
                 curr_pos += e->rec_len; 
@@ -156,7 +159,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
             curr_block++;
         }
         if (found_inode == curr_inode) return -1;
-        tpath = strtok(NULL, "/");
+        tpath += strlen(*tpath);
     }
     return found_inode;
 }
