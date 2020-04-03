@@ -19,12 +19,13 @@ char *truncatePath(char *path) {
     int index = -1;
     while (index == -1) {
         if (path[i] == '/') {
-            path[i] = '\0';
             index = i;
         }
         i--;
     }
-    return path;
+    char newPath[i];
+    strncpy(newPath, i)
+    return newPath;
 }
 
 // /*
@@ -54,13 +55,15 @@ char *truncatePath(char *path) {
  * Gets the desired file name
  */
  char *extractFileName(char *path) {
-    char **tpath = tokenizePath(path);
-    char *name;
-    while (*tpath != NULL) {
-        name = *tpath;
-        // +1 for null byte
-        tpath += (strlen(name) + 1)* sizeof(char);
+    int i = strlen(path) - 1;
+    int index = -1;
+    while (index == -1) {
+        if ([i] == '/') {
+            index = i;
+        }
+        i--;
     }
+    char *name = &(path[i + 1]);
     return name;
  }
 
