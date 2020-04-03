@@ -162,7 +162,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
         printf("looking for: %s\n", tpath);
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
-        curr_inode = found_inode;
+        found_inode = curr_inode;
         // Loop through each block
         while (found_inode == curr_inode && curr_block < inode->i_blocks) {
             int curr_pos = 0;
@@ -173,7 +173,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
                 // check name if it MATCHES :D
                 printf("\tcurrent thing: %s\n", e->name);
                 if (strcmp(tpath, e->name) == 0) {
-                    found_inode = e->inode;
+                    curr_inode = e->inode;
                 }
                 curr_pos += e->rec_len; 
             }
@@ -184,7 +184,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
         // +1 for null byte
         tpath = strtok(NULL, "/");
     }
-    return found_inode;
+    return curr_inode;
 }
 
 /*
