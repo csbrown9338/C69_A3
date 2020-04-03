@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
             while (curr_pos < i->i_size && linkidx < links) {
                 //printf("confusion\n");
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, i, curr_block, curr_pos);
-                // printf("\tentry: %s, curr link: %d, total links: %d\n", e->name, linkidx, links);
+                printf("\tentry: %s, curr link: %d, total links: %d\n", e->name, linkidx, links);
                 if (strcmp(e->name, ".") == 0 || strcmp(e->name, "..") == 0) {
                     if (has_flag == 1) printf("%s\n", e->name);
                 }
