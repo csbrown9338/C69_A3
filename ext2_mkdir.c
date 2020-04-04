@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
     int exists_inode = isValidPath(disk, newdir);
     char *raw_name = extractFileName(newdir);
     char *filename;
-    strncpy(filename, strlen(raw_name), raw_name);
+    strncpy(filename, raw_name, strlen(raw_name));
     printf("name received: %s\n", filename);
     char *parent = truncatePath(newdir);
     printf("name after truncate: %s\n", filename);
