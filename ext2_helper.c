@@ -347,6 +347,7 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // get a freeeeeeeeeee inode :D:D:D
     int allocatedinode = allocateInode(disk, 1);
     if (allocatedinode == -1) return -1;
+    printf("\ninode received: %d\n", allocatedinode);
     // put er innnnn
     struct ext2_inode *in = get_inode(disk, allocatedinode);
     struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
