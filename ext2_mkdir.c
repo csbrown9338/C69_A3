@@ -34,20 +34,20 @@ int main(int argc, char **argv) {
     // Check that everything before the last '/' is a valid dir
     if (inode == -1) {
         fprintf(stderr, "Invalid parent path");
-        memcpy(filename, '\0', strlen(filename));
+        memset(filename, '\0', strlen(filename));
         return ENOENT;
     }
     // Check if the name is taken
     else if (exists_inode != -1) {
         fprintf(stderr, "Name is taken");
-        memcpy(filename, '\0', strlen(filename));
+        memset(filename, '\0', strlen(filename));
         if (isValidDirectory(disk, newdir) != -1) return EISDIR;
         else if (isValidFile(disk, newdir) != -1) return EEXIST;
         else exit(1);
     }
     else { 
         addDir(disk, filename, inode);
-        memcpy(filename, '\0', strlen(filename));
+        memset(filename, '\0', strlen(filename));
     } 
     return 0;
 }
