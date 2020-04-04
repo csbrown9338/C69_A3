@@ -19,8 +19,7 @@ int main(int argc, char **argv) {
     unsigned char *disk = readDisk(disk_name);
     int exists_inode = isValidPath(disk, newdir);
     char *raw_name = extractFileName(newdir);
-    char *filename;
-    memset(filename, '\0', sizeof(raw_name));
+    char filename[strlen(raw_name)];
     strncpy(filename, raw_name, strlen(raw_name));
     printf("name received: %s\n", filename);
     char *parent = truncatePath(newdir);
