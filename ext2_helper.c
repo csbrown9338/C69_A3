@@ -366,19 +366,20 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
  * returns 0 on success, and -1 on failure
  */
 int addDir(unsigned char *disk, char *dirname, int inode) {
-    printf("we adding this bad boi : %s\n", dirname);
+    printf("we adding this bad boi: %s\n", dirname);
     // get a freeeeeeeeeee inode :D:D:D
     int allocatedinode = allocateInode(disk, 1);
     if (allocatedinode == -1) return -1;
-    printf("\ninode received: %d\n", allocatedinode);
     // put er innnnn
     struct ext2_inode *in = get_inode(disk, allocatedinode);
     struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, dirname);
+    printf("a_entry tingz\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     // now add it to the parent dirrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
     // and add
     addEntry(entry, allocatedinode, EXT2_FT_DIR, dirname);
+    printf("entry tingz\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     return 0;
 }
 

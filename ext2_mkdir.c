@@ -27,9 +27,7 @@ int main(int argc, char **argv) {
     char *raw_name = extractFileName(newdir);
     char filename[strlen(raw_name)];
     strncpy(filename, raw_name, strlen(raw_name));
-    printf("name received: %s\n", filename);
     char *parent = truncatePath(newdir);
-    printf("name after truncate: %s\n", filename);
     int inode = isValidDirectory(disk, parent);
     // Check that everything before the last '/' is a valid dir
     if (inode == -1) {
