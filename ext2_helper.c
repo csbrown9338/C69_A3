@@ -233,7 +233,7 @@ int isValidLink(unsigned char *disk, char *path) {
 /*
  * checks state of bit
  */
-int bit_in_use(unsigned char *byte, int offset) {
+int bit_in_use(unsigned char byte, int offset) {
     return (byte & (1 << offset));
 }
 
@@ -250,7 +250,7 @@ int allocateInode(unsigned char *disk, int size) {
         return ENOMEM;
     }
     // loop through the inode bitmap to see what's free!!!!
-    unsigned char *ibm = get_i_bm(disk);
+    unsigned char ibm = get_i_bm(disk);
     int curr_block = 0;
     // Look for a free inodeeee
     struct ext2_super_block *sb = get_sb(disk);
