@@ -39,16 +39,15 @@ char *truncatePath(char *path) {
  * Gets the desired file name
  */
  char *extractFileName(char *path) {
-    int i = strlen(path) - 1;
+    int i = strlen(path);
     int index = -1;
     while (index == -1) {
+        i--;
         if (path[i] == '/') {
             index = i;
         }
-        i--;
     }
     char *name = &(path[i + 1]);
-    printf("name extracted: %s\n", name);
     return name;
  }
 
