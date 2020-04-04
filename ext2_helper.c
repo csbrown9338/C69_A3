@@ -48,6 +48,7 @@ char *truncatePath(char *path) {
         i--;
     }
     char *name = &(path[i + 1]);
+    printf("name extracted: %s\n", name);
     return name;
  }
 

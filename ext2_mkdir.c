@@ -19,7 +19,9 @@ int main(int argc, char **argv) {
     unsigned char *disk = readDisk(disk_name);
     int exists_inode = isValidPath(disk, newdir);
     char *filename = extractFileName(newdir);
+    printf("name received: %s\n", filename);
     char *parent = truncatePath(newdir);
+    printf("name after truncate: %s\n", filename);
     int inode = isValidDirectory(disk, parent);
     // Check if disk exists
     if (disk == NULL) {
