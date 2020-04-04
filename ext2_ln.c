@@ -24,7 +24,9 @@ int main(int argc, char **argv) {
     unsigned char *disk = readDisk(disk_name);
     int srcinode = isValidFile(disk, source);
     int exists_inode = isValidPath(disk, dest);
-    char *filename = extractFileName(dest);
+    char *raw_name = extractFileName(dest);
+    char filename[strlen(raw_name)];
+    strncpy(filename, raw_name, strlen(raw_name));
     char *parent = truncatePath(dest);
     int dirinode = isValidDirectory(disk, parent);
     // Check if disk exists
