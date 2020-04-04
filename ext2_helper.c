@@ -11,6 +11,14 @@
 #include "ext2.h"
 #include "ext2_helper.h"
 
+
+
+////////////////////////////////////////////
+//  Functions for path stuff and disk :D  //
+////////////////////////////////////////////
+
+
+
 /*
  * takes out the last name in the path (get parent dir)
  */
@@ -26,29 +34,6 @@ char *truncatePath(char *path) {
     }
     return path;
 }
-
-// /*
-//  * returns tokens of path
-//  */
-//  char **tokenizePath(char *path) {
-//     // loop through the path
-//     int i = 0;
-//     int tokenindex = 0;
-//     char **tpath;
-//     while (i < strlen(path)) {
-//         if (path[i] == '/') {
-//             if (i != 0) {
-//                 **(tpath + sizeof(char) * i) = '\0';
-//                 tokenindex++;
-//             }
-//         }
-//         else **(tpath + sizeof(char) * i) = path[i];
-//         printf("aklsdjhalkdjfh\n");
-//         fflush(stdout);
-//         i++;
-//     }
-//     return tpath;
-//  }
 
 /*
  * Gets the desired file name
@@ -83,6 +68,14 @@ unsigned char *readDisk(char *path) {
     return d;
 }
 
+
+
+/////////////////////////////////////////////////////
+//  Functions for getting basic info of the disk   //
+/////////////////////////////////////////////////////
+
+
+
 /*
  * returns the super block :D:D:D:D:D
  */
@@ -97,6 +90,9 @@ struct ext2_group_desc *get_gd(unsigned char *disk) {
     return (struct ext2_group_desc *)(disk + 2 * EXT2_BLOCK_SIZE);
 }
 
+/*
+ * Gets the inode table :D
+ */
 struct ext2_inode *get_it(unsigned char *disk) {
     struct ext2_group_desc *gd = get_gd(disk);
     return (struct ext2_inode *) (disk + EXT2_BLOCK_SIZE * gd->bg_inode_table);
@@ -142,6 +138,22 @@ struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
     struct ext2_inode *i = get_inode(disk, inode);
     return (struct ext2_dir_entry_2 *)(disk + EXT2_BLOCK_SIZE * (i->i_block)[0]);
 }
+
+/*
+ * checks state of bit
+ */
+int bit_in_use(unsigned char byte, int offset) {
+    // return (byte & (1 << offset));
+    return (byte >> offset) & 1;
+}
+
+
+
+//////////////////////////////////////////////////////////////
+//  Functions to check the validity of a path in the disk   //
+//////////////////////////////////////////////////////////////
+
+
 
 /*
  * Check if specified path is valid
@@ -230,13 +242,14 @@ int isValidLink(unsigned char *disk, char *path) {
     return -1;
 }
 
-/*
- * checks state of bit
- */
-int bit_in_use(unsigned char byte, int offset) {
-    // return (byte & (1 << offset));
-    return (byte >> offset) & 1;
-}
+
+
+/////////////////////////
+//  Misc helpers lol   //
+/////////////////////////
+
+
+
 
 /*
  * Returns the node that was allocated
@@ -294,6 +307,7 @@ int allocateInode(unsigned char *disk, int size) {
             printf("looping through position\ninode: %d, name: %s\n", e->inode, e->name);
             fflush(stdout);
             if (e->inode <= 0 || e->inode > get_sb(disk)->s_inodes_count) return e;
+            printf("that aint it, chief\n");
             curr_pos += e->rec_len;
         }
         curr_block++;
@@ -313,6 +327,14 @@ int allocateInode(unsigned char *disk, int size) {
     strcpy(entry->name, name);
     return 0;
  }
+
+
+
+/////////////////////////////////////////////
+// The functions for the ACTUAL COMMANDS   //
+/////////////////////////////////////////////
+
+
 
 /*
  * Adds a file into the directory given by the inode
@@ -344,6 +366,7 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
  * returns 0 on success, and -1 on failure
  */
 int addDir(unsigned char *disk, char *dirname, int inode) {
+    printf("we adding this bad boi : %s", dirname);
     // get a freeeeeeeeeee inode :D:D:D
     int allocatedinode = allocateInode(disk, 1);
     if (allocatedinode == -1) return -1;
