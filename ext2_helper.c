@@ -366,7 +366,7 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
  * returns 0 on success, and -1 on failure
  */
 int addDir(unsigned char *disk, char *dirname, int inode) {
-    printf("we adding this bad boi : %s", dirname);
+    printf("we adding this bad boi : %s\n", dirname);
     // get a freeeeeeeeeee inode :D:D:D
     int allocatedinode = allocateInode(disk, 1);
     if (allocatedinode == -1) return -1;
