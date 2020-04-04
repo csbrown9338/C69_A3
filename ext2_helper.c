@@ -231,6 +231,13 @@ int isValidLink(unsigned char *disk, char *path) {
 }
 
 /*
+ * checks state of bit
+ */
+int bit_in_use(int byte, int offset) {
+    return (byte & (1 << offset));
+}
+
+/*
  * Returns the node that was allocated
  * size is required amount of blocks
  * if there aren't enough blocks, uh gg returns -1
@@ -251,7 +258,7 @@ int allocateInode(unsigned char *disk, int size) {
         int bit = 0;
         while (bit < 8) {
             printf("bit: %d", ~(ibm[curr_block] & 1 << bit));
-            if (~(ibm[curr_block] & 1 << bit)) {
+            if (!(bit_in_use(ibm[curr_block], bit))) {
                 int found_inode = (curr_block * 8) + bit;
                 printf("found free inode: %d\n", curr_block);
                 fflush(stdout);
