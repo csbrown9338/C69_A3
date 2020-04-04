@@ -233,7 +233,7 @@ int isValidLink(unsigned char *disk, char *path) {
 /*
  * checks state of bit
  */
-int bit_in_use(int byte, int offset) {
+int bit_in_use(unsigned char *byte, int offset) {
     return (byte & (1 << offset));
 }
 
