@@ -270,10 +270,13 @@ int allocateBlocks(unsigned char *disk, int size) {
     while (bit < sb->s_blocks_count && curr_size != size) {
         byte = bit / (sizeof(unsigned char) * 8);
         offset = bit % (sizeof(unsigned char) * 8);
+        printf("bit in use: %d", bit_in_use(bbm[byte], offset));
+        // If bit is in use...
         if (bit_in_use(bbm[byte], offset) == 1) {
             found = -1;
             size = 0;
         }
+        // If bit is not in use
         else {
             if (found == -1) found = bit;
             curr_size++;
@@ -281,7 +284,7 @@ int allocateBlocks(unsigned char *disk, int size) {
         printf("in loop - found: %d, curr_size: %d\n", found, curr_size);
         bit++;
     }
-    if (curr_size != size) {
+    if (curr_size != size || found == -1) {
         printf("couldn't find consecutive blocks, sorry\n");
         return -1;
     }
