@@ -292,7 +292,7 @@ int allocateBlocks(unsigned char *disk, int size) {
         bbm[byte] |= 1 << offset;
         k++;
     }
-    sb->bg_free_blocks_count -= size;
+    sb->s_free_blocks_count -= size;
     return found;
 }
 
@@ -420,7 +420,7 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // Find blocks
     int block = allocateBlocks(disk, 1);
     // Have that inode point to that block :D
-    in->block[0] = block + 1;
+    in->i_block[0] = block + 1;
     struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
     printf("a_entry tingz before\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, dirname);
