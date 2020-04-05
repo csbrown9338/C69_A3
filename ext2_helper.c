@@ -270,16 +270,18 @@ int allocateBlocks(unsigned char *disk, int size) {
     while (bit < sb->s_blocks_count && curr_size != size) {
         byte = bit / (sizeof(unsigned char) * 8);
         offset = bit % (sizeof(unsigned char) * 8);
-        printf("bit in use: %d", bit_in_use(bbm[byte], offset));
+        printf("bit in use: %d --- ", bit_in_use(bbm[byte], offset));
         // If bit is in use...
         if (bit_in_use(bbm[byte], offset) == 1) {
             found = -1;
             size = 0;
+            printf("yes\n");
         }
         // If bit is not in use
         else {
             if (found == -1) found = bit;
             curr_size++;
+            printf("no, she freeee\n");
         }
         printf("in loop - found: %d, curr_size: %d\n", found, curr_size);
         bit++;
@@ -296,7 +298,7 @@ int allocateBlocks(unsigned char *disk, int size) {
         bbm[byte] |= 1 << offset;
         k++;
     }
-    printf("officially found: %d", found);
+    printf("\tofficially found: %d\n", found);
     sb->s_free_blocks_count -= size;
     return found;
 }
@@ -323,7 +325,7 @@ int allocateInode(unsigned char *disk, int size) {
         while (bit < 8) {
             if (bit_in_use(ibm[curr_block], bit) == 0) {
                 int found_inode = (curr_block * 8) + bit + 1;
-                printf("\tfound free inode: %d\n", found_inode);
+                // printf("\tfound free inode: %d\n", found_inode);
                 fflush(stdout);
                 ibm[curr_block] |= 1 << bit; // set it to in use
                 sb->s_free_inodes_count--;
@@ -348,16 +350,16 @@ int allocateInode(unsigned char *disk, int size) {
     // loooooopp through the blocks :)
     int curr_block = 0;
     while (curr_block < dir->i_blocks) {
-        printf("looping through blocks\n");
+        // printf("looping through blocks\n");
         fflush(stdout);
         unsigned int block = dir->i_block[curr_block];
         int curr_pos = block;
         while (curr_pos < dir->i_size) {
             struct ext2_dir_entry_2 *e = get_dir_entry(disk, dir, curr_block, curr_pos);
-            printf("looping through position\ninode: %d, name: %s\n", e->inode, e->name);
+            // printf("looping through position\ninode: %d, name: %s\n", e->inode, e->name);
             fflush(stdout);
             if (e->inode <= 0 || e->inode > get_sb(disk)->s_inodes_count) return e;
-            printf("that aint it, chief\n");
+            // printf("that aint it, chief\n");
             curr_pos += e->rec_len;
         }
         curr_block++;
@@ -416,7 +418,7 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
  * returns 0 on success, and -1 on failure
  */
 int addDir(unsigned char *disk, char *dirname, int inode) {
-    printf("we adding this bad boi: %s\n", dirname);
+    // printf("we adding this bad boi: %s\n", dirname);
     // get a freeeeeeeeeee inode :D:D:D
     int allocatedinode = allocateInode(disk, 1);
     if (allocatedinode == -1) return -1;
@@ -433,9 +435,9 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // now add it to the parent dirrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
     // and add
-    printf("entry tingz before\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
+    printf("entry tingz before\n\tinode: %d\n\tname: %s\n", entry->inode, entry->name);
     addEntry(entry, allocatedinode, EXT2_FT_DIR, dirname);
-    printf("entry tingz after\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
+    printf("entry tingz after\n\tinode: %d\n\tname: %s\n", entry->inode, entry->name);
     return 0;
 }
 
