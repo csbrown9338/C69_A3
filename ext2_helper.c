@@ -270,21 +270,17 @@ int allocateBlocks(unsigned char *disk, int size) {
     while (bit < sb->s_blocks_count && curr_size != size) {
         byte = bit / (sizeof(unsigned char) * 8);
         offset = bit % (sizeof(unsigned char) * 8);
-        printf("bit in use: %d --- ", bit_in_use(bbm[byte], offset));
         // If bit is in use...
         if (bit_in_use(bbm[byte], offset) == 1) {
             // restart counters
             found = -1;
             curr_size = 0;
-            printf("yes\n");
         }
         // If bit is not in use
         else {
             if (found == -1) found = bit;
             curr_size++;
-            printf("no, she freeee\n");
         }
-        printf("in loop - found: %d, curr_size: %d\n", found, curr_size);
         bit++;
     }
     if (curr_size != size || found == -1) {
@@ -293,6 +289,7 @@ int allocateBlocks(unsigned char *disk, int size) {
     }
     // Turn on all of the bits in the bitmap omg
     int k = 0;
+    found++;
     while (k < size) {
         byte = (found + k) / (sizeof(unsigned char) * 8);
         offset = (found + k) % (sizeof(unsigned char) * 8);
@@ -402,8 +399,14 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
     int blocks = lseek(fd, 0, SEEK_END) / EXT2_BLOCK_SIZE;
     // Find an inode that you can allocate to
     int allocatedinode = allocateInode(disk, blocks);
+    // get the inode
+    struct ext2_inode *in = get_inode(disk, allocatedinode);
+    // get blocks
+    int dest_blocks = allocateBlocks(disk, blocks);
+    // have inode to point to dem blocks yo
+    in->i_block[0] = dest_blocks + 1;
     // Put it in
-    struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *)(get_inode(disk, allocatedinode))->i_block[0];
+    struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *) in->i_block[0];
     addEntry(a_entry, allocatedinode, EXT2_FT_REG_FILE, fname);
     // Find an empty spot in the parent directory
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
@@ -430,15 +433,15 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // Have that inode point to that block :D
     in->i_block[0] = block + 1;
     struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
-    printf("a_entry tingz before\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
+    // printf("a_entry tingz before\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, dirname);
-    printf("a_entry tingz after\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
+    // printf("a_entry tingz after\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     // now add it to the parent dirrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
     // and add
-    printf("entry tingz before\n\tinode: %d\n\tname: %s\n", entry->inode, entry->name);
+    // printf("entry tingz before\n\tinode: %d\n\tname: %s\n", entry->inode, entry->name);
     addEntry(entry, allocatedinode, EXT2_FT_DIR, dirname);
-    printf("entry tingz after\n\tinode: %d\n\tname: %s\n", entry->inode, entry->name);
+    // printf("entry tingz after\n\tinode: %d\n\tname: %s\n", entry->inode, entry->name);
     return 0;
 }
 
@@ -451,8 +454,14 @@ int addSymLink(unsigned char *disk, char *lname, char *source_name, int file_ino
     int blocks = ceil(sizeof(source_name) / EXT2_BLOCK_SIZE);
     // do the do
     int allocatedinode = allocateInode(disk, blocks);
+    // Get inode
+    struct ext2_inode *in = get_inode(disk, allocatedinode);
+    // Find blockssss
+    int dest_blocks = allocateBlocks(disk, blocks);
+    // point to those blocks
+    in->i_block[0] = dest_blocks + 1;
     // put em INNNN BOII
-    struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *)(get_inode(disk, allocatedinode))->i_block[0];
+    struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *) in->i_block[0];
     addEntry(a_entry, allocatedinode, EXT2_FT_SYMLINK, lname);
     // put it into the parent dirrrrrrrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, dir_inode);
