@@ -273,8 +273,9 @@ int allocateBlocks(unsigned char *disk, int size) {
         printf("bit in use: %d --- ", bit_in_use(bbm[byte], offset));
         // If bit is in use...
         if (bit_in_use(bbm[byte], offset) == 1) {
+            // restart counters
             found = -1;
-            size = 0;
+            curr_size = 0;
             printf("yes\n");
         }
         // If bit is not in use
