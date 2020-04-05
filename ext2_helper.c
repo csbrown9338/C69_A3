@@ -270,7 +270,7 @@ int allocateBlocks(unsigned char *disk, int size) {
     while (bit < sb->s_blocks_count && curr_size != size) {
         byte = bit / (sizeof(unsigned char) * 8);
         offset = bit % (sizeof(unsigned char) * 8);
-        if (bit_in_use(bbm[byte], offset) == 0) {
+        if (bit_in_use(bbm[byte], offset) == 1) {
             found = -1;
             size = 0;
         }
@@ -278,11 +278,11 @@ int allocateBlocks(unsigned char *disk, int size) {
             if (found == -1) found = bit;
             curr_size++;
         }
-        printf("in loop - found: %d, curr_size: %d", found, curr_size);
+        printf("in loop - found: %d, curr_size: %d\n", found, curr_size);
         bit++;
     }
     if (curr_size != size) {
-        printf("couldn't find consecutive blocks, sorry");
+        printf("couldn't find consecutive blocks, sorry\n");
         return -1;
     }
     // Turn on all of the bits in the bitmap omg
