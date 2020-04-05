@@ -252,6 +252,50 @@ int isValidLink(unsigned char *disk, char *path) {
 
 
 /*
+ * returns a free block given the size
+ * size says how many blocks are needed
+ */
+int allocateBlocks(unsigned char *disk, int size) {
+    // Get block bitmap
+    unsigned char *bbm = get_b_bm(disk);
+    // also super block
+    struct ext2_super_block *sb = get_sb(disk);
+    // Loop through the bitmaperino
+    // One loop for every byte, another for every bit, and another for size
+    int bit = 0;
+    int found = -1;
+    int curr_size = 0;
+    int byte = 0;
+    int offset = 0;
+    while (bit < sb->s_blocks_count && curr_size != size) {
+        byte = bit / (sizeof(unsigned char) * 8);
+        offset = bit % (sizeof(unsigned char) * 8);
+        if (bit_in_use(bbm[byte], offset) == 0) {
+            found = -1;
+            size = 0;
+        }
+        else {
+            if (found == -1) found = bit;
+            curr_size++;
+        }
+        bit++;
+    }
+    if (curr_size != size) {
+        printf("couldn't find consecutive blocks, sorry");
+        return -1;
+    }
+    // Turn on all of the bits in the bitmap omg
+    int k = 0;
+    while (k < size) {
+        byte = (found + k) / (sizeof(unsigned char) * 8);
+        offset = (found + k) % (sizeof(unsigned char) * 8);
+        bbm[byte] |= 1 << offset;
+        k++;
+    }
+    return found;
+}
+
+/*
  * Returns the node that was allocated
  * size is required amount of blocks
  * if there aren't enough blocks, uh gg returns -1
@@ -276,6 +320,7 @@ int allocateInode(unsigned char *disk, int size) {
                 printf("\tfound free inode: %d\n", found_inode);
                 fflush(stdout);
                 ibm[curr_block] |= 1 << bit; // set it to in use
+                sb->s_free_inodes--;
                 return found_inode;
             }
             bit++;
@@ -371,6 +416,10 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     if (allocatedinode == -1) return -1;
     // put er innnnn
     struct ext2_inode *in = get_inode(disk, allocatedinode);
+    // Find blocks
+    int block = allocateBlocks(disk, 1);
+    // Have that inode point to that block :D
+    in->block[0] = block + 1;
     struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
     printf("a_entry tingz before\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, dirname);
