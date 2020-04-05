@@ -271,7 +271,6 @@ int allocateInode(unsigned char *disk, int size) {
     while (curr_block < sb->s_inodes_count/(sizeof(unsigned char) * 8)) {
         int bit = 0;
         while (bit < 8) {
-            printf("bit: %d, inode: %d\n", bit_in_use(ibm[curr_block], bit), (curr_block * 8) + bit);
             if (bit_in_use(ibm[curr_block], bit) == 0) {
                 int found_inode = (curr_block * 8) + bit + 1;
                 printf("\tfound free inode: %d\n", found_inode);
@@ -373,13 +372,15 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // put er innnnn
     struct ext2_inode *in = get_inode(disk, allocatedinode);
     struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
+    printf("a_entry tingz before\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, dirname);
-    printf("a_entry tingz\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
+    printf("a_entry tingz after\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     // now add it to the parent dirrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
     // and add
+    printf("entry tingz before\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     addEntry(entry, allocatedinode, EXT2_FT_DIR, dirname);
-    printf("entry tingz\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
+    printf("entry tingz after\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     return 0;
 }
 
