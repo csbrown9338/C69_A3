@@ -292,6 +292,7 @@ int allocateBlocks(unsigned char *disk, int size) {
         bbm[byte] |= 1 << offset;
         k++;
     }
+    sb->bg_free_blocks_count -= size;
     return found;
 }
 
@@ -320,7 +321,7 @@ int allocateInode(unsigned char *disk, int size) {
                 printf("\tfound free inode: %d\n", found_inode);
                 fflush(stdout);
                 ibm[curr_block] |= 1 << bit; // set it to in use
-                sb->s_free_inodes--;
+                sb->s_free_inodes_count--;
                 return found_inode;
             }
             bit++;
