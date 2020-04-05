@@ -278,6 +278,7 @@ int allocateBlocks(unsigned char *disk, int size) {
             if (found == -1) found = bit;
             curr_size++;
         }
+        printf("in loop - found: %d, curr_size: %d", found, curr_size);
         bit++;
     }
     if (curr_size != size) {
@@ -292,6 +293,7 @@ int allocateBlocks(unsigned char *disk, int size) {
         bbm[byte] |= 1 << offset;
         k++;
     }
+    printf("officially found: %d", found);
     sb->s_free_blocks_count -= size;
     return found;
 }
