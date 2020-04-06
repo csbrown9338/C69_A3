@@ -346,6 +346,8 @@ int allocateInode(unsigned char *disk, int size) {
         printf("entering other loop\n");
         fflush(stdout);
         while (curr_pos < dir->i_size) {
+            printf("structure\n");
+            fflush(stdout);
             struct ext2_dir_entry_2 *e = get_dir_entry(disk, dir, curr_block, curr_pos);
             printf("looping through position\ninode: %d, name: %s\n", e->inode, e->name);
             fflush(stdout);
