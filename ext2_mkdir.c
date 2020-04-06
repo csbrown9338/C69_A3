@@ -45,12 +45,12 @@ int main(int argc, char **argv) {
         memset(filename, '\0', strlen(filename));
     }
     // Check if the name is taken
-    else {
-        fprintf(stderr, "Name is taken");
-        memset(filename, '\0', strlen(filename));
-        if (isValidDirectory(disk, newdir) != -1) return EISDIR;
-        else if (isValidFile(disk, newdir) != -1) return EEXIST;
-        else exit(1);
-    }
+    // else {
+    //     fprintf(stderr, "Name is taken");
+    //     memset(filename, '\0', strlen(filename));
+    //     if (isValidDirectory(disk, newdir) != -1) return EISDIR;
+    //     else if (isValidFile(disk, newdir) != -1) return EEXIST;
+    //     else exit(1);
+    // }
     return 0;
 }
