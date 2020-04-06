@@ -23,12 +23,12 @@ int main(int argc, char **argv) {
         exit(1);
     }
     // If the disk exists :)
-    // printf("full path: %s, length: %d\n", newdir, strlen(newdir));
     int exists_inode = isValidPath(disk, newdir);
     char *raw_name = extractFileName(newdir);
-    // printf("raw name: %s, length: %d\n", raw_name, strlen(raw_name));
+    printf("raw name: %s, length: %d\n", raw_name, strlen(raw_name));
     char filename[strlen(raw_name)];
     strncpy(filename, raw_name, strlen(raw_name));
+    printf("raw name: %s, filename: %d\n", raw_name, filename);
     char *parent = truncatePath(newdir);
     int inode = isValidDirectory(disk, parent);
     // Check that everything before the last '/' is a valid dir
