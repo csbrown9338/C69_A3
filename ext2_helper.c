@@ -183,8 +183,6 @@ int isValidPath(unsigned char *disk, char *og_path) {
         // Do the stuff to find the path :D
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
-        // If we found a file we can't go any further :(
-        if (inode->i_mode != EXT2_S_IFDIR) found_file = 1;
         found_inode = curr_inode;
         // Loop through each block
         while (found_inode == curr_inode && curr_block < inode->i_blocks && found_file == 0) {
