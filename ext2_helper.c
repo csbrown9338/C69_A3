@@ -184,10 +184,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
         // If we found a file we can't go any further :(
-        if (inode->i_mode != EXT2_S_IFDIR) {
-            printf("she a file\n");
-            found_file = 1;
-        }
+        if (inode->i_mode != EXT2_S_IFDIR) found_file = 1;
         found_inode = curr_inode;
         // Loop through each block
         while (found_inode == curr_inode && curr_block < inode->i_blocks && found_file == 0) {
@@ -206,7 +203,10 @@ int isValidPath(unsigned char *disk, char *og_path) {
             // If curr_pos is i_size, then we gotta go to the next block
             if (found_inode == curr_inode) curr_block++;
         }
-        if (found_inode == curr_inode && found_file == 0) return -1;
+        if (found_inode == curr_inode && found_file == 0) {
+            printf("found file, but uhhhhhhhhh yeah");
+            return -1;
+        } 
         // +1 for null byte
         tpath = strtok(NULL, "/");
     }
