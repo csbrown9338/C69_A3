@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
     }
     inode = isValidDirectory(disk, path);
     int fileInode = isValidFile(disk, path);
-    // printf("file inode: %d\n", fileInode);
+    printf("file inode: %d\n", fileInode);
     // If it's a file, then just... print da filename lmao
     if (fileInode != -1) printf("%s", path);
     // If it's a directory... oh boi
