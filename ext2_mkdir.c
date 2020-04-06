@@ -26,9 +26,9 @@ int main(int argc, char **argv) {
     int exists_inode = isValidPath(disk, newdir);
     char *raw_name = extractFileName(newdir);
     printf("raw name: %s, length: %d\n", raw_name, strlen(raw_name));
-    char filename[strlen(raw_name)];
+    char filename[strlen(raw_name) + 1];
     strncpy(filename, raw_name, strlen(raw_name));
-    // filename[strlen(raw_name) + 1] = '\0';
+    filename[strlen(raw_name)] = '\0';
     printf("filename: %s, length: %d\n", filename, strlen(filename));
     char *parent = truncatePath(newdir);
     int inode = isValidDirectory(disk, parent);
