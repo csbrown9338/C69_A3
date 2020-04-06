@@ -38,13 +38,13 @@ int main(int argc, char **argv) {
         return ENOENT;
     }
     // Check if the name is taken
-    else if (exists_inode != -1) {
-        fprintf(stderr, "Name is taken");
-        memset(filename, '\0', strlen(filename));
-        if (isValidDirectory(disk, newdir) != -1) return EISDIR;
-        else if (isValidFile(disk, newdir) != -1) return EEXIST;
-        else exit(1);
-    }
+    // else if (exists_inode != -1) {
+    //     fprintf(stderr, "Name is taken");
+    //     memset(filename, '\0', strlen(filename));
+    //     if (isValidDirectory(disk, newdir) != -1) return EISDIR;
+    //     else if (isValidFile(disk, newdir) != -1) return EEXIST;
+    //     else exit(1);
+    // }
     else { 
         addDir(disk, filename, inode);
         memset(filename, '\0', strlen(filename));

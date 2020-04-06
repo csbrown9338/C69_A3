@@ -409,21 +409,15 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
     int blocks = lseek(fd, 0, SEEK_END) / EXT2_BLOCK_SIZE;
     // Find an inode that you can allocate to
     int allocatedinode = allocateInode(disk, blocks);
-    printf("received inode: %d\n", allocatedinode);
-    fflush(stdout);
     // get the inode
     struct ext2_inode *in = get_inode(disk, allocatedinode);
     // get first free block and allocate all nodes
     allocateBlocks(disk, in, blocks);
     // Copy the file infoooooo
-    printf("putting in the file contents\n");
-    fflush(stdout);
     addFileContents(disk, in, fd);
     // Change mode
     in->i_mode |= EXT2_S_IFREG;
     // Find an empty spot in the parent directory
-    printf("putting in the parent dir\n");
-    fflush(stdout);
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
     // Do the same thaaaaaannnnnng but with the parent dirrrr
     addEntry(entry, allocatedinode, EXT2_FT_REG_FILE, fname);
