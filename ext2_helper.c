@@ -438,6 +438,8 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     struct ext2_inode *in = get_inode(disk, allocatedinode);
     // Find blocks
     allocateBlocks(disk, in, 1);
+    printf("amount of blocks: %d\n", in->i_blocks);
+    fflush(stdout);
     struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
     // printf("a_entry tingz before\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, ".");
@@ -445,8 +447,6 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // Update size of new dir :)
     in->i_size = a_entry->rec_len;
     // Add another entry for parent
-    printf("getting the first empty entry in the new inode!!!\n");
-    fflush(stdout);
     struct ext2_dir_entry_2 *parent = findNewEntry(disk, allocatedinode);
     addEntry(parent, inode, EXT2_FT_DIR, "..");
     // Add this too
