@@ -390,7 +390,7 @@ int addFileContents(unsigned char *disk, struct ext2_inode *i, int fd) {
     unsigned char *block = get_block(disk, i, curr_block);
     int size_read = 0;
     // direct blocksssss
-    while (curr_block < 12 && size_read = read(fd, block, EXT2_BLOCK_SIZE) > 0) {
+    while (curr_block < 12 && (size_read = read(fd, block, EXT2_BLOCK_SIZE)) > 0) {
         // increase inode size, and update counters
         i->i_size += size_read;
         total_size += size_read;
@@ -399,20 +399,6 @@ int addFileContents(unsigned char *disk, struct ext2_inode *i, int fd) {
     if (size_read == 0) return 0;
     // indirect blockssssss
     return -1;
-}
-
-/*
- * puts the pathname into the blocks
- * returns 0 on success, -1 on failure
- */
-int insertLink(unsigned char *disk, struct ext2_inode *i, char *path) {
-    int curr_block = 0;
-    int total_size = 0;
-    unsigned char *block = get_block(disk, i, curr_block);
-    int size = sizeof(path);
-    while (curr_bock < 12 && total_size < size) {
-
-    }
 }
 
 
