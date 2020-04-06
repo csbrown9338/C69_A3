@@ -37,6 +37,8 @@ int main(int argc, char **argv) {
         printf("received inode: %d\n", inode);
         fflush(stdout);
         struct ext2_inode *i = get_inode(disk, inode);
+        printf("\n");
+        fflush(stdout);
         int curr_block = 0;
         while (curr_block < i->i_blocks){
             int curr_pos = 0;
