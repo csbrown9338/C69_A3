@@ -441,8 +441,11 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     allocateBlocks(disk, in, 1);
     struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
     // printf("a_entry tingz before\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
-    addEntry(a_entry, allocatedinode, EXT2_FT_DIR, dirname);
+    addEntry(a_entry, allocatedinode, EXT2_FT_DIR, ".");
     // printf("a_entry tingz after\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
+    // Add another entry for parent
+    struct ext2_dir_entry_2 *parent = findNewEntry(disk, allocatedinode);
+    addEntry(parent, inode, EXT2_FT_DIR, "..");
     // the modeeeeeee 
     in->i_mode |= EXT2_S_IFDIR;
     // now add it to the parent dirrrr

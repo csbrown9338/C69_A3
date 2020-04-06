@@ -35,10 +35,10 @@ ext2_ls:
 ext2_cp:
     - Allocated an inode
     - Allocated up to 12 blocks
-    - Adding an ext2_dir_entry_2 into the destination
+    - Adding an ext2_dir_entry_2 into the destination (not properly, but it's stored in there)
 
 ext2_mkdir:
-    - 
+    - Adding 
 
 ext2_ln:
 
@@ -56,5 +56,8 @@ ext2_mkdir:
 
 ext2_ln:
 
-ext2_rm:
-    - See above
+
+There are also some things that I don't know if they work for specific commands:
+
+ext2_cp:
+    - I'm not sure if I copied the information correctly, or in the right spot (specifically, for anything that requires less than 12 blocks)
