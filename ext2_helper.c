@@ -333,9 +333,13 @@ int allocateInode(unsigned char *disk, int size) {
  */
  struct ext2_dir_entry_2 *findNewEntry(unsigned char *disk, int dir_inode) {
     // Get the dir_inode
+    printf("getting struct\n");
+    fflush(stdout)
     struct ext2_inode *dir = get_inode(disk, dir_inode);
     // loooooopp through the blocks :)
     int curr_block = 0;
+    printf("size: %d\n", dir->i_size);
+    fflush(stdout)
     while (curr_block < dir->i_blocks) {
         unsigned int block = dir->i_block[curr_block];
         int curr_pos = block;
