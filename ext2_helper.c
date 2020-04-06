@@ -177,36 +177,37 @@ int isValidPath(unsigned char *disk, char *og_path) {
     char *tpath = strtok(path, "/");
     int curr_inode = EXT2_ROOT_INO; // start at root
     int found_inode;
+    int found_file = 0;
     // Starting the loop to go through each token in the path
-    while (tpath != NULL) {
-        int blank = 0;
+    while (tpath != NULL && found_file == 0) {
         // Do the stuff to find the path :D
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
+        // If we found a file we can't go any further :(
+        if (inode->i_mode == EXT2_S_IFREG || inode->i_mode == EXT2_S_IFLNK) found_file == 1;
         found_inode = curr_inode;
         // Loop through each block
-        while (found_inode == curr_inode && curr_block < inode->i_blocks && blank == 0) {
+        while (found_inode == curr_inode && curr_block < inode->i_blocks && found_file == 0) {
             int curr_pos = 0;
             // Loop through each position
-            while (found_inode == curr_inode && curr_pos < inode->i_size && blank == 0) {
+            while (found_inode == curr_inode && curr_pos < inode->i_size) {
                 // Go through all the entries in the directory to find a name match
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
                 // check name if it MATCHES :D
                 if (strncmp(tpath, e->name, strlen(tpath)) == 0) {
                     curr_inode = e->inode;
                 }
-                else if (e->name_len == 0) {
-                    blank = 1;
-                }
                 curr_pos += e->rec_len; 
             }
             // If curr_pos is i_size, then we gotta go to the next block
             if (found_inode == curr_inode) curr_block++;
         }
-        if (found_inode == curr_inode) return -1;
+        if (found_inode == curr_inode && found_file == 0) return -1;
         // +1 for null byte
         tpath = strtok(NULL, "/");
     }
+    // I think another if statement takes care of this but... just to be safe lol
+    if (found_file == 1 && tpath != NULL) return -1;
     return curr_inode;
 }
 
@@ -414,39 +415,26 @@ int addFileContents(unsigned char *disk, struct ext2_inode *i, int fd) {
  * path is the native path to the file
  * returns 0 on success, and -1 on failure
  */
-int addNativeFile(unsigned char *disk, char *path, int inode) {\
-    printf("getting the name :D\n");
-    fflush(stdout);
+int addNativeFile(unsigned char *disk, char *path, int inode) {
     char *fname = extractFileName(path);
     // Get the file handle
-    printf("getting file\n");
-    fflush(stdout);
     int fd = open(path, O_RDONLY);
     // get the amount of blocks you need to allocate
-    printf("getting amount of blocks\n");
-    fflush(stdout);
     int blocks = lseek(fd, 0, SEEK_END) / EXT2_BLOCK_SIZE;
     // Find an inode that you can allocate to
-    printf("allocating blocks\n");
-    fflush(stdout);
     int allocatedinode = allocateInode(disk, blocks);
-    // get the inode
-    printf("getting inode from allocateInode\n");
+    printf("received inode: %d\n", allocatedinode);
     fflush(stdout);
+    // get the inode
     struct ext2_inode *in = get_inode(disk, allocatedinode);
     // get first free block and allocate all nodes
-    printf("allocate blocks\n");
-    fflush(stdout);
     allocateBlocks(disk, in, blocks);
     // Copy the file infoooooo
     printf("putting in the file contents\n");
     fflush(stdout);
     addFileContents(disk, in, fd);
-    // Put it in
-    printf("putting in\n");
-    fflush(stdout);
-    struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *) in->i_block[0];
-    addEntry(a_entry, allocatedinode, EXT2_FT_REG_FILE, fname);
+    // Change mode
+    in->i_mode = EXT2_S_IFREG;
     // Find an empty spot in the parent directory
     printf("putting in the parent dir\n");
     fflush(stdout);
@@ -475,6 +463,8 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // printf("a_entry tingz before\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, dirname);
     // printf("a_entry tingz after\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
+    // the modeeeeeee 
+    in->i_mode = EXT2_S_IFDIR;
     // now add it to the parent dirrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
     // and add
@@ -503,9 +493,8 @@ int addSymLink(unsigned char *disk, char *lname, char *source_name, int file_ino
     // memcpy the path
     unsigned char *block = get_block(disk, in, 0);
     memcpy(block, source_name, sizeof(source_name));
-    // put em INNNN BOII
-    struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *) in->i_block[0];
-    addEntry(a_entry, allocatedinode, EXT2_FT_SYMLINK, lname);
+    // mode
+    in->i_mode = EXT2_S_IFLNK;
     // put it into the parent dirrrrrrrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, dir_inode);
     // and addddddd
