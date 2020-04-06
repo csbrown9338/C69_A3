@@ -414,24 +414,42 @@ int addFileContents(unsigned char *disk, struct ext2_inode *i, int fd) {
  * path is the native path to the file
  * returns 0 on success, and -1 on failure
  */
-int addNativeFile(unsigned char *disk, char *path, int inode) {
+int addNativeFile(unsigned char *disk, char *path, int inode) {\
+    printf("getting the name :D\n");
+    fflush(stdout);
     char *fname = extractFileName(path);
     // Get the file handle
+    printf("getting file\n");
+    fflush(stdout);
     int fd = open(path, O_RDONLY);
     // get the amount of blocks you need to allocate
+    printf("getting amount of blocks\n");
+    fflush(stdout);
     int blocks = lseek(fd, 0, SEEK_END) / EXT2_BLOCK_SIZE;
     // Find an inode that you can allocate to
+    printf("allocating blocks\n");
+    fflush(stdout);
     int allocatedinode = allocateInode(disk, blocks);
     // get the inode
+    printf("getting inode from allocateInode\n");
+    fflush(stdout);
     struct ext2_inode *in = get_inode(disk, allocatedinode);
     // get first free block and allocate all nodes
+    printf("allocate blocks\n");
+    fflush(stdout);
     allocateBlocks(disk, in, blocks);
     // Copy the file infoooooo
+    printf("putting in the file contents\n");
+    fflush(stdout);
     addFileContents(disk, in, fd);
     // Put it in
+    printf("putting in\n");
+    fflush(stdout);
     struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *) in->i_block[0];
     addEntry(a_entry, allocatedinode, EXT2_FT_REG_FILE, fname);
     // Find an empty spot in the parent directory
+    printf("putting in the parent dir\n");
+    fflush(stdout);
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
     // Do the same thaaaaaannnnnng but with the parent dirrrr
     addEntry(entry, allocatedinode, EXT2_FT_REG_FILE, fname);
