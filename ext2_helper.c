@@ -191,14 +191,13 @@ int isValidPath(unsigned char *disk, char *og_path) {
             while (found_inode == curr_inode && curr_pos < inode->i_size && found_file == 0) {
                 // Go through all the entries in the directory to find a name match
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
-                printf("inode: %d, name: %s, ", e->inode, e->name);
                 // check name if it MATCHES :D
                 if (strncmp(tpath, e->name, strlen(tpath)) == 0) {
                     curr_inode = e->inode;
                 }
                 if (e->file_type != EXT2_FT_DIR) found_file = 1;
-                printf("found_file: %d\n", found_file);
                 curr_pos += e->rec_len; 
+                printf("inode: %d\n", curr_inode);
             }
             // If curr_pos is i_size, then we gotta go to the next block
             if (found_inode == curr_inode) curr_block++;
