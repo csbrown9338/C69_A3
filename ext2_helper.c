@@ -232,7 +232,7 @@ int isValidFile(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is file (EXT2_FT_REG_FILE)
     struct ext2_inode *i = get_inode(disk, inode);
-    if (i->i_mode & EXT2_S_IFREG) || (i->i_mode & EXT2_S_IFLNK)) return inode;
+    if ((i->i_mode & EXT2_S_IFREG) || (i->i_mode & EXT2_S_IFLNK)) return inode;
     return -1;
 }
 
