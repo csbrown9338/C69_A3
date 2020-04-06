@@ -295,7 +295,7 @@ int allocateBlocks(unsigned char *disk, struct ext2_inode *i, int size) {
         }
         bit++;
     }
-    if (curr_size != size || found == -1) {
+    if (curr_size != size) {
         printf("couldn't find blocks, sorry\n");
         // deallocate everything :(((
         return -1;
