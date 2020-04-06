@@ -426,8 +426,6 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
     struct ext2_inode *in = get_inode(disk, allocatedinode);
     // get first free block and allocate all nodes
     int dest_blocks = allocateBlocks(disk, in, blocks);
-    // have inode to point to dem blocks yo
-    in->i_block[0] = dest_blocks + 1;
     // Copy the file infoooooo
     addFileContents(disk, in, fd);
     // Put it in
@@ -454,9 +452,7 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // put er innnnn
     struct ext2_inode *in = get_inode(disk, allocatedinode);
     // Find blocks
-    int block = allocateBlocks(disk, 1);
-    // Have that inode point to that block :D
-    in->i_block[0] = block + 1;
+    int block = allocateBlocks(disk, in, 1);
     struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
     // printf("a_entry tingz before\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, dirname);
@@ -486,10 +482,8 @@ int addSymLink(unsigned char *disk, char *lname, char *source_name, int file_ino
     struct ext2_inode *in = get_inode(disk, allocatedinode);
     // Find blockssss
     int dest_blocks = allocateBlocks(disk, in, blocks);
-    // point to those blocks
-    in->i_block[0] = dest_blocks + 1;
     // memcpy the path
-    unsigned char *block = get_b_bm(disk, in, block, 0);
+    unsigned char *block = get_block(disk, in, block, 0);
     memcpy(block, source_name, sizeof(source_name));
     // put em INNNN BOII
     struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *) in->i_block[0];
