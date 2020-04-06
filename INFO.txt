@@ -31,22 +31,24 @@ For the specific commands, I have completed the following:
 ext2_ls:
     - Looping through the entries of a given directory and listing them
     - Printing out the name if it's not a directory
+    - Displayed . and .. given the -a flag
 
 ext2_cp:
     - Allocated an inode
     - Allocated up to 12 blocks
-    - Adding an ext2_dir_entry_2 into the destination (not properly, but it's stored in there)
 
 ext2_mkdir:
-    - Adding 
+    - Allocating a new inode for directory
+    - Allocating a place for the ext2_dir_entry_2 structure for the parent (..) after the new dir (.)
 
 ext2_ln:
+    - Not sure 
 
 ext2_rm:
     - Nothing
 
 
-Problems I had specific to each command:
+Problems I had specific to each command (that's not address/overwritten structure related):
 
 ext2_ls:
 
@@ -61,3 +63,6 @@ There are also some things that I don't know if they work for specific commands:
 
 ext2_cp:
     - I'm not sure if I copied the information correctly, or in the right spot (specifically, for anything that requires less than 12 blocks)
+
+ext2_mkdir:
+    - Adding an ext2_dir_entry_2 into the destination (not properly, but it's stored in there)
