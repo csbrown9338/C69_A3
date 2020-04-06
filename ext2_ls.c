@@ -32,7 +32,8 @@ int main(int argc, char **argv) {
     inode = isValidDirectory(disk, path);
     int fileInode = isValidFile(disk, path);
     // If it's a directory... oh boi
-    
+    printf("bout to make some checks dude\n");
+    fflush(stdout);
     if (inode != -1) {
         // If there be the -a, do the . and ..
         int has_flag = 0; // 0 if no flag, 1 if -a flag
