@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
         }
     }
     // If it's a file, then just... print da filename lmao
-    if (fileInode != -1) printf("%s\n", path);
+    if (fileInode != -1) printf("%s\n", extractFileName(path));
     // If not file or directory, then ENOENT
     else return ENOENT;
     return 0;
