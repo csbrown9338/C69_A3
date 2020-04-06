@@ -420,7 +420,7 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
     fflush(stdout);
     addFileContents(disk, in, fd);
     // Change mode
-    in->i_mode = EXT2_S_IFREG;
+    in->i_mode |= EXT2_S_IFREG;
     // Find an empty spot in the parent directory
     printf("putting in the parent dir\n");
     fflush(stdout);
@@ -450,7 +450,7 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, dirname);
     // printf("a_entry tingz after\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     // the modeeeeeee 
-    in->i_mode = EXT2_S_IFDIR;
+    in->i_mode |= EXT2_S_IFDIR;
     // now add it to the parent dirrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
     // and add
@@ -480,7 +480,7 @@ int addSymLink(unsigned char *disk, char *lname, char *source_name, int file_ino
     unsigned char *block = get_block(disk, in, 0);
     memcpy(block, source_name, sizeof(source_name));
     // mode
-    in->i_mode = EXT2_S_IFLNK;
+    in->i_mode |= EXT2_S_IFLNK;
     // put it into the parent dirrrrrrrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, dir_inode);
     // and addddddd
