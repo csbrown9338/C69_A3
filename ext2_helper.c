@@ -180,8 +180,6 @@ int isValidPath(unsigned char *disk, char *og_path) {
     int found_file = 0;
     // Starting the loop to go through each token in the path
     while (tpath != NULL && found_file == 0) {
-        printf("we looking for: %s\n", tpath);
-        fflush(stdout);
         // Do the stuff to find the path :D
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
@@ -449,9 +447,15 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // printf("a_entry tingz before\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, ".");
     // printf("a_entry tingz after\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
+    // Update size of new dir :)
+    in->i_size = a_entry->rec_len;
     // Add another entry for parent
+    printf("getting the first empty entry in the new inode!!!\n");
+    fflush(stdout);
     struct ext2_dir_entry_2 *parent = findNewEntry(disk, allocatedinode);
     addEntry(parent, inode, EXT2_FT_DIR, "..");
+    // Add this too
+    in->i_size += parent->rec_len;
     // the modeeeeeee 
     in->i_mode |= EXT2_S_IFDIR;
     // now add it to the parent dirrrr
@@ -462,7 +466,9 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // printf("entry tingz after\n\tinode: %d\n\tname: %s\n", entry->inode, entry->name);
     // Update links
     in->i_links_count = 2;
-    get_inode(disk, inode)->i_links_count++;
+    struct ext2_inode *pinode = get_inode(disk, inode);
+    pinode->i_links_count++;
+    pinode->i_size += entry->rec_len;
     return 0;
 }
 
