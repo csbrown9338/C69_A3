@@ -342,7 +342,7 @@ int allocateInode(unsigned char *disk, int size) {
     fflush(stdout);
     while (curr_block < dir->i_blocks) {
         unsigned int block = dir->i_block[curr_block];
-        int curr_pos = block;
+        int curr_pos = 0;
         printf("inode size: %d", dir->i_size);
         while (curr_pos < dir->i_size) {
             printf("we made it in the loop y'all\n");
