@@ -46,8 +46,6 @@ int main(int argc, char **argv) {
     //     else exit(1);
     // }
     else { 
-        printf("we passed all checks\n");
-        printf("parent inode received: %d\n", inode);
         fflush(stdout);
         addDir(disk, filename, inode);
         memset(filename, '\0', strlen(filename));
