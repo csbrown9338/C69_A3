@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     }
     unsigned char *disk = readDisk(disk_name);
     int srcinode = isValidFile(disk, source);
-    int exists_inode = isValidPath(disk, dest);
+    // int exists_inode = isValidPath(disk, dest);
     char *raw_name = extractFileName(dest);
     char filename[strlen(raw_name)];
     strncpy(filename, raw_name, strlen(raw_name));
@@ -45,13 +45,13 @@ int main(int argc, char **argv) {
         return ENOENT;
     }
     // Check if name is taken
-    else if (exists_inode != -1) {
-        fprintf(stderr, "Name is taken");
-        if (isValidDirectory(disk, dest) != -1) return EISDIR;
-        else if (isValidFile(disk, dest) != -1) return EEXIST;
-        else exit(1);
-    }
-    // Check flag to see if it's a symbolic or hard link
+    // else if (exists_inode != -1) {
+    //     fprintf(stderr, "Name is taken");
+    //     if (isValidDirectory(disk, dest) != -1) return EISDIR;
+    //     else if (isValidFile(disk, dest) != -1) return EEXIST;
+    //     else exit(1);
+    // }
+    // // Check flag to see if it's a symbolic or hard link
 
     if (strcmp(flag, "-s")) {
         // she symbolic
