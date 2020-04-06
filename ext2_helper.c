@@ -79,7 +79,7 @@ unsigned char *readDisk(char *path) {
 /*
  * returns the super block :D:D:D:D:D
  */
-struct ext2_super_block *get_sb(unsigned char* disk) {
+struct ext2_super_block *get_sb(unsigned char *disk) {
     return (struct ext2_super_block *)(disk + 1024);
 }
 
@@ -119,7 +119,7 @@ unsigned char *get_i_bm(unsigned char *disk) {
  */
 struct ext2_inode *get_inode(unsigned char *disk, int inode) {
     struct ext2_inode *i = get_it(disk);
-    return (struct ext2_inode *)(i +(sizeof(struct ext2_inode) * (inode - 1)));
+    return (struct ext2_inode *)(i + (inode - 1));
 }
 
 /*
