@@ -182,12 +182,8 @@ int isValidPath(unsigned char *disk, char *og_path) {
     while (tpath != NULL && found_file == 0) {
         // Do the stuff to find the path :D
         int curr_block = 0;
-        printf("getting the inode structure :)\n");
-        fflush(stdout);
         struct ext2_inode *inode = get_inode(disk, curr_inode);
         found_inode = curr_inode;
-        printf("inode info:\n\tsize: %d, blocks: %d\n", inode->i_size, inode->i_blocks);
-        fflush(stdout);
         // Loop through each block
         while (found_inode == curr_inode && curr_block < inode->i_blocks && found_file == 0) {
             int curr_pos = 0;
@@ -316,7 +312,6 @@ int allocateInode(unsigned char *disk, int size) {
         while (bit < 8) {
             if (bit_in_use(ibm[curr_block], bit) == 0) {
                 int found_inode = (curr_block * 8) + bit + 1;
-                // printf("\tfound free inode: %d\n", found_inode);
                 fflush(stdout);
                 ibm[curr_block] |= 1 << bit; // set it to in use
                 sb->s_free_inodes_count--;
@@ -430,7 +425,7 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
  * returns 0 on success, and -1 on failure
  */
 int addDir(unsigned char *disk, char *dirname, int inode) {
-    // printf("we adding this bad boi: %s\n", dirname);
+    printf("we adding this bad boi: %s\n", dirname);
     // get a freeeeeeeeeee inode :D:D:D
     int allocatedinode = allocateInode(disk, 1);
     if (allocatedinode == -1) return -1;
@@ -438,12 +433,8 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     struct ext2_inode *in = get_inode(disk, allocatedinode);
     // Find blocks
     allocateBlocks(disk, in, 1);
-    printf("amount of blocks: %d\n", in->i_blocks);
-    fflush(stdout);
     struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
-    // printf("a_entry tingz before\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     addEntry(a_entry, allocatedinode, EXT2_FT_DIR, ".");
-    // printf("a_entry tingz after\n\tinode: %d\n\tname: %s\n", a_entry->inode, a_entry->name);
     // Update size of new dir :)
     in->i_size = a_entry->rec_len;
     // Add another entry for parent
@@ -456,9 +447,7 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // now add it to the parent dirrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
     // and add
-    // printf("entry tingz before\n\tinode: %d\n\tname: %s\n", entry->inode, entry->name);
     addEntry(entry, allocatedinode, EXT2_FT_DIR, dirname);
-    // printf("entry tingz after\n\tinode: %d\n\tname: %s\n", entry->inode, entry->name);
     // Update links
     in->i_links_count = 2;
     struct ext2_inode *pinode = get_inode(disk, inode);
