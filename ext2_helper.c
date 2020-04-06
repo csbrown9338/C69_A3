@@ -48,6 +48,7 @@ char *truncatePath(char *path) {
         }
     }
     char *name = &(path[i + 1]);
+    printf("what's the name now????: %s\n", name);
     return name;
  }
 
