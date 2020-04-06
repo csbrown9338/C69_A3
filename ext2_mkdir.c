@@ -23,10 +23,11 @@ int main(int argc, char **argv) {
         exit(1);
     }
     // If the disk exists :)
-    printf("full path: %s, length: %d\n", newdir, strlen(newdir));
+    // printf("full path: %s, length: %d\n", newdir, strlen(newdir));
     int exists_inode = isValidPath(disk, newdir);
+    int exists_inode = isValidPath(disk, dest);
     char *raw_name = extractFileName(newdir);
-    printf("raw name: %s, length: %d\n", raw_name, strlen(raw_name));
+    // printf("raw name: %s, length: %d\n", raw_name, strlen(raw_name));
     char filename[strlen(raw_name)];
     strncpy(filename, raw_name, strlen(raw_name));
     char *parent = truncatePath(newdir);
@@ -37,17 +38,20 @@ int main(int argc, char **argv) {
         memset(filename, '\0', strlen(filename));
         return ENOENT;
     }
-    // Check if the name is taken
-    // else if (exists_inode != -1) {
-    //     fprintf(stderr, "Name is taken");
-    //     memset(filename, '\0', strlen(filename));
-    //     if (isValidDirectory(disk, newdir) != -1) return EISDIR;
-    //     else if (isValidFile(disk, newdir) != -1) return EEXIST;
-    //     else exit(1);
-    // }
-    else { 
+    
+    else if (exists_inode == -1) { 
+        printf("we passed all checks\n");
+        fflush(stdout);
         addDir(disk, filename, inode);
         memset(filename, '\0', strlen(filename));
-    } 
+    }
+    // Check if the name is taken
+    else {
+        fprintf(stderr, "Name is taken");
+        memset(filename, '\0', strlen(filename));
+        if (isValidDirectory(disk, newdir) != -1) return EISDIR;
+        else if (isValidFile(disk, newdir) != -1) return EEXIST;
+        else exit(1);
+    }
     return 0;
 }
