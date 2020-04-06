@@ -401,6 +401,20 @@ int addFileContents(unsigned char *disk, struct ext2_inode *i, int fd) {
     return -1;
 }
 
+/*
+ * puts the pathname into the blocks
+ * returns 0 on success, -1 on failure
+ */
+int insertLink(unsigned char *disk, struct ext2_inode *i, char *path) {
+    int curr_block = 0;
+    int total_size = 0;
+    unsigned char *block = get_block(disk, i, curr_block);
+    int size = sizeof(path);
+    while (curr_bock < 12 && total_size < size) {
+
+    }
+}
+
 
 
 /////////////////////////////////////////////
@@ -429,7 +443,7 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
     // have inode to point to dem blocks yo
     in->i_block[0] = dest_blocks + 1;
     // Copy the file infoooooo
-
+    addFileContents(disk, in, fd);
     // Put it in
     struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *) in->i_block[0];
     addEntry(a_entry, allocatedinode, EXT2_FT_REG_FILE, fname);
@@ -485,9 +499,12 @@ int addSymLink(unsigned char *disk, char *lname, char *source_name, int file_ino
     // Get inode
     struct ext2_inode *in = get_inode(disk, allocatedinode);
     // Find blockssss
-    int dest_blocks = allocateBlocks(disk, blocks);
+    int dest_blocks = allocateBlocks(disk, in, blocks);
     // point to those blocks
     in->i_block[0] = dest_blocks + 1;
+    // memcpy the path
+    unsigned char *block = get_b_bm(disk, in, block, 0);
+    memcpy(block, source_name, sizeof(source_name));
     // put em INNNN BOII
     struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *) in->i_block[0];
     addEntry(a_entry, allocatedinode, EXT2_FT_SYMLINK, lname);
