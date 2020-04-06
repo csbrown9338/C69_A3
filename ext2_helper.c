@@ -334,18 +334,18 @@ int allocateInode(unsigned char *disk, int size) {
  struct ext2_dir_entry_2 *findNewEntry(unsigned char *disk, int dir_inode) {
     // Get the dir_inode
     struct ext2_inode *dir = get_inode(disk, dir_inode);
+    printf("parent inode: %d\n", dir_inode);
+    fflush(stdout);
     // loooooopp through the blocks :)
     int curr_block = 0;
-    printf("entering loop\n");
-    fflush(stdout);
     while (curr_block < dir->i_blocks) {
         printf("blocksss\n");
         fflush(stdout);
         unsigned int block = dir->i_block[curr_block];
         int curr_pos = block;
+        printf("entering other loop\n");
+        fflush(stdout);
         while (curr_pos < dir->i_size) {
-            printf("getting the structure\n");
-            fflush(stdout);
             struct ext2_dir_entry_2 *e = get_dir_entry(disk, dir, curr_block, curr_pos);
             printf("looping through position\ninode: %d, name: %s\n", e->inode, e->name);
             fflush(stdout);
