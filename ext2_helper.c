@@ -180,6 +180,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
     int found_file = 0;
     // Starting the loop to go through each token in the path
     while (tpath != NULL && found_file == 0) {
+        printf("we looking for: %s\n", tpath);
         // Do the stuff to find the path :D
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
@@ -346,8 +347,6 @@ int allocateInode(unsigned char *disk, int size) {
         printf("inode size: %d\n", dir->i_size);
         fflush(stdout);
         while (curr_pos < dir->i_size) {
-            printf("structure\n");
-            fflush(stdout);
             struct ext2_dir_entry_2 *e = get_dir_entry(disk, dir, curr_block, curr_pos);
             printf("looping through position\ninode: %d, name: %s\n", e->inode, e->name);
             fflush(stdout);
