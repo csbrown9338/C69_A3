@@ -25,7 +25,6 @@ int main(int argc, char **argv) {
     // If the disk exists :)
     // printf("full path: %s, length: %d\n", newdir, strlen(newdir));
     int exists_inode = isValidPath(disk, newdir);
-    int exists_inode = isValidPath(disk, dest);
     char *raw_name = extractFileName(newdir);
     // printf("raw name: %s, length: %d\n", raw_name, strlen(raw_name));
     char filename[strlen(raw_name)];
