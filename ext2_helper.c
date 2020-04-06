@@ -221,6 +221,7 @@ int isValidDirectory(unsigned char *disk, char *path) {
     // struct ext2_dir_entry_2 *e = get_entry(disk, inode);
     // if (e->file_type == EXT2_FT_DIR) return inode;
     struct ext2_inode *i = get_inode(disk, inode);
+    printf("is dir?: %d\n", i->i_mode & EXT_S_IFDIR);
     if ((i->i_mode & EXT2_S_IFDIR)) return inode;
     return -1;
 }
@@ -234,6 +235,7 @@ int isValidFile(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is file (EXT2_FT_REG_FILE)
     struct ext2_inode *i = get_inode(disk, inode);
+    printf("is dir?: %d\n", i->i_mode & EXT_S_IFDIR);
     if ((i->i_mode & EXT2_S_IFDIR) == 0) return inode;
     return -1;
 }
