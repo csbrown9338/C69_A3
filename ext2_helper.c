@@ -197,7 +197,6 @@ int isValidPath(unsigned char *disk, char *og_path) {
                 }
                 if (e->file_type != EXT2_FT_DIR) found_file = 1;
                 curr_pos += e->rec_len; 
-                printf("inode: %d\n", curr_inode);
             }
             // If curr_pos is i_size, then we gotta go to the next block
             if (found_inode == curr_inode) curr_block++;
@@ -208,6 +207,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
     }
     // I think another if statement takes care of this but... just to be safe lol
     if (found_file == 1 && tpath != NULL) return -1;
+    printf("inode: %d\n", curr_inode);
     return curr_inode;
 }
 
