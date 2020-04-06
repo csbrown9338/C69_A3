@@ -1,2 +1,35 @@
 Colleen Brown
 brownc50
+
+General issues I had was wrapping my head around the structure. 
+It took me about a week to somewhat grasp how the inodes and blocks interact with each other,
+and that the ext2_dir_entry_2 structures were interpreted by the blocks at different offsets (depending on rec_len), and that only specifically inodes that
+represent directories have these specific structures in their blocks to begin with.
+It also took me a while to realize that the pointers in the superblock, block group, and inode structures (to stuff like the inode table, or the bitmaps)
+work like indices and you have to index through the blocks to find its address.
+
+Aside from my inability to grasp the structure in a timely manner (and by consequence, delaying the actual coding), a lot of issues I found were related to
+the pickiness of the addresses (i.e. getting the address to the exact byte), which makes sense considering we are meant to be working with memory. However,
+it has hindered my progress with several of the commands since it's difficult to pinpoint where in the code it failed to return the desired address,
+and how the address was shifted in any way.
+
+For all commands, functionalities (including helpers) I have completed:
+    - The checks for the arguments
+    - Checking the validity of a path
+    - Checking if an inode points to a dir or not
+    - Retrieving information from the superblock, block group, and inodes
+    - Extracting the ext2_dir_entry_2 structure from the blocks given the inode, block index, and position
+
+For the specific commands, I have completed the following:
+
+ext2_ls:
+    - Looping through the entries of a given directory and listing them
+
+ext2_cp:
+
+ext2_mkdir:
+
+ext2_ln:
+
+ext2_rm:
+    - Nothing
