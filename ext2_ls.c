@@ -27,6 +27,8 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Invalid disk");
         exit(1);
     }
+    printf("i don't think finding the inode works....\n");
+    fflush(stdout);
     inode = isValidDirectory(disk, path);
     int fileInode = isValidFile(disk, path);
     // If it's a directory... oh boi
