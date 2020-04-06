@@ -35,6 +35,7 @@ int main(int argc, char **argv) {
         int has_flag = 0; // 0 if no flag, 1 if -a flag
         if (strcmp(flag, "-a") == 0) has_flag = 1;
         // get the ext2_dir_entry of the current dir
+        printf("received inode: %d", inode);
         struct ext2_inode *i = get_inode(disk, inode);
         int curr_block = 0;
         while (curr_block < i->i_blocks){
