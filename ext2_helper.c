@@ -333,25 +333,19 @@ int allocateInode(unsigned char *disk, int size) {
  */
  struct ext2_dir_entry_2 *findNewEntry(unsigned char *disk, int dir_inode) {
     // Get the dir_inode
-    printf("getting struct\n");
-    fflush(stdout);
     struct ext2_inode *dir = get_inode(disk, dir_inode);
     // loooooopp through the blocks :)
     int curr_block = 0;
-    printf("size: %d\n", dir->i_size);
-    fflush(stdout);
     while (curr_block < dir->i_blocks) {
         unsigned int block = dir->i_block[curr_block];
         int curr_pos = 0;
         printf("inode size: %d", dir->i_size);
         while (curr_pos < dir->i_size) {
-            printf("we made it in the loop y'all\n");
-            fflush(stdout);
             struct ext2_dir_entry_2 *e = get_dir_entry(disk, dir, curr_block, curr_pos);
             printf("looping through position\ninode: %d, name: %s\n", e->inode, e->name);
             fflush(stdout);
             if (e->inode <= 0 || e->inode > get_sb(disk)->s_inodes_count) return e;
-            // printf("that aint it, chief\n");
+            printf("that aint it, chief\n");
             curr_pos += e->rec_len;
         }
         curr_block++;
