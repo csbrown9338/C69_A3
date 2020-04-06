@@ -181,6 +181,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
     // Starting the loop to go through each token in the path
     while (tpath != NULL && found_file == 0) {
         printf("we looking for: %s\n", tpath);
+        fflush(stdout);
         // Do the stuff to find the path :D
         int curr_block = 0;
         struct ext2_inode *inode = get_inode(disk, curr_inode);
