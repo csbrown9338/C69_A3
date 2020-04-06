@@ -30,10 +30,8 @@ int main(int argc, char **argv) {
     inode = isValidDirectory(disk, path);
     int fileInode = isValidFile(disk, path);
     printf("file inode: %d\n", fileInode);
-    // If it's a file, then just... print da filename lmao
-    if (fileInode != -1) printf("%s", path);
     // If it's a directory... oh boi
-    else if (inode != -1) {
+    if (inode != -1) {
         // If there be the -a, do the . and ..
         int has_flag = 0; // 0 if no flag, 1 if -a flag
         if (strcmp(flag, "-a") == 0) has_flag = 1;
@@ -59,6 +57,8 @@ int main(int argc, char **argv) {
             curr_block++;
         }
     }
+    // If it's a file, then just... print da filename lmao
+    if (fileInode != -1) printf("%s", path);
     // If not file or directory, then ENOENT
     else return ENOENT;
     return 0;
