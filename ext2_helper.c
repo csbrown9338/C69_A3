@@ -213,7 +213,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
         printf("mmmboi idk\n");
         return -1;
     }
-    print("fam idk\n");
+    printf("fam idk\n");
     return curr_inode;
 }
 
