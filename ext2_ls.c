@@ -29,8 +29,7 @@ int main(int argc, char **argv) {
     }
     inode = isValidDirectory(disk, path);
     int fileInode = isValidFile(disk, path);
-    printf("file inode: %d\n", fileInode);
-    // printf("%d", fileInode);
+    // printf("file inode: %d\n", fileInode);
     // If it's a file, then just... print da filename lmao
     if (fileInode != -1) printf("%s", path);
     // If it's a directory... oh boi
@@ -48,7 +47,6 @@ int main(int argc, char **argv) {
             int links = i->i_links_count;
             if (inode != EXT2_ROOT_INO) links++;
             while (curr_pos < i->i_size && linkidx < links) {
-                //printf("confusion\n");
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, i, curr_block, curr_pos);
                 // printf("namelength: %d, ", e->name_len);
                 if (strncmp(e->name, ".", 1) == 0 || strncmp(e->name, "..", 2) == 0) {

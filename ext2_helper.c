@@ -140,6 +140,13 @@ struct ext2_dir_entry_2 *get_entry(unsigned char *disk, int inode) {
 }
 
 /*
+ * Gets the block
+ */
+unsigned char *get_block(unsigned char *disk, struct ext2_inode *i, int block) {
+    return (unsigned char *) (disk + (i->i_block[block] * EXT2_BLOCK_SIZE));
+}
+
+/*
  * checks state of bit
  */
 int bit_in_use(unsigned char byte, int offset) {
@@ -250,55 +257,50 @@ int isValidLink(unsigned char *disk, char *path) {
 
 
 
-
 /*
- * returns a free block given the size
+ * returns the first free block given the size
+ * and allocates the rest of the blocks :)
  * size says how many blocks are needed
  */
-int allocateBlocks(unsigned char *disk, int size) {
+int allocateBlocks(unsigned char *disk, struct ext2_inode *i, int size) {
     // Get block bitmap
     unsigned char *bbm = get_b_bm(disk);
     // also super block
     struct ext2_super_block *sb = get_sb(disk);
+    // Assign amount of blocks in inode to be 0
+    i->i_blocks = 0;
     // Loop through the bitmaperino
     // One loop for every byte, another for every bit, and another for size
     int bit = 0;
-    int found = -1;
     int curr_size = 0;
     int byte = 0;
     int offset = 0;
+    int curr_block = 0;
+    int first = -1;
     while (bit < sb->s_blocks_count && curr_size != size) {
         byte = bit / (sizeof(unsigned char) * 8);
         offset = bit % (sizeof(unsigned char) * 8);
-        // If bit is in use...
-        if (bit_in_use(bbm[byte], offset) == 1) {
-            // restart counters
-            found = -1;
-            curr_size = 0;
-        }
-        // If bit is not in use
-        else {
-            if (found == -1) found = bit;
+        // If bit is free
+        if (bit_in_use(bbm[byte], offset) == 0) {
+            // Check if this is the first :)
+            if (first == -1) first = bit;
+            // point to dis block from inode :)))
+            i->i_block[curr_block];
+            curr_block++;
+            // also make bit in use and change counters
+            bbm[byte] |= 1 << offset;
+            i->i_blocks++;
+            sb->s_free_blocks_count--;
             curr_size++;
         }
         bit++;
     }
     if (curr_size != size || found == -1) {
-        printf("couldn't find consecutive blocks, sorry\n");
+        printf("couldn't find blocks, sorry\n");
+        // deallocate everything :(((
         return -1;
     }
-    // Turn on all of the bits in the bitmap omg
-    int k = 0;
-    found++;
-    while (k < size) {
-        byte = (found + k) / (sizeof(unsigned char) * 8);
-        offset = (found + k) % (sizeof(unsigned char) * 8);
-        bbm[byte] |= 1 << offset;
-        k++;
-    }
-    printf("\tofficially found: %d\n", found);
-    sb->s_free_blocks_count -= size;
-    return found;
+    return first;
 }
 
 /*
@@ -378,6 +380,27 @@ int allocateInode(unsigned char *disk, int size) {
     return 0;
  }
 
+ /*
+  * Copies the contents of the file!!!
+  * returns 0 on success, -1 on failure
+  */
+int addFileContents(unsigned char *disk, struct ext2_inode *i, int fd) {
+    int curr_block = 0;
+    int total_size = 0;
+    unsigned char *block = get_block(disk, i, curr_block);
+    int size_read = 0;
+    // direct blocksssss
+    while (curr_block < 12 && size_read = read(fd, block, EXT2_BLOCK_SIZE) > 0) {
+        // increase inode size, and update counters
+        i->i_size += size_read;
+        total_size += size_read;
+        curr_block++;
+    }
+    if (size_read == 0) return 0;
+    // indirect blockssssss
+    return -1;
+}
+
 
 
 /////////////////////////////////////////////
@@ -401,10 +424,12 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
     int allocatedinode = allocateInode(disk, blocks);
     // get the inode
     struct ext2_inode *in = get_inode(disk, allocatedinode);
-    // get blocks
-    int dest_blocks = allocateBlocks(disk, blocks);
+    // get first free block and allocate all nodes
+    int dest_blocks = allocateBlocks(disk, in, blocks);
     // have inode to point to dem blocks yo
     in->i_block[0] = dest_blocks + 1;
+    // Copy the file infoooooo
+
     // Put it in
     struct ext2_dir_entry_2 *a_entry = (struct ext2_dir_entry_2 *) in->i_block[0];
     addEntry(a_entry, allocatedinode, EXT2_FT_REG_FILE, fname);
@@ -442,6 +467,9 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     // printf("entry tingz before\n\tinode: %d\n\tname: %s\n", entry->inode, entry->name);
     addEntry(entry, allocatedinode, EXT2_FT_DIR, dirname);
     // printf("entry tingz after\n\tinode: %d\n\tname: %s\n", entry->inode, entry->name);
+    // Update links
+    in->i_links_count = 2;
+    inode->i_links_count++;
     return 0;
 }
 
