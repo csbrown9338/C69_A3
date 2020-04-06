@@ -191,7 +191,6 @@ int isValidPath(unsigned char *disk, char *og_path) {
             while (found_inode == curr_inode && curr_pos < inode->i_size && found_file == 0) {
                 // Go through all the entries in the directory to find a name match
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
-                printf("file type???: %d\n", e->file_type);
                 // check name if it MATCHES :D
                 if (strncmp(tpath, e->name, strlen(tpath)) == 0) {
                     curr_inode = e->inode;
@@ -219,8 +218,8 @@ int isValidPath(unsigned char *disk, char *og_path) {
 int isValidDirectory(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is directory (EXT2_FT_DIR)
-    struct ext2_dir_entry_2 *e = get_entry(disk, inode);
-    if ((e->file_type == EXT2_FT_DIR)) return inode;
+    struct ext2_inode *i = get_inode(disk, inode);
+    if ((i->i_mode == EXT2_S_IFDIR)) return inode;
     return -1;
 }
 
@@ -232,8 +231,8 @@ int isValidDirectory(unsigned char *disk, char *path) {
 int isValidFile(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is file (EXT2_FT_REG_FILE)
-    struct ext2_dir_entry_2 *e = get_entry(disk, inode);
-    if ((e->file_type == EXT2_FT_REG_FILE)) return inode;
+    struct ext2_inode *i = get_inode(disk, inode);
+    if ((i->i_mode == EXT2_S_IFREG)) return inode;
     return -1;
 }
 
@@ -245,8 +244,8 @@ int isValidFile(unsigned char *disk, char *path) {
 int isValidLink(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is symlink (EXT2_FT_SYMLINK)
-    struct ext2_dir_entry_2 *e = get_entry(disk, inode);
-    if ((e->file_type == EXT2_FT_SYMLINK)) return inode;
+    struct ext2_inode *i = get_inode(disk, inode);
+    if ((i->i_mode == EXT2_S_IFLNK)) return inode;
     return -1;
 }
 
