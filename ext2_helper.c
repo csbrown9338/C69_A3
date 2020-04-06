@@ -285,7 +285,7 @@ int allocateBlocks(unsigned char *disk, struct ext2_inode *i, int size) {
             // Check if this is the first :)
             if (first == -1) first = bit;
             // point to dis block from inode :)))
-            i->i_block[curr_block];
+            i->i_block[curr_block] = bit + 1;
             curr_block++;
             // also make bit in use and change counters
             bbm[byte] |= 1 << offset;
