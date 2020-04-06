@@ -218,8 +218,10 @@ int isValidPath(unsigned char *disk, char *og_path) {
 int isValidDirectory(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is directory (EXT2_FT_DIR)
+    // struct ext2_dir_entry_2 *e = get_entry(disk, inode);
+    // if (e->file_type == EXT2_FT_DIR) return inode;
     struct ext2_inode *i = get_inode(disk, inode);
-    if ((i->i_mode == EXT2_S_IFDIR)) return inode;
+    if ((i->i_mode |= EXT2_S_IFDIR)) return inode;
     return -1;
 }
 
@@ -232,21 +234,7 @@ int isValidFile(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is file (EXT2_FT_REG_FILE)
     struct ext2_inode *i = get_inode(disk, inode);
-    printf("inode received: %d, file type: %d", inode, i->i_mode);
-    if ((i->i_mode == EXT2_S_IFREG)) return inode;
-    return -1;
-}
-
-/*
- * Check if specified link is valid
- * returns -1 if invalid
- * returns inode number if valid
- */
-int isValidLink(unsigned char *disk, char *path) {
-    int inode = isValidPath(disk, path);
-    // Check if type is symlink (EXT2_FT_SYMLINK)
-    struct ext2_inode *i = get_inode(disk, inode);
-    if ((i->i_mode == EXT2_S_IFLNK)) return inode;
+    if ((i->i_mode != EXT2_S_IFDIR)) return inode;
     return -1;
 }
 

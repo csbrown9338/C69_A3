@@ -17,8 +17,6 @@ int isValidDirectory(unsigned char *disk, char *path);
 
 int isValidFile(unsigned char *disk, char *path);
 
-int isValidLink(unsigned char *disk, char *path);
-
 int addNativeFile(unsigned char *disk, char *path, int inode);
 
 int addDir(unsigned char *disk, char *dirname, int inode);
