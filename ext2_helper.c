@@ -343,7 +343,7 @@ int allocateInode(unsigned char *disk, int size) {
         fflush(stdout);
         unsigned int block = dir->i_block[curr_block];
         int curr_pos = block;
-        printf("entering other loop\n");
+        printf("inode size: %d\n", dir->i_size);
         fflush(stdout);
         while (curr_pos < dir->i_size) {
             printf("structure\n");
