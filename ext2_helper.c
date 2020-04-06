@@ -191,6 +191,7 @@ int isValidPath(unsigned char *disk, char *og_path) {
             while (found_inode == curr_inode && curr_pos < inode->i_size && found_file == 0) {
                 // Go through all the entries in the directory to find a name match
                 struct ext2_dir_entry_2 *e = get_dir_entry(disk, inode, curr_block, curr_pos);
+                printf("file type???: %d\n", e->file_type);
                 // check name if it MATCHES :D
                 if (strncmp(tpath, e->name, strlen(tpath)) == 0) {
                     curr_inode = e->inode;
@@ -207,7 +208,6 @@ int isValidPath(unsigned char *disk, char *og_path) {
     }
     // I think another if statement takes care of this but... just to be safe lol
     if (found_file == 1 && tpath != NULL) return -1;
-    printf("inode: %d\n", curr_inode);
     return curr_inode;
 }
 
