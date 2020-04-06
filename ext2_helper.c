@@ -119,7 +119,7 @@ unsigned char *get_i_bm(unsigned char *disk) {
  */
 struct ext2_inode *get_inode(unsigned char *disk, int inode) {
     struct ext2_inode *i = get_it(disk);
-    return (struct ext2_inode *)(i + (inode-1) * sizeof(struct ext2_inode));
+    return (struct ext2_inode *)(i + (inode-1));
 }
 
 /*
