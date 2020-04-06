@@ -202,14 +202,17 @@ int isValidPath(unsigned char *disk, char *og_path) {
             if (found_inode == curr_inode) curr_block++;
         }
         if (found_inode == curr_inode && found_file == 0) {
-            printf("found file, but uhhhhhhhhh yeah");
+            printf("found file, but uhhhhhhhhh yeah\n");
             return -1;
         } 
         // +1 for null byte
         tpath = strtok(NULL, "/");
     }
     // I think another if statement takes care of this but... just to be safe lol
-    if (found_file == 1 && tpath != NULL) return -1;
+    if (found_file == 1 && tpath != NULL) {
+        printf("mmmboi idk\n");
+        return -1;
+    }
     return curr_inode;
 }
 
