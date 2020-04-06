@@ -231,9 +231,13 @@ int isValidDirectory(unsigned char *disk, char *path) {
 int isValidFile(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is file (EXT2_FT_REG_FILE)
-    printf("inode received: %d\n", inode);
     struct ext2_inode *i = get_inode(disk, inode);
-    if ((i->i_mode == EXT2_S_IFREG)) return inode;
+    printf("inode received: %d, is file?: ", inode);
+    if ((i->i_mode == EXT2_S_IFREG))  {
+        printf("ye boi\n");
+        return inode;
+    }
+    printf("NAH boi\n");
     return -1;
 }
 
