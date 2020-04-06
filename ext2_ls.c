@@ -11,7 +11,7 @@
 int main(int argc, char **argv) {
     // Get the arguments
     if (argc != 3 && argc != 4) {
-        fprintf(stderr, "Usage: uhh it ain't right lmao");
+        fprintf(stderr, "Usage: <disk image file> <file absolute path> [-a]");
         exit(1);
     }
     char *disk_name = argv[1];
@@ -29,7 +29,6 @@ int main(int argc, char **argv) {
     }
     inode = isValidDirectory(disk, path);
     int fileInode = isValidFile(disk, path);
-    printf("file inode: %d, dir inode: %d\n", fileInode, inode);
     // If it's a directory... oh boi
     if (inode != -1) {
         // If there be the -a, do the . and ..

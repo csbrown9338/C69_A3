@@ -11,7 +11,7 @@
 int main(int argc, char **argv) {
     // Get the arguments
     if (argc != 4 && argc != 5) {
-        fprintf(stderr, "Usage: uhh it ain't right lmao");
+        fprintf(stderr, "Usage: <disk image file> <source path> <destination path> [-s]");
         exit(1);
     }
     char *disk_name = argv[1];

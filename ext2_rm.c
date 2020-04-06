@@ -11,7 +11,7 @@
 int main(int argc, char **argv) {
     // Get arguments
     if (argc != 3) {
-        fprintf(stderr, "Usage: it wrong buddy boi");
+        fprintf(stderr, "Usage: <disk image file> <file path>");
         exit(1);
     }
     char *disk_name = argv[1];
