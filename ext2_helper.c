@@ -119,7 +119,7 @@ unsigned char *get_i_bm(unsigned char *disk) {
  */
 struct ext2_inode *get_inode(unsigned char *disk, int inode) {
     struct ext2_inode *i = get_it(disk);
-    return (struct ext2_inode *)(i + (sizeof(struct ext2_inode)) * (inode - 1));
+    return (struct ext2_inode *)(i + (inode - 1));
 }
 
 /*
@@ -183,8 +183,8 @@ int isValidPath(unsigned char *disk, char *og_path) {
     while (tpath != NULL && found_file == 0) {
         // Do the stuff to find the path :D
         int curr_block = 0;
-        // struct ext2_inode *inode = get_inode(disk, curr_inode);
-        struct ext2_inode *inode = &get_it(disk)[curr_inode];
+        struct ext2_inode *inode = get_inode(disk, curr_inode);
+        // struct ext2_inode *inode = &get_it(disk)[curr_inode];
         found_inode = curr_inode;
         // Loop through each block
         while (found_inode == curr_inode && curr_block < inode->i_blocks && found_file == 0) {
