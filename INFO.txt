@@ -61,8 +61,7 @@ ext2_ls:
 
 ext2_cp:
     - I did not start on anything related to indirect blocks, only direct
-    - It's possible there was an overwriting/accessing issue, but I couldn't quite pinpoint that problem if it exists (I didn't spend too much
-      time testing this command in particular)
+    - It's possible there was an overwriting/accessing issue, but I couldn't quite pinpoint that problem if it exists
 
 ext2_mkdir:
     - In the parent directory, I did not allocate new blocks if previous block is full
@@ -72,7 +71,7 @@ ext2_mkdir:
 ext2_ln:
     - In my code, I have the checks to see if the name in the destination is already taken, however it's commented out (like in ext2_mkdir)
       This is because the checks for whether it's a file or directory were not working as intended
-    - Possible overwriting/accessing issue (didn't test this command as much either)
+    - Possible overwriting/accessing issue
 
 
 There are also some things that I don't know if they work for specific commands:
