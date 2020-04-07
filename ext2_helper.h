@@ -7,8 +7,6 @@ char *extractFileName(char *path);
 
 unsigned char *readDisk(char *path);
 
-struct ext2_inode *get_it(unsigned char *disk);
-
 struct ext2_dir_entry_2 *get_dir_entry(unsigned char *disk, struct ext2_inode *inode, int block, int pos);
 
 struct ext2_inode *get_inode(unsigned char *disk, int inode);

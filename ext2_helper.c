@@ -220,7 +220,6 @@ int isValidDirectory(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is directory (EXT2_FT_DIR)
     struct ext2_dir_entry_2 *e = get_entry(disk, inode);
-    printf("entry info\n\tinode: %d, name: %s\n", e->inode, e->name);
     if (e->file_type == EXT2_FT_DIR) return inode;
     return -1;
 }
@@ -285,7 +284,7 @@ int allocateBlocks(unsigned char *disk, struct ext2_inode *i, int size) {
         bit++;
     }
     if (curr_size != size) {
-        printf("couldn't find blocks, sorry\n");
+        fprintf(stderr, "couldn't find blocks, sorry\n");
         // deallocate everything :(((
         return -1;
     }
@@ -335,6 +334,8 @@ int allocateInode(unsigned char *disk, int size) {
  struct ext2_dir_entry_2 *findNewEntry(unsigned char *disk, int dir_inode) {
     // Get the dir_inode
     struct ext2_inode *dir = get_inode(disk, dir_inode);
+    struct ext2_super_block *sb = get_sb(disk);
+    int used_inodes = sb->s_inodes_count - sb->s_free_inodes_count;
     // loooooopp through the blocks :)
     int curr_block = 0;
     while (curr_block < dir->i_blocks) {
@@ -342,7 +343,7 @@ int allocateInode(unsigned char *disk, int size) {
         int curr_pos = 0;
         while (curr_pos < dir->i_size + 1) {
             struct ext2_dir_entry_2 *e = get_dir_entry(disk, dir, curr_block, curr_pos);
-            if (e->inode <= 0 || e->inode > get_sb(disk)->s_inodes_count) return e;
+            if (e->inode <= 0 || e->inode > used_inodes) return e;
             curr_pos += e->rec_len;
         }
         curr_block++;
@@ -427,7 +428,6 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
  * returns 0 on success, and -1 on failure
  */
 int addDir(unsigned char *disk, char *dirname, int inode) {
-    printf("we adding this bad boi: %s\n", dirname);
     // get a freeeeeeeeeee inode :D:D:D
     int allocatedinode = allocateInode(disk, 1);
     if (allocatedinode == -1) return -1;
