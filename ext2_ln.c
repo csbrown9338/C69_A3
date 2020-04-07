@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
     // }
     // // Check flag to see if it's a symbolic or hard link
 
-    if (strcmp(flag, "-s")) {
+    if (strncmp(flag, "-s", 2)) {
         // she symbolic
         addSymLink(disk, filename, source, srcinode, dirinode);
     }
