@@ -1,6 +1,8 @@
 Colleen Brown
 brownc50
 
+VERY IMPORTANT: don't create a link, then a directory right after please
+
 General issues I had was wrapping my head around the structure. 
 It took me about a week to somewhat grasp how the inodes and blocks interact with each other, and that the ext2_dir_entry_2 structures were interpreted
 by the blocks at different offsets (depending on rec_len), and that specifically, only inodes that represent directories have these specific structures
