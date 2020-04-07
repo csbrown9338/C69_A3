@@ -219,9 +219,9 @@ int isValidPath(unsigned char *disk, char *og_path) {
  */
 int isValidDirectory(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
-    printf("received inode: %d\n", inode);
     // Check if type is directory (EXT2_FT_DIR)
     struct ext2_dir_entry_2 *e = get_entry(disk, inode);
+    printf("entry info\n\tinode: %d, name: %s\n", e->inode, e->name);
     if (e->file_type == EXT2_FT_DIR) return inode;
     // struct ext2_inode *i = get_inode(disk, inode);
     // struct ext2_inode *i = &get_it(disk)[inode];
