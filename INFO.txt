@@ -1,7 +1,10 @@
 Colleen Brown
 brownc50
 
-VERY IMPORTANT: don't create a link, then a directory right after please
+My choice for designing was having multiple small helper functions so I could start figuring out an algorithm, and then focus on implementation later.
+I also elected to have ext2_helper do most of the work, and the other programs (i.e. ext2_ln, ext2_mkdir...) simply do the checks for the validity
+of the paths and arguments. The only exception to this was ext2_ls since it was only reading, and not actually changing the disk.
+
 
 General issues I had was wrapping my head around the structure. 
 It took me about a week to somewhat grasp how the inodes and blocks interact with each other, and that the ext2_dir_entry_2 structures were interpreted
@@ -16,19 +19,17 @@ memory. However, it has hindered my progress with several of the commands since 
 address, and how the address was shifted in any way.
 
 
-For all commands, functionalities (including helpers) I have completed:
+For all commands, functionalities (including helpers) I have completed (or at least I believe to be implemented properly):
     - The checks for the arguments
     - Checking the validity of a path
     - Checking if an inode points to a dir or not
     - Retrieving information from the superblock, block group, and inodes
     - Parsing through and changing the bitmaps
-
-Things I'm not sure worked properly:
+    - Retrieving an inode given its index
     - Extracting the ext2_dir_entry_2 structure from the blocks given the inode, block index, and position
-        Every time, it would seem to overwrite an existing structure when I added the new ext2_dir_entry_2 entry **** check findNewEntry
 
 
-For the specific commands, I have completed the following:
+For the specific commands, I have done the following:
 
 ext2_ls:
     - Looping through the entries of a given directory and listing them
@@ -41,24 +42,37 @@ ext2_cp:
 
 ext2_mkdir:
     - Allocating a new inode for directory
+    - Allocating a block for the new directory
     - Allocating a place for the ext2_dir_entry_2 structure for the parent (..) after the new dir (.)
 
 ext2_ln:
-    - Not sure 
+    - Allocating an inode for the link (if it's symbolic)
+    - Allocating blocks
 
 ext2_rm:
-    - Nothing
+    - Nothing :(
 
 
-Problems I had specific to each command (that's not address/overwritten structure related):
+Problems, bugs, or features I didn't implement, specific to each command:
 
 ext2_ls:
+    - Sometimes, after a series commands (i.e. ext2_mkdir, ext2_cp, or ext2_ln), ext2_ls will start to show strange characters (even while typing)
+      which I am assuming to be an issue with overwriting or accessing something I was not supposed to. Unfortunately, I couldn't locate the issue
 
 ext2_cp:
+    - I did not start on anything related to indirect blocks, only direct
+    - It's possible there was an overwriting/accessing issue, but I couldn't quite pinpoint that problem if it exists (I didn't spend too much
+      time testing this command in particular)
 
 ext2_mkdir:
+    - In the parent directory, I did not allocate new blocks if previous block is full
+    - Again, possibly an overwriting/accessing issue
+    - The checks if the directory already exists have been commented out since my checks on its type weren't working as I intended
 
 ext2_ln:
+    - In my code, I have the checks to see if the name in the destination is already taken, however it's commented out (like in ext2_mkdir)
+      This is because the checks for whether it's a file or directory were not working as intended
+    - Possible overwriting/accessing issue (didn't test this command as much either)
 
 
 There are also some things that I don't know if they work for specific commands:
