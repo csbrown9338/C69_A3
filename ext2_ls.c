@@ -29,6 +29,7 @@ int main(int argc, char **argv) {
     }
     inode = isValidDirectory(disk, path);
     int fileInode = isValidFile(disk, path);
+    printf("inode received: %d", inode);
     if (inode != -1) {
         // If there be the -a, do the . and ..
         int has_flag = 0; // 0 if no flag, 1 if -a flag
