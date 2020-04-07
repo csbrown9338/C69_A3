@@ -220,11 +220,11 @@ int isValidPath(unsigned char *disk, char *og_path) {
 int isValidDirectory(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is directory (EXT2_FT_DIR)
-    // struct ext2_dir_entry_2 *e = get_entry(disk, inode);
-    // if (e->file_type == EXT2_FT_DIR) return inode;
+    struct ext2_dir_entry_2 *e = get_entry(disk, inode);
+    if (e->file_type == EXT2_FT_DIR) return inode;
     // struct ext2_inode *i = get_inode(disk, inode);
-    struct ext2_inode *i = &get_it(disk)[inode];
-    if ((i->i_mode & EXT2_S_IFDIR)) return inode;
+    // struct ext2_inode *i = &get_it(disk)[inode];
+    // if ((i->i_mode & EXT2_S_IFDIR)) return inode;
     return -1;
 }
 
