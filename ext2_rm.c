@@ -11,7 +11,7 @@
 int main(int argc, char **argv) {
     // Get arguments
     if (argc != 3) {
-        fprintf(stderr, "Usage: <disk image file> <file path>");
+        fprintf(stderr, "Usage: <disk image file> <file path>\n");
         exit(1);
     }
     char *disk_name = argv[1];
@@ -20,16 +20,16 @@ int main(int argc, char **argv) {
     int to_del_inode = isValidPath(disk, to_del);
     // Check if disk exists
     if (disk == NULL) {
-        fprintf(stderr, "Invalid disk");
+        fprintf(stderr, "Invalid disk\n");
         exit(1);
     }
     // Check if to_del is a valid path
     if (to_del_inode == -1) {
-        fprintf(stderr, "Not a valid path");
+        fprintf(stderr, "Not a valid path\n");
         return ENOENT;
     }
     else if (isValidDirectory(disk, to_del) != -1) {
-        fprintf(stderr, "Not deleting directories");
+        fprintf(stderr, "Not deleting directories\n");
         return EISDIR;
     }
     else {

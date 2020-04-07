@@ -11,7 +11,7 @@
 int main(int argc, char **argv) {
     // Get the arguments
     if (argc != 3 && argc != 4) {
-        fprintf(stderr, "Usage: <disk image file> <file absolute path> [-a]");
+        fprintf(stderr, "Usage: <disk image file> <file absolute path> [-a]\n");
         exit(1);
     }
     char *disk_name = argv[1];
@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
     int inode;
     // Check if disk exists
     if (disk == NULL) {
-        fprintf(stderr, "Invalid disk");
+        fprintf(stderr, "Invalid disk\n");
         exit(1);
     }
     inode = isValidDirectory(disk, path);

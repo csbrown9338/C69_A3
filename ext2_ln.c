@@ -11,7 +11,7 @@
 int main(int argc, char **argv) {
     // Get the arguments
     if (argc != 4 && argc != 5) {
-        fprintf(stderr, "Usage: <disk image file> <source path> <destination path> [-s]");
+        fprintf(stderr, "Usage: <disk image file> <source path> <destination path> [-s]\n");
         exit(1);
     }
     char *disk_name = argv[1];
@@ -29,22 +29,21 @@ int main(int argc, char **argv) {
     strncpy(filename, raw_name, strlen(raw_name));
     filename[strlen(raw_name)] = '\0';
     // printf("filename: %s, length: %d\n", filename, strlen(filename));
-    printf("flag: %s, flag length: %d\n", flag, strlen(flag));
     char *parent = truncatePath(dest);
     int dirinode = isValidDirectory(disk, parent);
     // Check if disk exists
     if (disk == NULL) {
-        fprintf(stderr, "Invalid disk");
+        fprintf(stderr, "Invalid disk\n");
         exit(1);
     }
     // Check to make sure the source is a valid path
     if (srcinode == -1) {
-        fprintf(stderr, "Invalid source file");
+        fprintf(stderr, "Invalid source file\n");
         return ENOENT;
     }
     // Check to make sure that the dest is also valid
     else if (dirinode == -1) {
-        fprintf(stderr, "Invalid destination");
+        fprintf(stderr, "Invalid destination\n");
         return ENOENT;
     }
     // Check if name is taken
@@ -56,7 +55,7 @@ int main(int argc, char **argv) {
     // }
     // // Check flag to see if it's a symbolic or hard link
 
-    if (strncmp(flag, "-s", 2)) {
+    if (strncmp(flag, "-s", 2) == 0) {
         // she symbolic
         addSymLink(disk, filename, source, srcinode, dirinode);
     }
@@ -65,7 +64,7 @@ int main(int argc, char **argv) {
         addLinkFile(disk, filename, srcinode, dirinode);
     }
     else {
-        fprintf(stderr, "Invalid flag");
+        fprintf(stderr, "Invalid flag\n");
         exit(1);
     }
     
