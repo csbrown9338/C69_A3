@@ -50,7 +50,7 @@ ext2_ln:
     - Allocating blocks
 
 ext2_rm:
-    - Nothing :(
+    - Nothing
 
 
 Problems, bugs, or features I didn't implement, specific to each command:
