@@ -28,7 +28,8 @@ int main(int argc, char **argv) {
     char filename[strlen(raw_name) + 1];
     strncpy(filename, raw_name, strlen(raw_name));
     filename[strlen(raw_name)] = '\0';
-    printf("filename: %s, length: %d\n", filename, strlen(filename));
+    // printf("filename: %s, length: %d\n", filename, strlen(filename));
+    printf("flag: %s\n", flag);
     char *parent = truncatePath(dest);
     int dirinode = isValidDirectory(disk, parent);
     // Check if disk exists
