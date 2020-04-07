@@ -223,9 +223,6 @@ int isValidDirectory(unsigned char *disk, char *path) {
     struct ext2_dir_entry_2 *e = get_entry(disk, inode);
     printf("entry info\n\tinode: %d, name: %s\n", e->inode, e->name);
     if (e->file_type == EXT2_FT_DIR) return inode;
-    // struct ext2_inode *i = get_inode(disk, inode);
-    // struct ext2_inode *i = &get_it(disk)[inode];
-    // if ((i->i_mode & EXT2_S_IFDIR)) return inode;
     return -1;
 }
 
@@ -237,8 +234,8 @@ int isValidDirectory(unsigned char *disk, char *path) {
 int isValidFile(unsigned char *disk, char *path) {
     int inode = isValidPath(disk, path);
     // Check if type is file (EXT2_FT_REG_FILE)
-    // struct ext2_inode *i = get_inode(disk, inode);
-    struct ext2_inode *i = &get_it(disk)[inode];
+    struct ext2_inode *i = get_inode(disk, inode);
+    // struct ext2_inode *i = &get_it(disk)[inode];
     if ((i->i_mode & EXT2_S_IFREG) || (i->i_mode & EXT2_S_IFLNK)) return inode;
     return -1;
 }
@@ -339,8 +336,8 @@ int allocateInode(unsigned char *disk, int size) {
  */
  struct ext2_dir_entry_2 *findNewEntry(unsigned char *disk, int dir_inode) {
     // Get the dir_inode
-    // struct ext2_inode *dir = get_inode(disk, dir_inode);
-    struct ext2_inode *dir = &get_it(disk)[dir_inode];
+    struct ext2_inode *dir = get_inode(disk, dir_inode);
+    // struct ext2_inode *dir = &get_it(disk)[dir_inode];
     // loooooopp through the blocks :)
     int curr_block = 0;
     while (curr_block < dir->i_blocks) {
@@ -412,8 +409,8 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
     // Find an inode that you can allocate to
     int allocatedinode = allocateInode(disk, blocks);
     // get the inode
-    // struct ext2_inode *in = get_inode(disk, allocatedinode);
-    struct ext2_inode *in = &get_it(disk)[allocatedinode];
+    struct ext2_inode *in = get_inode(disk, allocatedinode);
+    // struct ext2_inode *in = &get_it(disk)[allocatedinode];
     // get first free block and allocate all nodes
     allocateBlocks(disk, in, blocks);
     // Copy the file infoooooo
@@ -439,8 +436,8 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     int allocatedinode = allocateInode(disk, 1);
     if (allocatedinode == -1) return -1;
     // put er innnnn
-    // struct ext2_inode *in = get_inode(disk, allocatedinode);
-    struct ext2_inode *in = &get_it(disk)[allocatedinode];
+    struct ext2_inode *in = get_inode(disk, allocatedinode);
+    // struct ext2_inode *in = &get_it(disk)[allocatedinode];
     // Find blocks
     allocateBlocks(disk, in, 1);
     struct ext2_dir_entry_2 *a_entry = get_dir_entry(disk, in, 0, 0);
@@ -460,8 +457,8 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     addEntry(entry, allocatedinode, EXT2_FT_DIR, dirname);
     // Update links
     in->i_links_count = 2;
-    // struct ext2_inode *pinode = get_inode(disk, inode);
-    struct ext2_inode *pinode = &get_it(disk)[inode];
+    struct ext2_inode *pinode = get_inode(disk, inode);
+    // struct ext2_inode *pinode = &get_it(disk)[inode];
     pinode->i_links_count++;
     pinode->i_size += entry->rec_len;
     return 0;
@@ -477,8 +474,8 @@ int addSymLink(unsigned char *disk, char *lname, char *source_name, int file_ino
     // do the do
     int allocatedinode = allocateInode(disk, blocks);
     // Get inode
-    // struct ext2_inode *in = get_inode(disk, allocatedinode);
-    struct ext2_inode *in = &get_it(disk)[allocatedinode];
+    struct ext2_inode *in = get_inode(disk, allocatedinode);
+    // struct ext2_inode *in = &get_it(disk)[allocatedinode];
     // Find blockssss
     allocateBlocks(disk, in, blocks);
     // memcpy the path
