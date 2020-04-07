@@ -57,11 +57,13 @@ int main(int argc, char **argv) {
 
     if (strncmp(flag, "-s", 2) == 0) {
         // she symbolic
-        addSymLink(disk, filename, source, srcinode, dirinode);
+        int ret = addSymLink(disk, filename, source, srcinode, dirinode);
+        fprintf(stderr, "Couldn't add symbolic link\n");
     }
     else if (flag[0] == '\0') {
         // she hard
-        addLinkFile(disk, filename, srcinode, dirinode);
+        int ret = addLinkFile(disk, filename, srcinode, dirinode);
+        fprintf(stderr, "Couldn't add hard link\n");
     }
     else {
         fprintf(stderr, "Invalid flag\n");

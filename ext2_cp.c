@@ -35,7 +35,8 @@ int main(int argc, char **argv) {
         return ENAMETOOLONG; 
     } 
     else {
-        addNativeFile(disk, to_copy, dir_inode);
+        int ret addNativeFile(disk, to_copy, dir_inode);
+        if (ret == -1) fprintf(stderr, "Couldn't copy file\n");
     }
 
     return 0;

@@ -46,8 +46,9 @@ int main(int argc, char **argv) {
     // }
     else { 
         fflush(stdout);
-        addDir(disk, filename, inode);
+        int ret = addDir(disk, filename, inode);
         memset(filename, '\0', strlen(filename));
+        if (ret == -1) fprintf(stderr, "Couldn't make the directory\n");
     }
     
     return 0;

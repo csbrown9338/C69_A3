@@ -34,7 +34,8 @@ int main(int argc, char **argv) {
     }
     else {
         int parent_inode = isValidDirectory(disk, truncatePath(to_del));
-        delFile(disk, to_del_inode, parent_inode);
+        int ret = delFile(disk, to_del_inode, parent_inode);
+        if (ret == -1) fprintf(stderr, "Couldn't delete\n");
     }
     
 

@@ -416,6 +416,10 @@ int addNativeFile(unsigned char *disk, char *path, int inode) {
     in->i_mode |= EXT2_S_IFREG;
     // Find an empty spot in the parent directory
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
+    if (entry == NULL) {
+        fprintf(stderr, "Couldn't find a free space in the directory\n");
+        return -1;
+    }
     // Do the same thaaaaaannnnnng but with the parent dirrrr
     addEntry(entry, allocatedinode, EXT2_FT_REG_FILE, fname);
     // close file handle btw
@@ -448,6 +452,10 @@ int addDir(unsigned char *disk, char *dirname, int inode) {
     in->i_mode |= EXT2_S_IFDIR;
     // now add it to the parent dirrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, inode);
+    if (entry == NULL) {
+        fprintf(stderr, "Couldn't find a free space in the directory\n");
+        return -1;
+    }
     // and add
     addEntry(entry, allocatedinode, EXT2_FT_DIR, dirname);
     // Update links
@@ -478,6 +486,10 @@ int addSymLink(unsigned char *disk, char *lname, char *source_name, int file_ino
     in->i_mode |= EXT2_S_IFLNK;
     // put it into the parent dirrrrrrrrr
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, dir_inode);
+    if (entry == NULL) {
+        fprintf(stderr, "Couldn't find a free space in the directory\n");
+        return -1;
+    }
     // and addddddd
     addEntry(entry, allocatedinode, EXT2_FT_SYMLINK, lname);
     return 0;
@@ -490,6 +502,10 @@ int addSymLink(unsigned char *disk, char *lname, char *source_name, int file_ino
 int addLinkFile(unsigned char *disk, char *lname, int link_inode, int dir_inode) {
     // don't need to allocate a new inode, just add it into the inode of the directory
     struct ext2_dir_entry_2 *entry = findNewEntry(disk, dir_inode);
+    if (entry == NULL) {
+        fprintf(stderr, "Couldn't find a free space in the directory\n");
+        return -1;
+    }
     // add
     addEntry(entry, link_inode, EXT2_FT_REG_FILE, lname);
     return 0;
